@@ -118,7 +118,7 @@
         <scene sceneID="AcI-uR-3Eb">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="WWp-lk-eCB" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="Sections" id="5cE-7S-mX7">
+                    <tabBarItem key="tabBarItem" title="" image="Home" selectedImage="Home" id="5cE-7S-mX7">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="0.0"/>
                     </tabBarItem>
                     <toolbarItems/>
@@ -139,7 +139,7 @@
         <scene sceneID="gqM-KF-qp7">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ab4-Uo-SID" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="Icon awesome-user-plus" id="NZi-AP-YHd">
+                    <tabBarItem key="tabBarItem" title="" image="新規作成" selectedImage="新規作成" id="NZi-AP-YHd">
                         <color key="badgeColor" red="1" green="0.67450980390000004" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBarItem>
                     <toolbarItems/>
@@ -160,7 +160,7 @@
         <scene sceneID="ZaX-up-dAN">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="qLa-Qy-15X" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="プレゼント完了ボタン" id="4PS-22-1VZ"/>
+                    <tabBarItem key="tabBarItem" title="" image="プレゼントOK" selectedImage="プレゼントOK" id="4PS-22-1VZ"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="xyp-JJ-oae">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -177,8 +177,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Icon awesome-user-plus" width="39.5" height="32.5"/>
-        <image name="Sections" width="34" height="30"/>
-        <image name="プレゼント完了ボタン" width="30" height="38.5"/>
+        <image name="Home" width="34" height="30"/>
+        <image name="プレゼントOK" width="30" height="36"/>
+        <image name="新規作成" width="40" height="33"/>
     </resources>
 </document>
