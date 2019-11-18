@@ -1,5 +1,5 @@
 //
-//  HomeViewController.swift
+//  FinishedPresentViewController.swift
 //  PFpractice
 //
 //  Created by 渡辺崇博 on 2019/11/18.
@@ -8,12 +8,10 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+class FinishedPresentViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
 
         // Do any additional setup after loading the view.
     }
@@ -21,12 +19,10 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.navigationItem.hidesBackButton = false
-        //タイトルを表示したいが、表示されず。
-        self.navigationItem.title = "Home"
+        self.navigationItem.hidesBackButton = true 
+        self.navigationItem.title = "プレゼント完了"
         
     }
-    
 
     /*
     // MARK: - Navigation

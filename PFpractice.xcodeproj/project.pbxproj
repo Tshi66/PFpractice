@@ -10,6 +10,8 @@
 		46224166963B327D57FB0070 /* Pods_PFpractice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48B1412873E13A4F00CD70C5 /* Pods_PFpractice.framework */; };
 		850A07292381B03B006F4827 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850A07282381B03B006F4827 /* HomeViewController.swift */; };
 		850A072B2381C323006F4827 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850A072A2381C323006F4827 /* TabBarController.swift */; };
+		850A072D23826745006F4827 /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850A072C23826745006F4827 /* CreatePostViewController.swift */; };
+		850A072F2382676E006F4827 /* FinishedPresentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850A072E2382676E006F4827 /* FinishedPresentViewController.swift */; };
 		85BCD5CD238061A9002828E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BCD5CC238061A9002828E3 /* AppDelegate.swift */; };
 		85BCD5CF238061A9002828E3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BCD5CE238061A9002828E3 /* SceneDelegate.swift */; };
 		85BCD5D1238061A9002828E3 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BCD5D0238061A9002828E3 /* OnboardingViewController.swift */; };
@@ -28,6 +30,8 @@
 		4FB354119D9D2C676F65CF96 /* Pods-PFpractice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PFpractice.debug.xcconfig"; path = "Target Support Files/Pods-PFpractice/Pods-PFpractice.debug.xcconfig"; sourceTree = "<group>"; };
 		850A07282381B03B006F4827 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		850A072A2381C323006F4827 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		850A072C23826745006F4827 /* CreatePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostViewController.swift; sourceTree = "<group>"; };
+		850A072E2382676E006F4827 /* FinishedPresentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishedPresentViewController.swift; sourceTree = "<group>"; };
 		85BCD5C9238061A9002828E3 /* PFpractice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PFpractice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85BCD5CC238061A9002828E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		85BCD5CE238061A9002828E3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -78,6 +82,8 @@
 				85BCD5CC238061A9002828E3 /* AppDelegate.swift */,
 				85BCD5CE238061A9002828E3 /* SceneDelegate.swift */,
 				850A07282381B03B006F4827 /* HomeViewController.swift */,
+				850A072C23826745006F4827 /* CreatePostViewController.swift */,
+				850A072E2382676E006F4827 /* FinishedPresentViewController.swift */,
 				850A072A2381C323006F4827 /* TabBarController.swift */,
 				85BCD5D0238061A9002828E3 /* OnboardingViewController.swift */,
 				85BCD5D2238061A9002828E3 /* Main.storyboard */,
@@ -231,7 +237,9 @@
 				85BCD5D1238061A9002828E3 /* OnboardingViewController.swift in Sources */,
 				85BCD5CD238061A9002828E3 /* AppDelegate.swift in Sources */,
 				85BCD5CF238061A9002828E3 /* SceneDelegate.swift in Sources */,
+				850A072F2382676E006F4827 /* FinishedPresentViewController.swift in Sources */,
 				850A072B2381C323006F4827 /* TabBarController.swift in Sources */,
+				850A072D23826745006F4827 /* CreatePostViewController.swift in Sources */,
 				850A07292381B03B006F4827 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
