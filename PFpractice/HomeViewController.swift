@@ -22,7 +22,7 @@ class HomeViewController: UIViewController {
         super.viewWillAppear(animated)
         
         self.navigationItem.hidesBackButton = false
-        //タイトルを表示したいが、表示されず。
+        
         self.navigationItem.title = "Home"
         
     }

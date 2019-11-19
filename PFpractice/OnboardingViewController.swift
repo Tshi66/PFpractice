@@ -98,7 +98,16 @@ class OnboardingViewController: UIViewController {
     @IBAction func skipButtonTapped(_ sender: UIButton) {
          print(#function)
         
-        performSegue(withIdentifier: "Home", sender: nil)
+//        performSegue(withIdentifier: "Home", sender: nil)
+        
+        //storyboardのインスタンスを取得。
+        let storyboard: UIStoryboard = self.storyboard!
+        
+        //変遷先ViewControllerのインスタンを取得。
+        let tabVC = storyboard.instantiateViewController(withIdentifier: "TabBar") as! TabBarController
+        
+        self.navigationController?.pushViewController(tabVC, animated: true)
+        
     }
     
 }
