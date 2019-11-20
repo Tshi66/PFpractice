@@ -1,2 +1,3 @@
 ${PODS_ROOT}/Target Support Files/Pods-PFpractice/Pods-PFpractice-frameworks.sh
+${BUILT_PRODUCTS_DIR}/FontAwesome.swift/FontAwesome_swift.framework
 ${BUILT_PRODUCTS_DIR}/paper-onboarding/paper_onboarding.framework

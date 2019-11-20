@@ -8,6 +8,7 @@ target 'PFpractice' do
   # Pods for PFpractice
 
 pod 'paper-onboarding'
+pod 'FontAwesome.swift'
 
 
 end

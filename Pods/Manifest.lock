@@ -1,16 +1,20 @@
 PODS:
+  - FontAwesome.swift (1.8.2)
   - paper-onboarding (6.1.4)
 
 DEPENDENCIES:
+  - FontAwesome.swift
   - paper-onboarding
 
 SPEC REPOS:
   trunk:
+    - FontAwesome.swift
     - paper-onboarding
 
 SPEC CHECKSUMS:
+  FontAwesome.swift: 7938d6a03113ff3f39001bde7f50be8a0903d605
   paper-onboarding: d3f16416e6f42add686117e8b32bfffaad899a79
 
-PODFILE CHECKSUM: 35c1fa93b65c4d308bab142a72b9ebeb370b0911
+PODFILE CHECKSUM: 22f044c11bb171ef9f262dcfad1d9d5649fe48aa
 
 COCOAPODS: 1.8.4
