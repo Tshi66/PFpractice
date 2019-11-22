@@ -13,6 +13,7 @@ import FontAwesome_swift
 class PostTableViewController: UITableViewController {
     //MARC: Properties
     var posts = [Post]()
+    var post = Post(name: "", theme: "", present: "", date: "", budget: 0, photo: nil, backImage: nil, remainingTime: "")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,6 +95,22 @@ class PostTableViewController: UITableViewController {
         
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        post = posts[indexPath.row]
+        
+        performSegue(withIdentifier: "Post", sender: nil)
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "Post" {
+            let nextVC: PostOneViewController = (segue.destination as? PostOneViewController)!
+            
+            nextVC.post = post
+        }
+    }
 
     
     /*
@@ -149,23 +166,26 @@ class PostTableViewController: UITableViewController {
         let photo4 = UIImage(named: "man2")
         let photo5 = UIImage(named: "man3")
         
-        guard let post1 = Post(name: "ひよこ", theme: "誕生日", present: "チュール", date: "2019/11/20", budget: 1000, photo: photo1, remainingTime: "60") else {
+        let backImage = UIImage(named: "backImage")
+
+        
+        guard let post1 = Post(name: "ひよこ", theme: "誕生日", present: "チュール", date: "2019/11/20", budget: 1000, photo: photo1, backImage: backImage, remainingTime: "60") else {
             fatalError("post1は初期化できませんでした。")
         }
         
-        guard let post2 = Post(name: "たかし", theme: "誕生日", present: "チュール", date: "2019/11/20", budget: 1000, photo: photo2, remainingTime: "60") else {
+        guard let post2 = Post(name: "たかし", theme: "誕生日", present: "チュール", date: "2019/11/20", budget: 1000, photo: photo2, backImage: backImage, remainingTime: "60") else {
             fatalError("post2は初期化できませんでした。")
         }
         
-        guard let post3 = Post(name: "よしこ", theme: "誕生日", present: "チュール", date: "2019/11/20", budget: 1000, photo: photo3, remainingTime: "60") else {
+        guard let post3 = Post(name: "よしこ", theme: "誕生日", present: "チュール", date: "2019/11/20", budget: 1000, photo: photo3, backImage: backImage, remainingTime: "60") else {
             fatalError("post3は初期化できませんでした。")
         }
         
-        guard let post4 = Post(name: "たけし", theme: "誕生日", present: "チュール", date: "2019/11/20", budget: 1000, photo: photo4, remainingTime: "60") else {
+        guard let post4 = Post(name: "たけし", theme: "誕生日", present: "チュール", date: "2019/11/20", budget: 1000, photo: photo4, backImage: backImage, remainingTime: "60") else {
             fatalError("post4は初期化できませんでした。")
         }
         
-        guard let post5 = Post(name: "やまだ", theme: "誕生日", present: "チュール", date: "2019/11/20", budget: 1000, photo: photo5, remainingTime: "60") else {
+        guard let post5 = Post(name: "やまだ", theme: "誕生日", present: "チュール", date: "2019/11/20", budget: 1000, photo: photo5, backImage: backImage, remainingTime: "60") else {
             fatalError("post5は初期化できませんでした。")
         }
         

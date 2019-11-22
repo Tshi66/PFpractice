@@ -12,6 +12,23 @@
 		850A072B2381C323006F4827 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850A072A2381C323006F4827 /* TabBarController.swift */; };
 		850A072D23826745006F4827 /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850A072C23826745006F4827 /* CreatePostViewController.swift */; };
 		850A072F2382676E006F4827 /* FinishedPresentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850A072E2382676E006F4827 /* FinishedPresentViewController.swift */; };
+		853FE551238692E7003F3E2D /* 楕円形.png in Resources */ = {isa = PBXBuildFile; fileRef = 853FE54E238692E7003F3E2D /* 楕円形.png */; };
+		853FE552238692E7003F3E2D /* 楕円形@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 853FE54F238692E7003F3E2D /* 楕円形@2x.png */; };
+		853FE553238692E7003F3E2D /* 楕円形@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 853FE550238692E7003F3E2D /* 楕円形@3x.png */; };
+		853FE5602386952A003F3E2D /* プレゼント完了@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 853FE55423869529003F3E2D /* プレゼント完了@3x.png */; };
+		853FE5612386952B003F3E2D /* 振り替え@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 853FE55523869529003F3E2D /* 振り替え@2x.png */; };
+		853FE5622386952B003F3E2D /* 通知@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 853FE55623869529003F3E2D /* 通知@2x.png */; };
+		853FE5632386952B003F3E2D /* 振り替え@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 853FE55723869529003F3E2D /* 振り替え@3x.png */; };
+		853FE5642386952B003F3E2D /* プレゼント完了@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 853FE55823869529003F3E2D /* プレゼント完了@2x.png */; };
+		853FE5652386952B003F3E2D /* ゴミ箱.png in Resources */ = {isa = PBXBuildFile; fileRef = 853FE5592386952A003F3E2D /* ゴミ箱.png */; };
+		853FE5662386952B003F3E2D /* 振り替え.png in Resources */ = {isa = PBXBuildFile; fileRef = 853FE55A2386952A003F3E2D /* 振り替え.png */; };
+		853FE5672386952B003F3E2D /* 通知.png in Resources */ = {isa = PBXBuildFile; fileRef = 853FE55B2386952A003F3E2D /* 通知.png */; };
+		853FE5682386952B003F3E2D /* ゴミ箱@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 853FE55C2386952A003F3E2D /* ゴミ箱@2x.png */; };
+		853FE5692386952B003F3E2D /* 通知@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 853FE55D2386952A003F3E2D /* 通知@3x.png */; };
+		853FE56A2386952B003F3E2D /* ゴミ箱@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 853FE55E2386952A003F3E2D /* ゴミ箱@3x.png */; };
+		853FE56B2386952B003F3E2D /* プレゼント完了.png in Resources */ = {isa = PBXBuildFile; fileRef = 853FE55F2386952A003F3E2D /* プレゼント完了.png */; };
+		853FE56F2387C250003F3E2D /* PostOneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853FE56E2387C250003F3E2D /* PostOneViewController.swift */; };
+		853FE5712387D871003F3E2D /* backImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 853FE5702387D870003F3E2D /* backImage.jpg */; };
 		854631BE23850DF0004E7514 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854631BD23850DF0004E7514 /* PostTableViewCell.swift */; };
 		854631C223851BAA004E7514 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854631C123851BAA004E7514 /* Post.swift */; };
 		854631C423852560004E7514 /* PostTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854631C323852560004E7514 /* PostTableViewController.swift */; };
@@ -57,6 +74,23 @@
 		850A072A2381C323006F4827 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		850A072C23826745006F4827 /* CreatePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostViewController.swift; sourceTree = "<group>"; };
 		850A072E2382676E006F4827 /* FinishedPresentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishedPresentViewController.swift; sourceTree = "<group>"; };
+		853FE54E238692E7003F3E2D /* 楕円形.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "楕円形.png"; sourceTree = "<group>"; };
+		853FE54F238692E7003F3E2D /* 楕円形@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "楕円形@2x.png"; sourceTree = "<group>"; };
+		853FE550238692E7003F3E2D /* 楕円形@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "楕円形@3x.png"; sourceTree = "<group>"; };
+		853FE55423869529003F3E2D /* プレゼント完了@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "プレゼント完了@3x.png"; sourceTree = "<group>"; };
+		853FE55523869529003F3E2D /* 振り替え@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "振り替え@2x.png"; sourceTree = "<group>"; };
+		853FE55623869529003F3E2D /* 通知@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "通知@2x.png"; sourceTree = "<group>"; };
+		853FE55723869529003F3E2D /* 振り替え@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "振り替え@3x.png"; sourceTree = "<group>"; };
+		853FE55823869529003F3E2D /* プレゼント完了@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "プレゼント完了@2x.png"; sourceTree = "<group>"; };
+		853FE5592386952A003F3E2D /* ゴミ箱.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ゴミ箱.png"; sourceTree = "<group>"; };
+		853FE55A2386952A003F3E2D /* 振り替え.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "振り替え.png"; sourceTree = "<group>"; };
+		853FE55B2386952A003F3E2D /* 通知.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "通知.png"; sourceTree = "<group>"; };
+		853FE55C2386952A003F3E2D /* ゴミ箱@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ゴミ箱@2x.png"; sourceTree = "<group>"; };
+		853FE55D2386952A003F3E2D /* 通知@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "通知@3x.png"; sourceTree = "<group>"; };
+		853FE55E2386952A003F3E2D /* ゴミ箱@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ゴミ箱@3x.png"; sourceTree = "<group>"; };
+		853FE55F2386952A003F3E2D /* プレゼント完了.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "プレゼント完了.png"; sourceTree = "<group>"; };
+		853FE56E2387C250003F3E2D /* PostOneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOneViewController.swift; sourceTree = "<group>"; };
+		853FE5702387D870003F3E2D /* backImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = backImage.jpg; sourceTree = "<group>"; };
 		854631BD23850DF0004E7514 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		854631C123851BAA004E7514 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		854631C323852560004E7514 /* PostTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewController.swift; sourceTree = "<group>"; };
@@ -108,11 +142,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		853FE54D238692CA003F3E2D /* ButtonIcon */ = {
+			isa = PBXGroup;
+			children = (
+				853FE54E238692E7003F3E2D /* 楕円形.png */,
+				853FE54F238692E7003F3E2D /* 楕円形@2x.png */,
+				853FE550238692E7003F3E2D /* 楕円形@3x.png */,
+				853FE5592386952A003F3E2D /* ゴミ箱.png */,
+				853FE55C2386952A003F3E2D /* ゴミ箱@2x.png */,
+				853FE55E2386952A003F3E2D /* ゴミ箱@3x.png */,
+				853FE55F2386952A003F3E2D /* プレゼント完了.png */,
+				853FE55823869529003F3E2D /* プレゼント完了@2x.png */,
+				853FE55423869529003F3E2D /* プレゼント完了@3x.png */,
+				853FE55A2386952A003F3E2D /* 振り替え.png */,
+				853FE55523869529003F3E2D /* 振り替え@2x.png */,
+				853FE55723869529003F3E2D /* 振り替え@3x.png */,
+				853FE55B2386952A003F3E2D /* 通知.png */,
+				853FE55623869529003F3E2D /* 通知@2x.png */,
+				853FE55D2386952A003F3E2D /* 通知@3x.png */,
+			);
+			path = ButtonIcon;
+			sourceTree = "<group>";
+		};
 		854631BA23850B77004E7514 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
 				854631C323852560004E7514 /* PostTableViewController.swift */,
 				854631BD23850DF0004E7514 /* PostTableViewCell.swift */,
+				853FE56E2387C250003F3E2D /* PostOneViewController.swift */,
 				850A07282381B03B006F4827 /* HomeViewController.swift */,
 				850A072C23826745006F4827 /* CreatePostViewController.swift */,
 				850A072E2382676E006F4827 /* FinishedPresentViewController.swift */,
@@ -143,6 +200,7 @@
 		854631C5238544C3004E7514 /* sampleImg */ = {
 			isa = PBXGroup;
 			children = (
+				853FE5702387D870003F3E2D /* backImage.jpg */,
 				854631C723854500004E7514 /* animal_hiyoko.png */,
 				854631C823854500004E7514 /* icon_business_man03.png */,
 				854631C623854500004E7514 /* woman_69.png */,
@@ -187,6 +245,7 @@
 		85C734732382A2A30026CAFE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				853FE54D238692CA003F3E2D /* ButtonIcon */,
 				854631C5238544C3004E7514 /* sampleImg */,
 				85C7348B2382A4BF0026CAFE /* onboardingImg */,
 				85C734782382A4990026CAFE /* TabIcon */,
@@ -306,32 +365,48 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				853FE5672386952B003F3E2D /* 通知.png in Resources */,
 				85C734A12382A4BF0026CAFE /* onboardImg1@2x.png in Resources */,
 				85C7349D2382A4BF0026CAFE /* onboardImg2@3x.png in Resources */,
+				853FE552238692E7003F3E2D /* 楕円形@2x.png in Resources */,
+				853FE56A2386952B003F3E2D /* ゴミ箱@3x.png in Resources */,
 				85BCD5D9238061AB002828E3 /* LaunchScreen.storyboard in Resources */,
 				85C734872382A4990026CAFE /* 新規作成@3x.png in Resources */,
+				853FE553238692E7003F3E2D /* 楕円形@3x.png in Resources */,
+				853FE5642386952B003F3E2D /* プレゼント完了@2x.png in Resources */,
 				85C734822382A4990026CAFE /* Home@2x.png in Resources */,
 				85C7349F2382A4BF0026CAFE /* onboardImg4.png in Resources */,
 				85C734A22382A4BF0026CAFE /* onboardImg1@3x.png in Resources */,
 				854631CF23854500004E7514 /* youngman_32.png in Resources */,
 				85C734852382A4990026CAFE /* 新規作成.png in Resources */,
 				854631CD23854500004E7514 /* icon_business_man03.png in Resources */,
+				853FE5692386952B003F3E2D /* 通知@3x.png in Resources */,
 				854631CB23854500004E7514 /* woman_69.png in Resources */,
 				85BCD5D6238061AB002828E3 /* Assets.xcassets in Resources */,
+				853FE5612386952B003F3E2D /* 振り替え@2x.png in Resources */,
 				854631CC23854500004E7514 /* animal_hiyoko.png in Resources */,
+				853FE56B2386952B003F3E2D /* プレゼント完了.png in Resources */,
 				85C734862382A4990026CAFE /* Home.png in Resources */,
 				854631CE23854500004E7514 /* youngman_28.png in Resources */,
 				85C7349B2382A4BF0026CAFE /* onboardImg2.png in Resources */,
 				85C734982382A4BF0026CAFE /* onboardImg4@3x.png in Resources */,
+				853FE5602386952A003F3E2D /* プレゼント完了@3x.png in Resources */,
+				853FE5632386952B003F3E2D /* 振り替え@3x.png in Resources */,
+				853FE5712387D871003F3E2D /* backImage.jpg in Resources */,
 				85C734A32382A4BF0026CAFE /* onboardImg3@2x.png in Resources */,
 				85C7349C2382A4BF0026CAFE /* onboardImg3.png in Resources */,
 				85C734882382A4990026CAFE /* プレゼントOK@3x.png in Resources */,
+				853FE5662386952B003F3E2D /* 振り替え.png in Resources */,
 				85C7348A2382A4990026CAFE /* 新規作成@2x.png in Resources */,
+				853FE551238692E7003F3E2D /* 楕円形.png in Resources */,
 				85BCD5D4238061A9002828E3 /* Main.storyboard in Resources */,
+				853FE5622386952B003F3E2D /* 通知@2x.png in Resources */,
 				85C734842382A4990026CAFE /* プレゼントOK.png in Resources */,
+				853FE5652386952B003F3E2D /* ゴミ箱.png in Resources */,
 				85C734892382A4990026CAFE /* プレゼントOK@2x.png in Resources */,
 				85C7349A2382A4BF0026CAFE /* onboardImg1.png in Resources */,
 				85C734832382A4990026CAFE /* Home@3x.png in Resources */,
+				853FE5682386952B003F3E2D /* ゴミ箱@2x.png in Resources */,
 				85C7349E2382A4BF0026CAFE /* onboardImg2@2x.png in Resources */,
 				85C734A02382A4BF0026CAFE /* onboardImg3@3x.png in Resources */,
 				85C734992382A4BF0026CAFE /* onboardImg4@2x.png in Resources */,
@@ -388,6 +463,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				85BCD5D1238061A9002828E3 /* OnboardingViewController.swift in Sources */,
+				853FE56F2387C250003F3E2D /* PostOneViewController.swift in Sources */,
 				85BCD5CD238061A9002828E3 /* AppDelegate.swift in Sources */,
 				85BCD5CF238061A9002828E3 /* SceneDelegate.swift in Sources */,
 				854631BE23850DF0004E7514 /* PostTableViewCell.swift in Sources */,

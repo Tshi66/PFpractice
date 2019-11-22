@@ -16,15 +16,17 @@ class Post {
     var date: String
     var budget: Int
     var photo: UIImage?
+    var backImage: UIImage?
     var remainingTime: String
     
-    init?(name: String, theme: String, present: String, date: String, budget: Int, photo: UIImage?, remainingTime: String) {
+    init?(name: String, theme: String, present: String, date: String, budget: Int, photo: UIImage?, backImage: UIImage?, remainingTime: String) {
         self.name = name
         self.theme = theme
         self.present = present
         self.date = date
         self.budget = budget
         self.photo = photo
+        self.backImage = backImage
         self.remainingTime = remainingTime
     }
 }
