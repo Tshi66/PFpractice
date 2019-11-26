@@ -41,21 +41,233 @@
             </objects>
             <point key="canvasLocation" x="491" y="113"/>
         </scene>
-        <!--Create Post View Controller-->
+        <!--新規作成-->
         <scene sceneID="8xV-Y1-dpU">
             <objects>
                 <viewController modalPresentationStyle="fullScreen" id="E2Y-e0-7qJ" customClass="CreatePostViewController" customModule="PFpractice" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3vU-tf-rLx">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1dU-dP-TGT">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultBackImg" translatesAutoresizingMaskIntoConstraints="NO" id="gFX-0q-FD6">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="196"/>
+                                        <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="196" id="8FR-wl-WbH"/>
+                                        </constraints>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="CJC-OZ-71c" appends="YES" id="SbD-Pu-x9K"/>
+                                        </connections>
+                                    </imageView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="0Bw-AZ-2s5">
+                                        <rect key="frame" x="26.5" y="50" width="361" height="566"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="eGo-Sf-KPn">
+                                                <rect key="frame" x="76" y="0.0" width="209" height="269"/>
+                                                <subviews>
+                                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultHero" translatesAutoresizingMaskIntoConstraints="NO" id="cLh-Ni-Px3">
+                                                        <rect key="frame" x="0.0" y="0.0" width="209" height="209"/>
+                                                        <gestureRecognizers/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="209" id="49F-rA-c41"/>
+                                                            <constraint firstAttribute="width" constant="209" id="Cc3-zb-hKc"/>
+                                                            <constraint firstAttribute="width" secondItem="cLh-Ni-Px3" secondAttribute="height" multiplier="1:1" id="UCx-TB-Wx3"/>
+                                                        </constraints>
+                                                        <connections>
+                                                            <outletCollection property="gestureRecognizers" destination="CEx-sA-rOJ" appends="YES" id="Gn6-wI-vqQ"/>
+                                                        </connections>
+                                                    </imageView>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="名前" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="o5a-JP-SHi">
+                                                        <rect key="frame" x="50.5" y="213" width="108.5" height="56"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
+                                                        <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES" textContentType="nickname"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="maxLength">
+                                                                <integer key="value" value="10"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </textField>
+                                                </subviews>
+                                                <gestureRecognizers/>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="T6Q-2Q-UgX">
+                                                <rect key="frame" x="0.0" y="299" width="361" height="171"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="G17-s0-nOs">
+                                                        <rect key="frame" x="0.0" y="0.0" width="48" height="171"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lpW-ws-oul">
+                                                                <rect key="frame" x="0.0" y="0.0" width="48" height="24"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="skt-Za-nE2">
+                                                                <rect key="frame" x="0.0" y="49" width="48" height="24"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oKQ-EV-B7S">
+                                                                <rect key="frame" x="0.0" y="98" width="48" height="24"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JPg-TN-vbx">
+                                                                <rect key="frame" x="0.0" y="147" width="48" height="24"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="tzD-23-SHb">
+                                                        <rect key="frame" x="58" y="0.0" width="122.5" height="156"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="テーマ" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ata-PO-hfT">
+                                                                <rect key="frame" x="0.0" y="0.0" width="61.5" height="24"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                                <size key="shadowOffset" width="0.0" height="0.0"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="プレゼント名" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9so-y0-tk5">
+                                                                <rect key="frame" x="0.0" y="44" width="122.5" height="24"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                                <size key="shadowOffset" width="0.0" height="0.0"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="渡す日" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rdb-EU-h6m">
+                                                                <rect key="frame" x="0.0" y="88" width="61.5" height="24"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                                <size key="shadowOffset" width="0.0" height="0.0"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="いま" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UEn-hP-NYB">
+                                                                <rect key="frame" x="0.0" y="132" width="41" height="24"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                                <size key="shadowOffset" width="0.0" height="0.0"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="gnt-gn-q5N">
+                                                        <rect key="frame" x="190.5" y="0.0" width="170.5" height="166"/>
+                                                        <subviews>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="例）誕生日" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7vl-Nd-foP">
+                                                                <rect key="frame" x="0.0" y="0.0" width="130" height="34"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="maxLength">
+                                                                        <integer key="value" value="15"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </textField>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="例）旅行券" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ech-FP-523">
+                                                                <rect key="frame" x="0.0" y="44" width="130" height="34"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="maxLength">
+                                                                        <integer key="value" value="15"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </textField>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="例）2019/11/25" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Y5A-fw-MiQ">
+                                                                <rect key="frame" x="0.0" y="88" width="170.5" height="34"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
+                                                            </textField>
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="例）5,000円" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oqW-6C-KBH">
+                                                                <rect key="frame" x="0.0" y="132" width="144.5" height="34"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="maxLength">
+                                                                        <integer key="value" value="10"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </textField>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="YQp-vI-IsL">
+                                                <rect key="frame" x="94.5" y="500" width="172" height="66"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0WN-kW-I5i">
+                                                        <rect key="frame" x="0.0" y="0.0" width="66" height="66"/>
+                                                        <color key="tintColor" red="0.85882352939999995" green="0.2666666667" blue="0.2156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <state key="normal" image="No"/>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1O5-lt-tKf">
+                                                        <rect key="frame" x="106" y="0.0" width="66" height="66"/>
+                                                        <state key="normal" image="Yes"/>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="gFX-0q-FD6" firstAttribute="centerX" secondItem="0Bw-AZ-2s5" secondAttribute="centerX" id="3cR-EI-qfd"/>
+                                    <constraint firstItem="gFX-0q-FD6" firstAttribute="leading" secondItem="K59-fX-6aC" secondAttribute="leading" id="9w5-Am-rET"/>
+                                    <constraint firstAttribute="bottom" secondItem="0Bw-AZ-2s5" secondAttribute="bottom" constant="109" id="FoW-kt-C0u"/>
+                                    <constraint firstItem="gFX-0q-FD6" firstAttribute="top" secondItem="K59-fX-6aC" secondAttribute="top" id="NgB-gy-dP1"/>
+                                    <constraint firstItem="0Bw-AZ-2s5" firstAttribute="centerX" secondItem="1dU-dP-TGT" secondAttribute="centerX" id="OAG-t3-PA2"/>
+                                    <constraint firstItem="gFX-0q-FD6" firstAttribute="trailing" secondItem="K59-fX-6aC" secondAttribute="trailing" id="Rco-9u-yQl"/>
+                                    <constraint firstItem="0Bw-AZ-2s5" firstAttribute="top" secondItem="1dU-dP-TGT" secondAttribute="top" constant="50" id="viB-ea-vLg"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="K59-fX-6aC"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="nye-Zx-efx"/>
+                            </scrollView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="1dU-dP-TGT" firstAttribute="top" secondItem="VGC-3k-zag" secondAttribute="top" id="Skw-jv-yha"/>
+                            <constraint firstItem="1dU-dP-TGT" firstAttribute="trailing" secondItem="VGC-3k-zag" secondAttribute="trailing" id="c27-by-yJL"/>
+                            <constraint firstItem="1dU-dP-TGT" firstAttribute="leading" secondItem="VGC-3k-zag" secondAttribute="leading" id="l0S-tY-TzD"/>
+                            <constraint firstItem="1dU-dP-TGT" firstAttribute="bottom" secondItem="VGC-3k-zag" secondAttribute="bottom" id="nmH-jt-LR8"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="VGC-3k-zag"/>
                     </view>
-                    <navigationItem key="navigationItem" id="KYD-4r-dLL"/>
+                    <navigationItem key="navigationItem" title="新規作成" id="KYD-4r-dLL"/>
+                    <connections>
+                        <outlet property="backImageView" destination="gFX-0q-FD6" id="f0j-j1-gFc"/>
+                        <outlet property="budgetIcon" destination="JPg-TN-vbx" id="8RL-4J-9Hj"/>
+                        <outlet property="budgetTextField" destination="oqW-6C-KBH" id="gMN-O0-gPD"/>
+                        <outlet property="dateIcon" destination="oKQ-EV-B7S" id="QHk-z5-MSK"/>
+                        <outlet property="dateTextField" destination="Y5A-fw-MiQ" id="p0f-Py-j29"/>
+                        <outlet property="heroImageView" destination="cLh-Ni-Px3" id="uir-4R-mzp"/>
+                        <outlet property="nameTextField" destination="o5a-JP-SHi" id="f0a-zc-J4d"/>
+                        <outlet property="presentIcon" destination="skt-Za-nE2" id="bze-Na-iqw"/>
+                        <outlet property="presentTextField" destination="ech-FP-523" id="tMb-VU-J7d"/>
+                        <outlet property="scrollView" destination="1dU-dP-TGT" id="fqZ-n0-MFO"/>
+                        <outlet property="themeIcon" destination="lpW-ws-oul" id="YQM-By-b1w"/>
+                        <outlet property="themeTextField" destination="7vl-Nd-foP" id="uk3-vp-SzA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9YX-fU-QtC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="CJC-OZ-71c">
+                    <connections>
+                        <action selector="backTapGesture:" destination="E2Y-e0-7qJ" id="RGP-Oo-QX7"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="CEx-sA-rOJ">
+                    <connections>
+                        <action selector="heroTapGesture:" destination="E2Y-e0-7qJ" id="yGY-ko-pIh"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="4029" y="135"/>
+            <point key="canvasLocation" x="4028.985507246377" y="134.59821428571428"/>
         </scene>
         <!--Finished Present View Controller-->
         <scene sceneID="cip-TF-kUf">
@@ -503,6 +715,10 @@
     </scenes>
     <resources>
         <image name="Home" width="34" height="30"/>
+        <image name="No" width="66" height="66"/>
+        <image name="Yes" width="66" height="66"/>
+        <image name="defaultBackImg" width="414" height="245"/>
+        <image name="defaultHero" width="257" height="257"/>
         <image name="ゴミ箱" width="20.5" height="23"/>
         <image name="プレゼントOK" width="30" height="35.5"/>
         <image name="プレゼント完了" width="25" height="33.5"/>

@@ -97,7 +97,6 @@ class PostTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         post = posts[indexPath.row]
         
         performSegue(withIdentifier: "Post", sender: nil)
