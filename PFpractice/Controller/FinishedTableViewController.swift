@@ -1,8 +1,8 @@
 //
-//  PostTableViewController.swift
+//  FinishedTableViewController.swift
 //  PFpractice
 //
-//  Created by 渡辺崇博 on 2019/11/20.
+//  Created by 渡辺崇博 on 2019/12/05.
 //  Copyright © 2019 渡辺崇博. All rights reserved.
 //
 
@@ -10,7 +10,7 @@ import UIKit
 import FontAwesome_swift
 import RealmSwift
 
-class PostTableViewController: UITableViewController {
+class FinishedTableViewController: UITableViewController {
     //MARC: Properties
     var posts: Results<Post>!
     var post = Post()
@@ -87,9 +87,6 @@ class PostTableViewController: UITableViewController {
         cell.budgetLabel.font = font
         cell.budgetLabel.attributedText = attrBudgetLabel
         
-        //残り日数
-        cell.remainingTimeLabel.text = "あとxx日"
-        
         //photoを丸く表示
         cell.photoImageView.image = post.photo
         cell.photoImageView.layer.cornerRadius = cell.photoImageView.frame.size.width * 0.5
@@ -97,24 +94,9 @@ class PostTableViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        post = posts[indexPath.row]
-        
-        performSegue(withIdentifier: "Post", sender: nil)
-        
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "Post" {
-            let nextVC: PostOneViewController = (segue.destination as? PostOneViewController)!
-            
-            nextVC.post = post
-        }
-    }
-    
     func loadPosts(){
         
-        posts = realm.objects(Post.self).filter("finished = false")
+        posts = realm.objects(Post.self).filter("finished = true")
         
         self.tableView.reloadData()
     }

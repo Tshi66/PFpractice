@@ -1,15 +1,15 @@
 //
-//  CreatePostViewController.swift
+//  EditPostViewController.swift
 //  PFpractice
 //
-//  Created by 渡辺崇博 on 2019/11/18.
+//  Created by 渡辺崇博 on 2019/12/05.
 //  Copyright © 2019 渡辺崇博. All rights reserved.
 //
 
 import UIKit
 import RealmSwift
 
-class CreatePostViewController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, ContentScrollable {
+class EditPostViewController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, ContentScrollable {
 
     //MARC: Properties
     @IBOutlet weak var themeIcon: UILabel!
@@ -31,16 +31,28 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
     
     var datePicker = UIDatePicker()
     
+    var post = Post()
+    
     let realm = try! Realm()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
         nameTextField.delegate = self
         themeTextField.delegate = self
         presentTextField.delegate = self
         dateTextField.delegate = self
         budgetTextField.delegate = self
+        
+        nameTextField.text = post.name
+        themeTextField.text = post.theme
+        presentTextField.text = post.present
+        dateTextField.text = post.date
+        budgetTextField.text = "\(post.budget)"
+        backImageView.image = post.backImage
+        heroImageView.image = post.photo
+        heroImageView.layer.cornerRadius = heroImageView.frame.size.width * 0.5
+        
         
         setDatePicker()
     }
@@ -59,8 +71,8 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
         self.next?.touchesBegan(touches, with: event)
+        self.view.endEditing(true)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -111,23 +123,13 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
     
     //MARC: IBAction
     
-    
-    @IBAction func createPostButton(_ sender: UIButton) {
-        let alert = UIAlertController(title: "ポストを新規作成しますか？", message: "", preferredStyle: .alert)
-        let action = UIAlertAction(title: "作成", style: .default) { (action) in
-            
-            let post = Post()
-            post.name = self.nameTextField.text!
-            post.theme = self.themeTextField.text!
-            post.present = self.presentTextField.text!
-            post.date = self.dateTextField.text!
-            post.budget = Int(self.budgetTextField.text!)!
-            post.backImage = self.backImageView.image
-            post.photo = self.heroImageView.image
+    @IBAction func editPostButton(_ sender: UIButton) {
+        let alert = UIAlertController(title: "ポストを編集しますか？", message: "", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default) { (action) in
                         
             self.navigationController?.popViewController(animated: true)
             
-            self.save(post: post)
+            self.updatePost(post: self.post)
         }
         
         let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel) { (action: UIAlertAction!) in
@@ -138,10 +140,17 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
         present(alert, animated: true, completion: nil)
     }
     
-    func save(post: Post){
+    func updatePost(post: Post){
         do {
             try realm.write {
-                realm.add(post)
+                
+                post.name = self.nameTextField.text!
+                post.theme = self.themeTextField.text!
+                post.present = self.presentTextField.text!
+                post.date = self.dateTextField.text!
+                post.budget = Int(self.budgetTextField.text!)!
+                post.backImage = self.backImageView.image
+                post.photo = self.heroImageView.image
             }
         } catch {
             print("Error saving post \(error)")
@@ -162,10 +171,10 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
         picker.delegate = self
         present(picker, animated: true, completion: nil)
     }
-    
+
 }
 
-extension CreatePostViewController: UIImagePickerControllerDelegate{
+extension EditPostViewController: UIImagePickerControllerDelegate{
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)

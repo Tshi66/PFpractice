@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import RealmSwift
 
 class PostOneViewController: UIViewController {
     
     //MARC: Properties
-    var post = Post(name: "", theme: "", present: "", date: "", budget: 0, photo: nil, backImage: nil, remainingTime: "")
-
+    var post = Post()
+    let realm = try! Realm()
+    
+    
     @IBOutlet weak var backImage: UIImageView!
     @IBOutlet weak var heroImage: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -32,6 +35,10 @@ class PostOneViewController: UIViewController {
         
         postDataLoad()
 
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
     }
     
     
@@ -55,15 +62,80 @@ class PostOneViewController: UIViewController {
         
         
         
-        backImage.image = post?.backImage
-        heroImage.image = post?.photo
-        nameLabel.text = post?.name
-        themeLabel.text = post?.theme
-        presentLabel.text = post?.present
-        dateLabel.text = post?.date
-        budgetLabel.text = "500 / \(post?.budget ?? 0)円"
+        backImage.image = post.backImage
+        heroImage.image = post.photo
+        nameLabel.text = post.name
+        themeLabel.text = post.theme
+        presentLabel.text = post.present
+        dateLabel.text = post.date
+        budgetLabel.text = "500 / \(post.budget)円"
         
         heroImage.layer.cornerRadius = heroImage.frame.size.width * 0.5
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "editPost" {
+            let nextVC: EditPostViewController = (segue.destination as? EditPostViewController)!
+            
+            nextVC.post = post
+        }
+    }
 
+    
+    @IBAction func finishedButton(_ sender: UIButton) {
+        
+        let alert = UIAlertController(title: "プレゼント完了", message: "完了を押すと、「プレゼント完了」に移動されます。", preferredStyle: .alert)
+        let action = UIAlertAction(title: "完了", style: .default) { (action) in
+                        
+            self.updatePost(post: self.post)
+            
+            self.navigationController?.popViewController(animated: true)
+        }
+        
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel) { (action: UIAlertAction!) in
+        }
+        
+        alert.addAction(action)
+        alert.addAction(cancelAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func deleteButton(_ sender: UIButton) {
+        let alert = UIAlertController(title: "ポストの削除", message: "削除すると復元できません。", preferredStyle: .alert)
+        let action = UIAlertAction(title: "削除", style: .destructive) { (action) in
+                        
+            self.deletePost(post: self.post)
+            
+            self.navigationController?.popViewController(animated: true)
+        }
+        
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel) { (action: UIAlertAction!) in
+        }
+        
+        alert.addAction(action)
+        alert.addAction(cancelAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func updatePost(post: Post){
+        do {
+            try realm.write {
+            
+                post.finished = true
+            }
+        } catch {
+            print("Error saving post \(error)")
+        }
+    }
+    
+    func deletePost(post: Post) {
+        do {
+            try realm.write {
+                realm.delete(post)
+            }
+        } catch {
+            print("Error deleting post \(error)")
+        }
+    }
 }

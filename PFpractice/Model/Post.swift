@@ -7,26 +7,66 @@
 //
 
 import UIKit
+import RealmSwift
 
-class Post {
-    //MARC: Properties
-    var name: String
-    var theme: String
-    var present: String
-    var date: String
-    var budget: Int
-    var photo: UIImage?
-    var backImage: UIImage?
-    var remainingTime: String
+class Post: Object {
     
-    init?(name: String, theme: String, present: String, date: String, budget: Int, photo: UIImage?, backImage: UIImage?, remainingTime: String) {
-        self.name = name
-        self.theme = theme
-        self.present = present
-        self.date = date
-        self.budget = budget
-        self.photo = photo
-        self.backImage = backImage
-        self.remainingTime = remainingTime
+    static let realm = try! Realm()
+    
+    @objc dynamic private var id = 0
+    @objc dynamic var name: String = ""
+    @objc dynamic var theme: String = ""
+    @objc dynamic var present: String = ""
+    @objc dynamic var date: String = ""
+    @objc dynamic var budget: Int = 0
+    @objc dynamic var finished: Bool = false
+
+    @objc dynamic private var _photo: UIImage? = nil
+    @objc dynamic var photo: UIImage? {
+        set{
+            self._photo = newValue
+            if let value = newValue {
+                self.imageData = value.pngData() as NSData?
+            }
+        }
+        get{
+            if let image = self._photo {
+                return image
+            }
+            if let data = self.imageData {
+                self._photo = UIImage(data: data as Data)
+                return self._photo
+            }
+            return nil
+        }
     }
+    
+    @objc dynamic private var imageData: NSData? = nil
+    
+    @objc dynamic private var _backImage: UIImage? = nil
+    @objc dynamic var backImage: UIImage? {
+        set{
+            self._backImage = newValue
+            if let value = newValue {
+                self.backImageData = value.pngData() as NSData?
+            }
+        }
+        get{
+            if let backImage = self._backImage {
+                return backImage
+            }
+            if let data = self.backImageData {
+                self._backImage = UIImage(data: data as Data)
+                return self._backImage
+            }
+            return nil
+        }
+    }
+    
+    @objc dynamic private var backImageData: NSData? = nil
+    
+    override static func ignoredProperties() -> [String] {
+        return ["photo", "_photo", "backImage", "_backImage"]
+    }
+    
 }
