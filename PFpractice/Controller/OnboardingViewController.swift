@@ -26,6 +26,7 @@ class OnboardingViewController: UIViewController {
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = true
     }
+    
 
     private func setupPaperOnboardingView() {
         let onboarding = PaperOnboarding()

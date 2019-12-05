@@ -13,7 +13,6 @@ class Post: Object {
     
     static let realm = try! Realm()
     
-    @objc dynamic private var id = 0
     @objc dynamic var name: String = ""
     @objc dynamic var theme: String = ""
     @objc dynamic var present: String = ""
