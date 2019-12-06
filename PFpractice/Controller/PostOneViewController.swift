@@ -32,13 +32,12 @@ class PostOneViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        postDataLoad()
 
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        super.viewWillAppear(true)
+        postDataLoad()
     }
     
     

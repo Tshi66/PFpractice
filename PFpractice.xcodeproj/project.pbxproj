@@ -16,7 +16,6 @@
 		8500D7F2239938A000BE9C7E /* nyukin.png in Resources */ = {isa = PBXBuildFile; fileRef = 8500D7EF2399389B00BE9C7E /* nyukin.png */; };
 		8500D7F3239938A000BE9C7E /* nyukin@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8500D7F02399389C00BE9C7E /* nyukin@3x.png */; };
 		8500D7F4239938A000BE9C7E /* nyukin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8500D7F12399389F00BE9C7E /* nyukin@2x.png */; };
-		850A07292381B03B006F4827 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850A07282381B03B006F4827 /* HomeViewController.swift */; };
 		850A072B2381C323006F4827 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850A072A2381C323006F4827 /* TabBarController.swift */; };
 		850A072D23826745006F4827 /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850A072C23826745006F4827 /* CreatePostViewController.swift */; };
 		853FE551238692E7003F3E2D /* 楕円形.png in Resources */ = {isa = PBXBuildFile; fileRef = 853FE54E238692E7003F3E2D /* 楕円形.png */; };
@@ -95,7 +94,6 @@
 		8500D7EF2399389B00BE9C7E /* nyukin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nyukin.png; sourceTree = "<group>"; };
 		8500D7F02399389C00BE9C7E /* nyukin@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nyukin@3x.png"; sourceTree = "<group>"; };
 		8500D7F12399389F00BE9C7E /* nyukin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nyukin@2x.png"; sourceTree = "<group>"; };
-		850A07282381B03B006F4827 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		850A072A2381C323006F4827 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		850A072C23826745006F4827 /* CreatePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostViewController.swift; sourceTree = "<group>"; };
 		853FE54E238692E7003F3E2D /* 楕円形.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "楕円形.png"; sourceTree = "<group>"; };
@@ -229,7 +227,6 @@
 				854631C323852560004E7514 /* PostTableViewController.swift */,
 				854631BD23850DF0004E7514 /* PostTableViewCell.swift */,
 				853FE56E2387C250003F3E2D /* PostOneViewController.swift */,
-				850A07282381B03B006F4827 /* HomeViewController.swift */,
 				850A072C23826745006F4827 /* CreatePostViewController.swift */,
 				8500D7E523981C5C00BE9C7E /* EditPostViewController.swift */,
 				8500D7E9239845C800BE9C7E /* FinishedTableViewController.swift */,
@@ -546,7 +543,6 @@
 				854631C223851BAA004E7514 /* Post.swift in Sources */,
 				850A072D23826745006F4827 /* CreatePostViewController.swift in Sources */,
 				8500D7EC239907D000BE9C7E /* Bank.swift in Sources */,
-				850A07292381B03B006F4827 /* HomeViewController.swift in Sources */,
 				8500D7EE23990B2000BE9C7E /* BankViewController.swift in Sources */,
 				8500D7E623981C5C00BE9C7E /* EditPostViewController.swift in Sources */,
 			);

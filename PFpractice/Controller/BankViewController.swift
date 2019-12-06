@@ -14,20 +14,35 @@ class BankViewController: UIViewController {
     
     @IBOutlet weak var savingLabel: UILabel!
     @IBOutlet weak var stackLabel: UILabel!
+    @IBOutlet weak var presentCostLabel: UILabel!
     @IBOutlet weak var progressLabel: UILabel!
     @IBOutlet weak var progressView: MBCircularProgressBarView!
     
     let realm = try! Realm()
+    var posts: Results<Post>!
     var bank = Bank()
     
     override func viewDidLoad() {
         print("viewDidLoad!!!!")
         super.viewDidLoad()
+        loadPosts()
         bankLoad()
+        
+        let sum: Int = posts.sum(ofProperty: "budget")
+        
         savingLabel.text = "\(bank.saving)円"
+        presentCostLabel.text = "\(sum)"
         stackLabel.text = "\(bank.stack)円 / 月"
         
-        progressLabel.text = "あと \(20000 - bank.saving)円"
+        let amount = sum - bank.saving
+        
+        if amount < 0 {
+            progressLabel.text = "余り \(-(amount))円"
+            progressLabel.textColor = .blue
+        } else {
+            progressLabel.text = "あと \(amount)円"
+        }
+        
         
         UIView.animate(withDuration: 1.0) {
             self.progressView.value = CGFloat(self.bank.saving)
@@ -43,8 +58,6 @@ class BankViewController: UIViewController {
         
         let alert = UIAlertController(title: "貯金額を編集しますか？", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default) { (action) in
-            
-            self.navigationController?.popViewController(animated: true)
             
             do {
                 try self.realm.write {
@@ -62,7 +75,7 @@ class BankViewController: UIViewController {
         
         alert.addTextField { (editSavingTextField) in
             self.bankLoad()
-            editSavingTextField.text = "\(self.bank.saving)"
+            editSavingTextField.placeholder = "\(self.bank.saving)"
             textField = editSavingTextField
         }
         
@@ -78,9 +91,7 @@ class BankViewController: UIViewController {
         
         let alert = UIAlertController(title: "積立額を編集しますか？", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default) { (action) in
-            
-            self.navigationController?.popViewController(animated: true)
-            
+                        
             do {
                 try self.realm.write {
                     self.bank.stack = Int(textField.text!)!
@@ -97,7 +108,7 @@ class BankViewController: UIViewController {
         
         alert.addTextField { (editStackTextField) in
             self.bankLoad()
-            editStackTextField.text = "\(self.bank.stack)"
+            editStackTextField.placeholder = "\(self.bank.stack)"
             textField = editStackTextField
         }
         
@@ -112,11 +123,8 @@ class BankViewController: UIViewController {
         
         let alert = UIAlertController(title: "貯金しますか？", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default) { (action) in
-            
-            self.navigationController?.popViewController(animated: true)
-            
+                        
             if self.realm.objects(Bank.self).filter("id = 0").first != nil{
-//                print(self.realm.objects(Bank.self).filter("id = 0").first)
                 
                 do {
                     try self.realm.write {
@@ -178,5 +186,11 @@ class BankViewController: UIViewController {
         } else {
             print("Bankデータが存在しません。")
         }
+    }
+    
+    func loadPosts(){
+        
+        posts = realm.objects(Post.self).filter("finished = false")
+        
     }
 }

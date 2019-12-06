@@ -9,24 +9,52 @@
 import UIKit
 import FontAwesome_swift
 import RealmSwift
+import MBCircularProgressBar
 
 class PostTableViewController: UITableViewController {
     //MARC: Properties
+    @IBOutlet weak var savingLabel: UILabel!
+    @IBOutlet weak var presentCostLabel: UILabel!
+    @IBOutlet weak var progressLabel: UILabel!
+    @IBOutlet weak var progressView: MBCircularProgressBarView!
+    
     var posts: Results<Post>!
     var post = Post()
+    var bank = Bank()
     let realm = try! Realm()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         loadPosts()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        print("viewWillAppear")
         tableView.reloadData()
         
+        let sum: Int = posts.sum(ofProperty: "budget")
+        
+        bankLoad()
+        savingLabel.text = "\(bank.saving)円"
+        presentCostLabel.text = "\(sum)円"
+        
+        let amount = sum - bank.saving
+        
+        if amount < 0 {
+            progressLabel.text = "余り \(-(amount))円"
+            progressLabel.textColor = .blue
+        } else {
+            progressLabel.text = "あと \(amount)円"
+        }
+        
+        UIView.animate(withDuration: 1.0) {
+            self.progressView.value = CGFloat(self.bank.saving)
+        }
+        
+        progressView.maxValue = CGFloat(sum)
     }
 
     // MARK: - Table view data source
@@ -117,6 +145,15 @@ class PostTableViewController: UITableViewController {
         posts = realm.objects(Post.self).filter("finished = false")
         
         self.tableView.reloadData()
+    }
+    
+    func bankLoad() {
+        if realm.objects(Bank.self).filter("id = 0").first != nil{
+            
+            bank = realm.objects(Bank.self).filter("id = 0").first!
+        } else {
+            print("Bankデータが存在しません。")
+        }
     }
 }
 

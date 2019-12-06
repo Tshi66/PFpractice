@@ -127,7 +127,7 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         let alert = UIAlertController(title: "ポストを編集しますか？", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default) { (action) in
                         
-            self.navigationController?.popViewController(animated: true)
+            self.navigationController?.popToRootViewController(animated: true)
             
             self.updatePost(post: self.post)
         }
