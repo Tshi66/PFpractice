@@ -13,13 +13,15 @@ class Post: Object {
     
     static let realm = try! Realm()
     
+    @objc dynamic var id: Int = 0
     @objc dynamic var name: String = ""
     @objc dynamic var theme: String = ""
     @objc dynamic var present: String = ""
     @objc dynamic var date: String = ""
     @objc dynamic var budget: Int = 0
     @objc dynamic var finished: Bool = false
-
+    @objc dynamic var deposit: Int = 0
+    
     @objc dynamic private var _photo: UIImage? = nil
     @objc dynamic var photo: UIImage? {
         set{
@@ -64,8 +66,26 @@ class Post: Object {
     
     @objc dynamic private var backImageData: NSData? = nil
     
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+    
     override static func ignoredProperties() -> [String] {
         return ["photo", "_photo", "backImage", "_backImage"]
+    }
+    
+    static func create() -> Post {
+        let post = Post()
+        post.id = lastId()
+        return post
+    }
+    
+    static func lastId() -> Int {
+        if let post = realm.objects(Post.self).last {
+            return post.id + 1
+        } else {
+            return 1
+        }
     }
     
 }

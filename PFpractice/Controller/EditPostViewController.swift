@@ -28,11 +28,9 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
     var heroImage:UIImage?
     var backImgae:UIImage?
     var tapId = 0
-    
     var datePicker = UIDatePicker()
-    
     var post = Post()
-    
+    var bank = Bank()
     let realm = try! Realm()
     
     override func viewDidLoad() {
@@ -53,7 +51,7 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         heroImageView.image = post.photo
         heroImageView.layer.cornerRadius = heroImageView.frame.size.width * 0.5
         
-        
+        bankLoad()
         setDatePicker()
     }
     
@@ -140,9 +138,32 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         present(alert, animated: true, completion: nil)
     }
     
+    @IBAction func backTapGesture(_ sender: UITapGestureRecognizer) {
+        setImgPicker()
+        tapId = 1
+    }
+    
+    @IBAction func heroTapGesture(_ sender: UITapGestureRecognizer) {
+        setImgPicker()
+        tapId = 0
+    }
+    
+    func setImgPicker(){
+        let picker = UIImagePickerController()
+        picker.sourceType = .photoLibrary
+        picker.delegate = self
+        present(picker, animated: true, completion: nil)
+    }
+    
     func updatePost(post: Post){
         do {
             try realm.write {
+            
+                if post.deposit > Int(self.budgetTextField.text!)! {
+                    bank.saving += (post.deposit - Int(self.budgetTextField.text!)!)
+                    
+                    post.deposit -= (post.deposit - Int(self.budgetTextField.text!)!)
+                }
                 
                 post.name = self.nameTextField.text!
                 post.theme = self.themeTextField.text!
@@ -151,25 +172,20 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
                 post.budget = Int(self.budgetTextField.text!)!
                 post.backImage = self.backImageView.image
                 post.photo = self.heroImageView.image
+                
             }
         } catch {
             print("Error saving post \(error)")
         }
     }
     
-    @IBAction func backTapGesture(_ sender: UITapGestureRecognizer) {
-        setImgPicker()
-        tapId = 1
-    }
-    @IBAction func heroTapGesture(_ sender: UITapGestureRecognizer) {
-        setImgPicker()
-        tapId = 0
-    }
-    func setImgPicker(){
-        let picker = UIImagePickerController()
-        picker.sourceType = .photoLibrary
-        picker.delegate = self
-        present(picker, animated: true, completion: nil)
+    func bankLoad() {
+        if realm.objects(Bank.self).filter("id = 0").first != nil{
+            
+            bank = realm.objects(Bank.self).filter("id = 0").first!
+        } else {
+            print("Bankデータが存在しません。")
+        }
     }
 
 }

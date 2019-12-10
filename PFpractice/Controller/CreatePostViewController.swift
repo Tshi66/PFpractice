@@ -116,7 +116,7 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
         let alert = UIAlertController(title: "ポストを新規作成しますか？", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "作成", style: .default) { (action) in
             
-            let post = Post()
+            let post = Post.create()
             post.name = self.nameTextField.text!
             post.theme = self.themeTextField.text!
             post.present = self.presentTextField.text!

@@ -15,6 +15,7 @@ class PostTableViewController: UITableViewController {
     //MARC: Properties
     @IBOutlet weak var savingLabel: UILabel!
     @IBOutlet weak var presentCostLabel: UILabel!
+    @IBOutlet weak var sumDepositLabel: UILabel!
     @IBOutlet weak var progressLabel: UILabel!
     @IBOutlet weak var progressView: MBCircularProgressBarView!
     
@@ -32,29 +33,9 @@ class PostTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("viewWillAppear")
         tableView.reloadData()
         
-        let sum: Int = posts.sum(ofProperty: "budget")
-        
-        bankLoad()
-        savingLabel.text = "\(bank.saving)円"
-        presentCostLabel.text = "\(sum)円"
-        
-        let amount = sum - bank.saving
-        
-        if amount < 0 {
-            progressLabel.text = "余り \(-(amount))円"
-            progressLabel.textColor = .blue
-        } else {
-            progressLabel.text = "あと \(amount)円"
-        }
-        
-        UIView.animate(withDuration: 1.0) {
-            self.progressView.value = CGFloat(self.bank.saving)
-        }
-        
-        progressView.maxValue = CGFloat(sum)
+        indicateProgress()
     }
 
     // MARK: - Table view data source
@@ -109,7 +90,7 @@ class PostTableViewController: UITableViewController {
         cell.dateLabel.attributedText = attrDateLabel
  
         let budgetIcon = String.fontAwesomeIcon(name: .moneyBillAlt)
-        let budgetLabelText = budgetIcon + "  " + "\(post.budget)円"
+        let budgetLabelText = budgetIcon + "  " + "\(post.deposit) / \(post.budget)円"
         let attrBudgetLabel = NSMutableAttributedString(string: budgetLabelText)
         attrBudgetLabel.addAttribute(.foregroundColor, value: color, range: NSMakeRange(0, 1))
         cell.budgetLabel.font = font
@@ -138,6 +119,32 @@ class PostTableViewController: UITableViewController {
             
             nextVC.post = post
         }
+    }
+    
+    func indicateProgress(){
+        let sumBudget: Int = posts.sum(ofProperty: "budget")
+        let sumDeposit: Int = posts.sum(ofProperty: "deposit")
+        
+        bankLoad()
+        savingLabel.text = "\(bank.saving)円"
+        sumDepositLabel.text = "\(sumDeposit)円"
+        presentCostLabel.text = "\(sumBudget)円"
+        
+        let amount = sumBudget - sumDeposit
+        
+        if amount < 0 {
+            progressLabel.text = "余り \(-(amount))円"
+            progressLabel.textColor = .blue
+        } else {
+            progressLabel.text = "あと \(amount)円"
+            progressLabel.textColor = .red
+        }
+        
+        UIView.animate(withDuration: 1.0) {
+            self.progressView.value = CGFloat(sumDeposit)
+        }
+        
+        progressView.maxValue = CGFloat(sumBudget)
     }
     
     func loadPosts(){

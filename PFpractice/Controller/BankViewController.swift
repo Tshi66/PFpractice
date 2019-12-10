@@ -14,6 +14,7 @@ class BankViewController: UIViewController {
     
     @IBOutlet weak var savingLabel: UILabel!
     @IBOutlet weak var stackLabel: UILabel!
+    @IBOutlet weak var sumDepositLabel: UILabel!
     @IBOutlet weak var presentCostLabel: UILabel!
     @IBOutlet weak var progressLabel: UILabel!
     @IBOutlet weak var progressView: MBCircularProgressBarView!
@@ -27,28 +28,7 @@ class BankViewController: UIViewController {
         super.viewDidLoad()
         loadPosts()
         bankLoad()
-        
-        let sum: Int = posts.sum(ofProperty: "budget")
-        
-        savingLabel.text = "\(bank.saving)円"
-        presentCostLabel.text = "\(sum)"
-        stackLabel.text = "\(bank.stack)円 / 月"
-        
-        let amount = sum - bank.saving
-        
-        if amount < 0 {
-            progressLabel.text = "余り \(-(amount))円"
-            progressLabel.textColor = .blue
-        } else {
-            progressLabel.text = "あと \(amount)円"
-        }
-        
-        
-        UIView.animate(withDuration: 1.0) {
-            self.progressView.value = CGFloat(self.bank.saving)
-        }
-        
-        progressView.maxValue = 20000
+        indicateProgress()
         
     }
     
@@ -166,6 +146,32 @@ class BankViewController: UIViewController {
         alert.addAction(cancelAction)
         present(alert, animated: true, completion: nil)
         
+    }
+    
+    func indicateProgress(){
+        let sumBudget: Int = posts.sum(ofProperty: "budget")
+        let sumDeposit: Int = posts.sum(ofProperty: "deposit")
+        
+        bankLoad()
+        savingLabel.text = "\(bank.saving)円"
+        sumDepositLabel.text = "\(sumDeposit)円"
+        presentCostLabel.text = "\(sumBudget)円"
+        
+        let amount = sumBudget - sumDeposit
+        
+        if amount < 0 {
+            progressLabel.text = "余り \(-(amount))円"
+            progressLabel.textColor = .blue
+        } else {
+            progressLabel.text = "あと \(amount)円"
+            progressLabel.textColor = .red
+        }
+        
+        UIView.animate(withDuration: 1.0) {
+            self.progressView.value = CGFloat(sumDeposit)
+        }
+        
+        progressView.maxValue = CGFloat(sumBudget)
     }
     
     func save(){
