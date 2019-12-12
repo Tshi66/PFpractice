@@ -97,7 +97,15 @@ class PostTableViewController: UITableViewController {
         cell.budgetLabel.attributedText = attrBudgetLabel
         
         //残り日数
-        cell.remainingTimeLabel.text = "あとxx日"
+        
+        if remainingTime(date: post.date) < 0 {
+            
+            cell.remainingTimeLabel.text = "\(-(remainingTime(date: post.date)))日前"
+        } else {
+            
+            cell.remainingTimeLabel.text = "あと\(remainingTime(date: post.date))日"
+        }
+        
         
         //photoを丸く表示
         cell.photoImageView.image = post.photo
@@ -162,5 +170,17 @@ class PostTableViewController: UITableViewController {
             print("Bankデータが存在しません。")
         }
     }
-}
+    
+    func remainingTime(date: String) -> Int {
+        
+        let now = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "yMd", options: 0, locale: Locale(identifier: "ja_JP"))
+        let currentDate = dateFormatter.string(from: now)
+        let curDate = dateFormatter.date(from: currentDate)
+        let repDate = dateFormatter.date(from: date)
 
+        return (Calendar.current.dateComponents([.day], from: curDate!, to: repDate!)).day!
+        
+    }
+}

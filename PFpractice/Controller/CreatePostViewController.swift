@@ -43,6 +43,7 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
         budgetTextField.delegate = self
         
         setDatePicker()
+        print(datePicker.date)
     }
     
     override func viewWillAppear(_ animated: Bool) {

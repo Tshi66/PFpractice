@@ -43,7 +43,6 @@
 		8544FBFD23999CAF00F581CD /* pregressBackImage@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8544FBFA23999CAD00F581CD /* pregressBackImage@3x.png */; };
 		8544FBFE23999CAF00F581CD /* pregressBackImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8544FBFB23999CAE00F581CD /* pregressBackImage.png */; };
 		8544FBFF23999CAF00F581CD /* pregressBackImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8544FBFC23999CAE00F581CD /* pregressBackImage@2x.png */; };
-		8544FC15239EDA9400F581CD /* PostTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8544FC13239EDA9400F581CD /* PostTableViewCell.xib */; };
 		854631BE23850DF0004E7514 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854631BD23850DF0004E7514 /* PostTableViewCell.swift */; };
 		854631C223851BAA004E7514 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854631C123851BAA004E7514 /* Post.swift */; };
 		854631C423852560004E7514 /* PostTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854631C323852560004E7514 /* PostTableViewController.swift */; };
@@ -122,7 +121,6 @@
 		8544FBFA23999CAD00F581CD /* pregressBackImage@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pregressBackImage@3x.png"; sourceTree = "<group>"; };
 		8544FBFB23999CAE00F581CD /* pregressBackImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pregressBackImage.png; sourceTree = "<group>"; };
 		8544FBFC23999CAE00F581CD /* pregressBackImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pregressBackImage@2x.png"; sourceTree = "<group>"; };
-		8544FC13239EDA9400F581CD /* PostTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = PostTableViewCell.xib; path = ../PostTableViewCell.xib; sourceTree = "<group>"; };
 		854631BD23850DF0004E7514 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		854631C123851BAA004E7514 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		854631C323852560004E7514 /* PostTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewController.swift; sourceTree = "<group>"; };
@@ -245,7 +243,6 @@
 				85BCD5D2238061A9002828E3 /* Main.storyboard */,
 				85BCD5D5238061AB002828E3 /* Assets.xcassets */,
 				85BCD5D7238061AB002828E3 /* LaunchScreen.storyboard */,
-				8544FC13239EDA9400F581CD /* PostTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -455,7 +452,6 @@
 				853FE576238B03CB003F3E2D /* defaultHero.png in Resources */,
 				853FE5602386952A003F3E2D /* プレゼント完了@3x.png in Resources */,
 				853FE5632386952B003F3E2D /* 振り替え@3x.png in Resources */,
-				8544FC15239EDA9400F581CD /* PostTableViewCell.xib in Resources */,
 				85C734A32382A4BF0026CAFE /* onboardImg3@2x.png in Resources */,
 				858C1E06238D9CC900CDD91D /* No@3x.png in Resources */,
 				85C7349C2382A4BF0026CAFE /* onboardImg3.png in Resources */,

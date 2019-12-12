@@ -29,7 +29,8 @@ class PostOneViewController: UIViewController {
     @IBOutlet weak var dateIcon: UILabel!
     @IBOutlet weak var budgetIcon: UILabel!
     @IBOutlet weak var depositButton: UIButton!
-    
+    @IBOutlet weak var remainingTimeLabel: UILabel!
+    @IBOutlet weak var balanceLabel: UILabel!
     
     
     override func viewDidLoad() {
@@ -239,8 +240,6 @@ class PostOneViewController: UIViewController {
         budgetIcon.text = String.fontAwesomeIcon(name: .moneyBillAlt)
         budgetIcon.textColor = color
         
-        
-        
         backImage.image = post.backImage
         heroImage.image = post.photo
         nameLabel.text = post.name
@@ -249,7 +248,30 @@ class PostOneViewController: UIViewController {
         dateLabel.text = post.date
         budgetLabel.text = "\(post.deposit) / \(post.budget)円"
         
+        if remainingTime(date: post.date) < 0 {
+            
+            remainingTimeLabel.text = "\(-(remainingTime(date: post.date)))日前"
+        } else {
+            
+            remainingTimeLabel.text = "あと\(remainingTime(date: post.date))日"
+        }
+        
+        balanceLabel.text = "あと\(post.budget - post.deposit)円"
+        
         heroImage.layer.cornerRadius = heroImage.frame.size.width * 0.5
+    }
+    
+    func remainingTime(date: String) -> Int {
+        
+        let now = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "yMd", options: 0, locale: Locale(identifier: "ja_JP"))
+        let currentDate = dateFormatter.string(from: now)
+        let curDate = dateFormatter.date(from: currentDate)
+        let repDate = dateFormatter.date(from: date)
+
+        return (Calendar.current.dateComponents([.day], from: curDate!, to: repDate!)).day!
+        
     }
     
     func bankLoad() {
