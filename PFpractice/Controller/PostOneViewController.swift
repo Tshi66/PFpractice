@@ -16,7 +16,6 @@ class PostOneViewController: UIViewController {
     var bank = Bank()
     let realm = try! Realm()
     
-    
     @IBOutlet weak var backImage: UIImageView!
     @IBOutlet weak var heroImage: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -31,7 +30,8 @@ class PostOneViewController: UIViewController {
     @IBOutlet weak var depositButton: UIButton!
     @IBOutlet weak var remainingTimeLabel: UILabel!
     @IBOutlet weak var balanceLabel: UILabel!
-    
+    @IBOutlet weak var notificationButton: UIButton!
+    @IBOutlet weak var notificationLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,13 +43,28 @@ class PostOneViewController: UIViewController {
         postDataLoad()
         bankLoad()
         postRealmLoad()
+        
+        if post.info?.enable != nil {
+            notificationButton.setImage(UIImage(named: "通知"), for: .normal)
+        } else {
+            notificationButton.setImage(UIImage(named: "通知オフ"), for: .normal)
+        }
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "editPost" {
+        
+        switch segue.identifier {
+        case "editPost":
             let nextVC: EditPostViewController = (segue.destination as? EditPostViewController)!
             
             nextVC.post = post
+        case "postInfo":
+            let nextVC: PostNotificationTableViewController = (segue.destination as? PostNotificationTableViewController)!
+            
+            nextVC.post = post
+        default:
+            print("error")
         }
     }
     
@@ -120,7 +135,6 @@ class PostOneViewController: UIViewController {
             
         }
         
-        
     }
     
     @IBAction func finishedButton(_ sender: UIButton) {
@@ -140,7 +154,6 @@ class PostOneViewController: UIViewController {
         alert.addAction(cancelAction)
         present(alert, animated: true, completion: nil)
     }
-    
     
     @IBAction func deleteButton(_ sender: UIButton) {
         let alert = UIAlertController(title: "ポストの削除", message: "削除すると復元できません。", preferredStyle: .alert)
@@ -259,6 +272,18 @@ class PostOneViewController: UIViewController {
         balanceLabel.text = "あと\(post.budget - post.deposit)円"
         
         heroImage.layer.cornerRadius = heroImage.frame.size.width * 0.5
+        
+        notificationLabel.layer.cornerRadius = 3
+        notificationLabel.clipsToBounds = true
+        
+        if post.info?.enable != nil {
+            notificationLabel.isHidden = false
+            
+            notificationLabel.text =
+            " [\(String(post.info!.repetition))]  \(String(post.info!.date))、\(String(post.info!.time)) "
+        } else {
+            notificationLabel.isHidden = true
+        }
     }
     
     func remainingTime(date: String) -> Int {
@@ -269,7 +294,7 @@ class PostOneViewController: UIViewController {
         let currentDate = dateFormatter.string(from: now)
         let curDate = dateFormatter.date(from: currentDate)
         let repDate = dateFormatter.date(from: date)
-
+        
         return (Calendar.current.dateComponents([.day], from: curDate!, to: repDate!)).day!
         
     }

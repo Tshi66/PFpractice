@@ -28,14 +28,13 @@ class PostTableViewController: UITableViewController {
         super.viewDidLoad()
         
         loadPosts()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
-        
         indicateProgress()
+        
     }
 
     // MARK: - Table view data source
@@ -67,7 +66,6 @@ class PostTableViewController: UITableViewController {
         let color = UIColor.init(red: 219/255, green: 68/255, blue: 55/255, alpha: 1.0)
 
         //アイコンとラベルテキストを表示。アイコンのみを着色する。
-        
         let themeIcon = String.fontAwesomeIcon(name: .heart)
         let themeLabelText = themeIcon + "  " + post.theme
         let attrThemeLabel = NSMutableAttributedString(string: themeLabelText)
@@ -96,8 +94,6 @@ class PostTableViewController: UITableViewController {
         cell.budgetLabel.font = font
         cell.budgetLabel.attributedText = attrBudgetLabel
         
-        //残り日数
-        
         if remainingTime(date: post.date) < 0 {
             
             cell.remainingTimeLabel.text = "\(-(remainingTime(date: post.date)))日前"
@@ -106,8 +102,19 @@ class PostTableViewController: UITableViewController {
             cell.remainingTimeLabel.text = "あと\(remainingTime(date: post.date))日"
         }
         
+        cell.notificationLabel.layer.cornerRadius = 3
+        cell.notificationLabel.clipsToBounds = true
         
-        //photoを丸く表示
+        if post.info?.enable != nil {
+            cell.notificationLabel.isHidden = false
+            
+            cell.notificationLabel.text =
+                "[\(String(post.info!.repetition))] \(String(post.info!.date))、\(String(post.info!.time))"
+            
+        } else {
+            cell.notificationLabel.isHidden = true
+        }
+        
         cell.photoImageView.image = post.photo
         cell.photoImageView.layer.cornerRadius = cell.photoImageView.frame.size.width * 0.5
         

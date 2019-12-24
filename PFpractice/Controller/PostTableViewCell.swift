@@ -18,6 +18,8 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet weak var presentLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var budgetLabel: UILabel!
+    @IBOutlet weak var notificationLabel: UILabel!
+    
     
     
     override func awakeFromNib() {

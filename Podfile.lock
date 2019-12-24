@@ -1,12 +1,12 @@
 PODS:
-  - FontAwesome.swift (1.8.2)
+  - FontAwesome.swift (1.8.3)
   - MBCircularProgressBar (0.3.5)
   - paper-onboarding (6.1.4)
-  - Realm (4.1.1):
-    - Realm/Headers (= 4.1.1)
-  - Realm/Headers (4.1.1)
-  - RealmSwift (4.1.1):
-    - Realm (= 4.1.1)
+  - Realm (4.3.0):
+    - Realm/Headers (= 4.3.0)
+  - Realm/Headers (4.3.0)
+  - RealmSwift (4.3.0):
+    - Realm (= 4.3.0)
 
 DEPENDENCIES:
   - FontAwesome.swift
@@ -23,11 +23,11 @@ SPEC REPOS:
     - RealmSwift
 
 SPEC CHECKSUMS:
-  FontAwesome.swift: 7938d6a03113ff3f39001bde7f50be8a0903d605
+  FontAwesome.swift: 2a3235131a6caffc6b2ccba318e94d793b2fd342
   MBCircularProgressBar: 0b795b722a5eb5b0923822f90474e2576a1a7855
   paper-onboarding: d3f16416e6f42add686117e8b32bfffaad899a79
-  Realm: 25f0a8244cbb1c2271c922963ea8666fc2d8104d
-  RealmSwift: 9e2657b33764f80e4a4dffd6d440e24715782052
+  Realm: 9357c3589555793e1860a7104a7412bca4a48d99
+  RealmSwift: 402f1e379a8ef82c635313037b043f0f06de880c
 
 PODFILE CHECKSUM: 95d6cd825708294909f8b22a9eabfb0c5caaf443
 

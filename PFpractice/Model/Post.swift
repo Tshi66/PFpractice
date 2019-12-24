@@ -22,6 +22,8 @@ class Post: Object {
     @objc dynamic var finished: Bool = false
     @objc dynamic var deposit: Int = 0
     
+    @objc dynamic var info: Info?
+    
     @objc dynamic private var _photo: UIImage? = nil
     @objc dynamic var photo: UIImage? {
         set{
