@@ -85,6 +85,7 @@
 		85CC081823B1FCD3000AD3C7 /* 通知オフ@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 85CC081523B1FCD2000AD3C7 /* 通知オフ@3x.png */; };
 		85CC081923B1FCD3000AD3C7 /* 通知オフ.png in Resources */ = {isa = PBXBuildFile; fileRef = 85CC081623B1FCD2000AD3C7 /* 通知オフ.png */; };
 		85CC081A23B1FCD3000AD3C7 /* 通知オフ@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 85CC081723B1FCD3000AD3C7 /* 通知オフ@2x.png */; };
+		85CC082123B2957E000AD3C7 /* ValidationErrorType.swift .swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CC082023B2957E000AD3C7 /* ValidationErrorType.swift .swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -170,6 +171,7 @@
 		85CC081523B1FCD2000AD3C7 /* 通知オフ@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "通知オフ@3x.png"; sourceTree = "<group>"; };
 		85CC081623B1FCD2000AD3C7 /* 通知オフ.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "通知オフ.png"; sourceTree = "<group>"; };
 		85CC081723B1FCD3000AD3C7 /* 通知オフ@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "通知オフ@2x.png"; sourceTree = "<group>"; };
+		85CC082023B2957E000AD3C7 /* ValidationErrorType.swift .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ValidationErrorType.swift .swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -267,6 +269,7 @@
 				854631C123851BAA004E7514 /* Post.swift */,
 				8500D7EB239907D000BE9C7E /* Bank.swift */,
 				85CC081323ACBFD3000AD3C7 /* Info.swift */,
+				85CC082023B2957E000AD3C7 /* ValidationErrorType.swift .swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -562,6 +565,7 @@
 				854631C223851BAA004E7514 /* Post.swift in Sources */,
 				850A072D23826745006F4827 /* CreatePostViewController.swift in Sources */,
 				8500D7EC239907D000BE9C7E /* Bank.swift in Sources */,
+				85CC082123B2957E000AD3C7 /* ValidationErrorType.swift .swift in Sources */,
 				8500D7EE23990B2000BE9C7E /* BankViewController.swift in Sources */,
 				8500D7E623981C5C00BE9C7E /* EditPostViewController.swift in Sources */,
 				85CC081423ACBFD3000AD3C7 /* Info.swift in Sources */,

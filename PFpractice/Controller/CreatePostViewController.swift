@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import Validator
 
 class CreatePostViewController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, ContentScrollable {
 
@@ -24,6 +25,11 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
     @IBOutlet weak var dateTextField: UITextField!
     @IBOutlet weak var budgetTextField: UITextField!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var nameVdLabel: UILabel!
+    @IBOutlet weak var themeVdLabel: UILabel!
+    @IBOutlet weak var presentVdLabel: UILabel!
+    @IBOutlet weak var dateVdLabel: UILabel!
+    @IBOutlet weak var budgetVdLabel: UILabel!
     
     var heroImage:UIImage?
     var backImgae:UIImage?
@@ -43,14 +49,14 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
         budgetTextField.delegate = self
         
         setDatePicker()
-        print(datePicker.date)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //FAアイコン。
         fontAwesomeIconSet()
-        configureObserver()
+//        configureObserver()
         
     }
 
@@ -114,6 +120,27 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
     
     
     @IBAction func createPostButton(_ sender: UIButton) {
+    
+        validateTextField()
+        
+        if nameVdLabel.text == "ok" && themeVdLabel.text == "ok" && presentVdLabel.text == "ok" && dateVdLabel.text == "ok" && budgetVdLabel.text == "ok"  {
+            
+            saveAlert()
+        }
+        
+    }
+    
+    func save(post: Post){
+        do {
+            try realm.write {
+                realm.add(post)
+            }
+        } catch {
+            print("Error saving post \(error)")
+        }
+    }
+    
+    func saveAlert(){
         let alert = UIAlertController(title: "ポストを新規作成しますか？", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "作成", style: .default) { (action) in
             
@@ -139,16 +166,6 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
         present(alert, animated: true, completion: nil)
     }
     
-    func save(post: Post){
-        do {
-            try realm.write {
-                realm.add(post)
-            }
-        } catch {
-            print("Error saving post \(error)")
-        }
-    }
-    
     @IBAction func backTapGesture(_ sender: UITapGestureRecognizer) {
         setImgPicker()
         tapId = 1
@@ -162,6 +179,41 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
         picker.sourceType = .photoLibrary
         picker.delegate = self
         present(picker, animated: true, completion: nil)
+    }
+    
+    func validateTextField() {
+        
+        //空白文字が含むとエラー
+        let stringRule = ValidationRulePattern(pattern: "^[\\S]+$", error: ExampleValidationError("空白等は含めないで下さい"))
+        //数字以外はエラー
+        let budgetRule = ValidationRulePattern(pattern: "^[\\d]+$", error: ExampleValidationError("金額を入力して下さい"))
+        //20../../..の型でないとエラー
+        let dateRule = ValidationRulePattern(pattern: "20../../..", error: ExampleValidationError("日付を入力して下さい"))
+        
+        let nameValidation = nameTextField.validate(rule: stringRule)
+        reflectValidateResalut(result: nameValidation, label: nameVdLabel)
+        
+        let themeValidation = themeTextField.validate(rule: stringRule)
+        reflectValidateResalut(result: themeValidation, label: themeVdLabel)
+        
+        let presentValidation = presentTextField.validate(rule: stringRule)
+        reflectValidateResalut(result: presentValidation, label: presentVdLabel)
+        
+        let dateValidation = dateTextField.validate(rule: dateRule)
+        reflectValidateResalut(result: dateValidation, label: dateVdLabel)
+        
+        let budgetValidation = budgetTextField.validate(rule: budgetRule)
+        reflectValidateResalut(result: budgetValidation, label: budgetVdLabel)
+        
+    }
+    
+    func reflectValidateResalut(result: ValidationResult, label: UILabel) {
+        switch result {
+        case .valid:
+            label.text = "ok"
+        case .invalid(let failures):
+            label.text = (failures.first as? ExampleValidationError)?.message
+        }
     }
     
 }

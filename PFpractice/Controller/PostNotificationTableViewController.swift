@@ -9,6 +9,7 @@
 import UIKit
 import RealmSwift
 import UserNotifications
+import Validator
 
 class PostNotificationTableViewController: UITableViewController,UIPickerViewDelegate,UNUserNotificationCenterDelegate {
     
@@ -30,42 +31,9 @@ class PostNotificationTableViewController: UITableViewController,UIPickerViewDel
         super.viewDidLoad()
         
         postRealmLoad()
-        
         allowNotification()
-        
-        if post.info != nil {
-            
-            dateLabel.text = post.info?.date
-            timeLabel.text = post.info?.time
-            repetitionLabel.text = post.info?.repetition
-        } else {
-            
-            let current = Date()
-            let calendar = Calendar.current
-            let component = DateComponents(day: 1)
-            let date = calendar.date(byAdding: component, to: current)
-            let formatter1 = DateFormatter()
-            let formatter2 = DateFormatter()
-            formatter1.dateFormat = "yyyy/MM/dd"
-            formatter2.dateFormat = "HH:mm"
-            formatter1.locale = .current
-            formatter2.locale = .current
-            
-            let format1 = formatter1.string(from: date!)
-            let format2 = formatter2.string(from: date!)
-            
-            info.date = format1
-            info.time = format2
-            info.repetition = "繰り返さない"
-            info.enable = true
-            
-            dateLabel.text = info.date
-            timeLabel.text = info.time
-            repetitionLabel.text = info.repetition
-            
-        }
-        
-        
+        setLabel()
+
         if post.info != nil {
             deleteButton.isHidden = false
         } else {
@@ -101,9 +69,7 @@ class PostNotificationTableViewController: UITableViewController,UIPickerViewDel
             let alert = UIAlertController(title: "日付を選択してください。", message: "", preferredStyle: .alert)
             let action = UIAlertAction(title: "OK", style: .default) { (action) in
                 
-                self.dateLabel.text = self.textField.text
-                self.info.date = self.dateLabel.text!
-                tableView.reloadData()
+                self.validateTextField(caseNumber: 0)
             }
             
             let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel) { (action: UIAlertAction!) in
@@ -124,9 +90,7 @@ class PostNotificationTableViewController: UITableViewController,UIPickerViewDel
             let alert = UIAlertController(title: "時刻を選択してください。", message: "", preferredStyle: .alert)
             let action = UIAlertAction(title: "OK", style: .default) { (action) in
                 
-                self.timeLabel.text = self.textField.text
-                self.info.time = self.timeLabel.text!
-                tableView.reloadData()
+                self.validateTextField(caseNumber: 1)
             }
             
             let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel) { (action: UIAlertAction!) in
@@ -183,6 +147,41 @@ class PostNotificationTableViewController: UITableViewController,UIPickerViewDel
             present(alert, animated: true, completion: nil)
         default:
             print("error")
+        }
+    }
+    
+    func setLabel() {
+        if post.info != nil {
+            
+            dateLabel.text = post.info?.date
+            timeLabel.text = post.info?.time
+            repetitionLabel.text = post.info?.repetition
+            
+        } else {
+            
+            let current = Date()
+            let calendar = Calendar.current
+            let component = DateComponents(day: 1)
+            let date = calendar.date(byAdding: component, to: current)
+            let formatter1 = DateFormatter()
+            let formatter2 = DateFormatter()
+            formatter1.dateFormat = "yyyy/MM/dd"
+            formatter2.dateFormat = "HH:mm"
+            formatter1.locale = .current
+            formatter2.locale = .current
+            
+            let format1 = formatter1.string(from: date!)
+            let format2 = formatter2.string(from: date!)
+            
+            info.date = format1
+            info.time = format2
+            info.repetition = "繰り返さない"
+            info.enable = true
+            
+            dateLabel.text = info.date
+            timeLabel.text = info.time
+            repetitionLabel.text = info.repetition
+            
         }
     }
     
@@ -392,5 +391,67 @@ class PostNotificationTableViewController: UITableViewController,UIPickerViewDel
         
         return (Calendar.current.dateComponents([.day], from: curDate!, to: repDate!)).day!
         
+    }
+    
+    func validateTextField(caseNumber: Int) {
+        
+        let caseNumber = caseNumber
+        
+        //空白文字が含むとエラー
+        let stringRule = ValidationRulePattern(pattern: "^[\\S]+$", error: ExampleValidationError("空白等は含めないで下さい"))
+        //..:..の型でないとエラー
+        let timeRule = ValidationRulePattern(pattern: "..:..", error:
+            ExampleValidationError("時刻を入力して下さい"))
+        //20../../..の型でないとエラー
+        let dateRule = ValidationRulePattern(pattern: "20../../..", error: ExampleValidationError("日付を入力して下さい"))
+        
+        var dateRules = ValidationRuleSet<String>()
+        dateRules.add(rule: stringRule)
+        dateRules.add(rule: dateRule)
+        
+        var timeRules = ValidationRuleSet<String>()
+        timeRules.add(rule: timeRule)
+        timeRules.add(rule: stringRule)
+        
+        
+        if caseNumber == 0 {
+            
+            let dateValidation = textField.validate(rules: dateRules)
+            reflectValidateResalut(result: dateValidation, pattern: 0)
+        } else {
+            
+            let timeValidation = textField.validate(rules: timeRules)
+            reflectValidateResalut(result: timeValidation, pattern: 1)
+            
+        }
+        
+    }
+    
+    func reflectValidateResalut(result: ValidationResult, pattern: Int) {
+        switch result {
+        case .valid:
+            let pattern = pattern
+            
+            if pattern == 0 {
+                
+                self.dateLabel.text = self.textField.text
+                self.info.date = self.dateLabel.text!
+            } else {
+                
+                self.timeLabel.text = self.textField.text
+                self.info.time = self.timeLabel.text!
+            }
+            
+            tableView.reloadData()
+            
+        case .invalid(let failures):
+            let alert = UIAlertController(title: "エラー",
+                                          message: "\(String(describing: (failures.first as? ExampleValidationError)?.message))", preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default) { (action) in
+            }
+            
+            alert.addAction(action)
+            present(alert, animated: true, completion: nil)
+        }
     }
 }

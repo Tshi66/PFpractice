@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import Validator
 
 class PostOneViewController: UIViewController {
     
@@ -15,6 +16,7 @@ class PostOneViewController: UIViewController {
     var post = Post()
     var bank = Bank()
     let realm = try! Realm()
+    var textField = UITextField()
     
     @IBOutlet weak var backImage: UIImageView!
     @IBOutlet weak var heroImage: UIImageView!
@@ -70,8 +72,6 @@ class PostOneViewController: UIViewController {
     
     @IBAction func depositButton(_ sender: UIButton) {
         
-        var textField = UITextField()
-        
         if bank.saving > 0 && realm.objects(Bank.self).filter("id = 0").first != nil {
             
             if post.budget != post.deposit {
@@ -79,24 +79,7 @@ class PostOneViewController: UIViewController {
                 let alert = UIAlertController(title: "入金する", message: "貯金箱からこのポストに入金できます。\n(現在の貯金額:\(self.bank.saving))円", preferredStyle: .alert)
                 let action = UIAlertAction(title: "OK", style: .default) { (action) in
                     
-                    if Int(textField.text!)! > self.bank.saving {
-                        textField.text = String(self.bank.saving)
-                    }
-                    
-                    if self.post.budget < Int(textField.text!)! + self.post.deposit {
-                        let modifiedDeposit =  self.post.budget - self.post.deposit
-                        textField.text = String(modifiedDeposit)
-                    }
-                    
-                    do {
-                        try self.realm.write {
-                            self.post.deposit += Int(textField.text!)!
-                            self.bank.saving -= Int(textField.text!)!
-                        }
-                    } catch {
-                        print("Error saving bank \(error)")
-                    }
-                    
+                    self.validateTextField(caseNumber: 0)
                     self.viewWillAppear(true)
                 }
                 
@@ -109,7 +92,7 @@ class PostOneViewController: UIViewController {
                     depositTextField.enablesReturnKeyAutomatically = true
                     depositTextField.keyboardType = .numberPad
                     
-                    textField = depositTextField
+                    self.textField = depositTextField
                 }
                 
                 alert.addAction(action)
@@ -175,49 +158,10 @@ class PostOneViewController: UIViewController {
     
     @IBAction func editDepositButton(_ sender: UIButton) {
         
-        var textField = UITextField()
-        
         let alert = UIAlertController(title: "入金額を編集しますか？\n(現在の貯金額:\(self.bank.saving))円", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default) { (action) in
             
-            if Int(textField.text!)! > self.post.budget {
-                textField.text = String(self.post.budget)
-            }
-            
-            if Int(textField.text!)! < self.post.deposit {
-                do {
-                    try self.realm.write {
-                        self.bank.saving += self.post.deposit - Int(textField.text!)!
-                        self.post.deposit = Int(textField.text!)!
-                    }
-                } catch {
-                    print("Error saving bank \(error)")
-                    
-                }
-            } else {
-                if Int(textField.text!)! - self.post.deposit > self.bank.saving {
-                    do {
-                        try self.realm.write {
-                            self.post.deposit += self.bank.saving
-                            self.bank.saving = 0
-                        }
-                    } catch {
-                        print("Error saving bank \(error)")
-                    }
-                    
-                } else {
-                    do {
-                        try self.realm.write {
-                            self.bank.saving -= Int(textField.text!)! - self.post.deposit
-                            self.post.deposit = Int(textField.text!)!
-                        }
-                    } catch {
-                        print("Error saving bank \(error)")
-                    }
-                }
-                
-            }
-            
+            self.validateTextField(caseNumber: 1)
             self.viewWillAppear(true)
         }
         
@@ -226,7 +170,7 @@ class PostOneViewController: UIViewController {
         
         alert.addTextField { (editSavingTextField) in
             editSavingTextField.placeholder = "\(self.post.deposit)"
-            textField = editSavingTextField
+            self.textField = editSavingTextField
         }
         
         alert.addAction(action)
@@ -332,6 +276,110 @@ class PostOneViewController: UIViewController {
             }
         } catch {
             print("Error deleting post \(error)")
+        }
+    }
+    
+    func validateTextField(caseNumber: Int) {
+        
+        let caseNumber = caseNumber
+        
+        //空白文字が含むとエラー
+        let stringRule = ValidationRulePattern(pattern: "^[\\S]+$", error: ExampleValidationError("空白等は含めないで下さい"))
+        //数字以外はエラー
+        let moneyRule = ValidationRulePattern(pattern: "^[\\d]+$", error: ExampleValidationError("金額を入力して下さい"))
+        
+        var depositRules = ValidationRuleSet<String>()
+        depositRules.add(rule: stringRule)
+        depositRules.add(rule: moneyRule)
+
+        if caseNumber == 0 {
+            
+            let depositValidation = textField.validate(rules: depositRules)
+            reflectValidateResalut(result: depositValidation, pattern: caseNumber)
+            
+        } else {
+            
+            let depositValidation = textField.validate(rules: depositRules)
+            reflectValidateResalut(result: depositValidation, pattern: caseNumber)
+            
+        }
+        
+    }
+    
+    func reflectValidateResalut(result: ValidationResult, pattern: Int) {
+        
+        switch result {
+        case .valid:
+            let pattern = pattern
+            
+            if pattern == 0 {
+                
+                if Int(self.textField.text!)! > self.bank.saving {
+                    self.textField.text = String(self.bank.saving)
+                }
+                
+                if self.post.budget < Int(self.textField.text!)! + self.post.deposit {
+                    let modifiedDeposit =  self.post.budget - self.post.deposit
+                    self.textField.text = String(modifiedDeposit)
+                }
+                
+                do {
+                    try self.realm.write {
+                        self.post.deposit += Int(self.textField.text!)!
+                        self.bank.saving -= Int(self.textField.text!)!
+                    }
+                } catch {
+                    print("Error saving bank \(error)")
+                }
+                
+            } else {
+                
+                if Int(self.textField.text!)! > self.post.budget {
+                    self.textField.text = String(self.post.budget)
+                }
+                
+                if Int(self.textField.text!)! < self.post.deposit {
+                    do {
+                        try self.realm.write {
+                            self.bank.saving += self.post.deposit - Int(self.textField.text!)!
+                            self.post.deposit = Int(self.textField.text!)!
+                        }
+                    } catch {
+                        print("Error saving bank \(error)")
+                        
+                    }
+                } else {
+                    if Int(self.textField.text!)! - self.post.deposit > self.bank.saving {
+                        do {
+                            try self.realm.write {
+                                self.post.deposit += self.bank.saving
+                                self.bank.saving = 0
+                            }
+                        } catch {
+                            print("Error saving bank \(error)")
+                        }
+                        
+                    } else {
+                        do {
+                            try self.realm.write {
+                                self.bank.saving -= Int(self.textField.text!)! - self.post.deposit
+                                self.post.deposit = Int(self.textField.text!)!
+                            }
+                        } catch {
+                            print("Error saving bank \(error)")
+                        }
+                    }
+                }
+            }
+                        
+        case .invalid(let failures):
+            let alert = UIAlertController(title: "エラー",
+                                          message: "\(String(describing: (failures.first as? ExampleValidationError)?.message))", preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default) { (action) in
+            }
+            
+            alert.addAction(action)
+            present(alert, animated: true, completion: nil)
         }
     }
 }

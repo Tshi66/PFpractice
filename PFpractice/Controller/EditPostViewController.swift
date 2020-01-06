@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import Validator
 
 class EditPostViewController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, ContentScrollable {
 
@@ -24,6 +25,11 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
     @IBOutlet weak var dateTextField: UITextField!
     @IBOutlet weak var budgetTextField: UITextField!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var nameVdLabel: UILabel!
+    @IBOutlet weak var themeVdLabel: UILabel!
+    @IBOutlet weak var presentVdLabel: UILabel!
+    @IBOutlet weak var dateVdLabel: UILabel!
+    @IBOutlet weak var budgetVdLabel: UILabel!
     
     var heroImage:UIImage?
     var backImgae:UIImage?
@@ -122,6 +128,19 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
     //MARC: IBAction
     
     @IBAction func editPostButton(_ sender: UIButton) {
+        
+        validateTextField()
+        
+        if nameVdLabel.text == "ok" && themeVdLabel.text == "ok" && presentVdLabel.text == "ok" && dateVdLabel.text == "ok" && budgetVdLabel.text == "ok"  {
+            
+            saveAlert()
+        }
+        
+        
+    }
+    
+    func saveAlert() {
+        
         let alert = UIAlertController(title: "ポストを編集しますか？", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default) { (action) in
                         
@@ -136,6 +155,41 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         alert.addAction(action)
         alert.addAction(cancelAction)
         present(alert, animated: true, completion: nil)
+    }
+    
+    func validateTextField() {
+        
+        //空白文字が含むとエラー
+        let stringRule = ValidationRulePattern(pattern: "^[\\S]+$", error: ExampleValidationError("空白等は含めないで下さい"))
+        //数字以外はエラー
+        let budgetRule = ValidationRulePattern(pattern: "^[\\d]+$", error: ExampleValidationError("金額を入力して下さい"))
+        //20../../..の型でないとエラー
+        let dateRule = ValidationRulePattern(pattern: "20../../..", error: ExampleValidationError("日付を入力して下さい"))
+        
+        let nameValidation = nameTextField.validate(rule: stringRule)
+        reflectValidateResalut(result: nameValidation, label: nameVdLabel)
+        
+        let themeValidation = themeTextField.validate(rule: stringRule)
+        reflectValidateResalut(result: themeValidation, label: themeVdLabel)
+        
+        let presentValidation = presentTextField.validate(rule: stringRule)
+        reflectValidateResalut(result: presentValidation, label: presentVdLabel)
+        
+        let dateValidation = dateTextField.validate(rule: dateRule)
+        reflectValidateResalut(result: dateValidation, label: dateVdLabel)
+        
+        let budgetValidation = budgetTextField.validate(rule: budgetRule)
+        reflectValidateResalut(result: budgetValidation, label: budgetVdLabel)
+        
+    }
+    
+    func reflectValidateResalut(result: ValidationResult, label: UILabel) {
+        switch result {
+        case .valid:
+            label.text = "ok"
+        case .invalid(let failures):
+            label.text = (failures.first as? ExampleValidationError)?.message
+        }
     }
     
     @IBAction func backTapGesture(_ sender: UITapGestureRecognizer) {
