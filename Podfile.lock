@@ -1,6 +1,7 @@
 PODS:
   - FontAwesome.swift (1.8.3)
   - MBCircularProgressBar (0.3.5)
+  - Onboard (2.3.3)
   - paper-onboarding (6.1.4)
   - Realm (4.3.0):
     - Realm/Headers (= 4.3.0)
@@ -12,6 +13,7 @@ PODS:
 DEPENDENCIES:
   - FontAwesome.swift
   - MBCircularProgressBar
+  - Onboard
   - paper-onboarding
   - RealmSwift
   - Validator
@@ -20,6 +22,7 @@ SPEC REPOS:
   trunk:
     - FontAwesome.swift
     - MBCircularProgressBar
+    - Onboard
     - paper-onboarding
     - Realm
     - RealmSwift
@@ -28,11 +31,12 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   FontAwesome.swift: 2a3235131a6caffc6b2ccba318e94d793b2fd342
   MBCircularProgressBar: 0b795b722a5eb5b0923822f90474e2576a1a7855
+  Onboard: 4d6e943e20bdd6bc229df967a347dd7514bc2a6f
   paper-onboarding: d3f16416e6f42add686117e8b32bfffaad899a79
   Realm: 9357c3589555793e1860a7104a7412bca4a48d99
   RealmSwift: 402f1e379a8ef82c635313037b043f0f06de880c
   Validator: 80a6f567220c962dfd2d9928ae98a8c1d164f6f4
 
-PODFILE CHECKSUM: b8f52d396b789a00f14cb9ad30515ef3e66e992a
+PODFILE CHECKSUM: 365da79a5dcbc664a5be7e5ba1233bc39d884d44
 
 COCOAPODS: 1.8.4

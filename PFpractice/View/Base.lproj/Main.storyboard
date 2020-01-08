@@ -10,11 +10,15 @@
         <!--Onboarding View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="OnboardingViewController" customModule="PFpractice" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="onBoarding" id="BYZ-38-t0r" customClass="OnboardingViewController" customModule="PFpractice" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xw8-cp-aTm" customClass="OnboardingView" customModule="PFpractice" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TIJ-eZ-JOt">
                                 <rect key="frame" x="263" y="115" width="121" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -27,24 +31,29 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="TIJ-eZ-JOt" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" symbolic="YES" id="0jq-sc-hpg"/>
+                            <constraint firstItem="Xw8-cp-aTm" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="542-I6-tSY"/>
+                            <constraint firstItem="Xw8-cp-aTm" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="KiS-c7-qW1"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="TIJ-eZ-JOt" secondAttribute="trailing" constant="30" id="W6T-Q9-Zbd"/>
+                            <constraint firstAttribute="bottom" secondItem="Xw8-cp-aTm" secondAttribute="bottom" id="cOG-zQ-SY5"/>
+                            <constraint firstItem="Xw8-cp-aTm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ldy-Ys-5NO"/>
                             <constraint firstItem="TIJ-eZ-JOt" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="27" id="uiK-ZC-g74"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="Isw-ee-LJ7"/>
                     <connections>
-                        <outlet property="skipButton" destination="TIJ-eZ-JOt" id="HOI-3k-RJN"/>
+                        <outlet property="onboardingView" destination="Xw8-cp-aTm" id="XBe-Z6-WHX"/>
+                        <outlet property="skipButton" destination="TIJ-eZ-JOt" id="3ma-Nk-y6c"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="491" y="113"/>
+            <point key="canvasLocation" x="489.85507246376818" y="112.5"/>
         </scene>
         <!--貯金箱-->
         <scene sceneID="65J-FS-dXm">
             <objects>
-                <viewController id="Mao-WQ-xCz" customClass="BankViewController" customModule="PFpractice" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="asd" id="Mao-WQ-xCz" customClass="BankViewController" customModule="PFpractice" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kQ1-3G-sse">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -690,7 +699,7 @@
                             </connections>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PostTableViewCell" translatesAutoresizingMaskIntoConstraints="NO" id="GGC-JC-B5K" customClass="PostTableViewCell" customModule="PFpractice" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PostTableViewCell" translatesAutoresizingMaskIntoConstraints="NO" id="GGC-JC-B5K" customClass="PostTableViewCell" customModule="PFpractice" customModuleProvider="target">
                                 <rect key="frame" x="20" y="226.5" width="374" height="152"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GGC-JC-B5K" id="LYs-xr-xTD">

@@ -9,8 +9,9 @@
 import UIKit
 import paper_onboarding
 
-class OnboardingViewController: UIViewController {
+class OnboardingViewController: UIViewController, PaperOnboardingDelegate, PaperOnboardingDataSource {
 
+    @IBOutlet weak var onboardingView: OnboardingView!
     @IBOutlet weak var skipButton: UIButton!
     
     override func viewDidLoad() {
@@ -19,6 +20,9 @@ class OnboardingViewController: UIViewController {
 
         setupPaperOnboardingView()
         view.bringSubviewToFront(skipButton)
+        
+        onboardingView.dataSource = self
+        onboardingView.delegate = self
 
     }
     
@@ -84,7 +88,7 @@ class OnboardingViewController: UIViewController {
         
         OnboardingItemInfo(informationImage: UIImage(named: "onboardImg4")!,
                            title: "4. 贈る",
-                           description: "自分の気持ちを大事な人に贈ってみる。\nきっと、喜んでくれる。",
+                           description: "自分の気持ちを大事な人に贈ってみる。\nプレゼントを渡して喜びを共有しましょう。",
                            pageIcon: UIImage(named: "onboardImg4")!,
                            color: UIColor.white,
                            titleColor: UIColor.black,
@@ -111,18 +115,9 @@ class OnboardingViewController: UIViewController {
         
     }
     
-}
-
-extension OnboardingViewController: PaperOnboardingDelegate {
-
     func onboardingWillTransitonToIndex(_ index: Int) {
         skipButton.isHidden = index != 0 ? false : true
     }
-}
-
-
-extension OnboardingViewController: PaperOnboardingDataSource {
-    
     
     func onboardingItemsCount() -> Int {
         return 4
@@ -138,4 +133,5 @@ extension OnboardingViewController: PaperOnboardingDataSource {
     func onboardingPageItemColor(at index: Int) -> UIColor {
         return [UIColor.systemRed, UIColor.systemRed, UIColor.systemRed,UIColor.systemRed][index]
     }
+    
 }

@@ -12,5 +12,6 @@ pod 'FontAwesome.swift'
 pod 'RealmSwift'
 pod "MBCircularProgressBar"
 pod 'Validator'
+pod "Onboard"
 
 end
