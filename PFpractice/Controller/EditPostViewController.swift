@@ -41,12 +41,40 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        hideKeyboardWhenTappedAround()
     
         nameTextField.delegate = self
         themeTextField.delegate = self
         presentTextField.delegate = self
         dateTextField.delegate = self
         budgetTextField.delegate = self
+        
+        setPostData()
+        bankLoad()
+        setDatePicker()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //FAアイコン。
+        fontAwesomeIconSet()
+        
+        configureObserver()
+        
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        removeObserver()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+    }
+    
+    func setPostData(){
         
         nameTextField.text = post.name
         themeTextField.text = post.theme
@@ -56,31 +84,6 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         backImageView.image = post.backImage
         heroImageView.image = post.photo
         heroImageView.layer.cornerRadius = heroImageView.frame.size.width * 0.5
-        
-        bankLoad()
-        setDatePicker()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        //FAアイコン。
-        fontAwesomeIconSet()
-        configureObserver()
-        
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        removeObserver()
-        super.viewWillDisappear(animated)
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.next?.touchesBegan(touches, with: event)
-        self.view.endEditing(true)
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
     }
     
     func fontAwesomeIconSet(){

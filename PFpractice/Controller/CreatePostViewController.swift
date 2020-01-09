@@ -34,14 +34,14 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
     var heroImage:UIImage?
     var backImgae:UIImage?
     var tapId = 0
-    
     var datePicker = UIDatePicker()
-    
     let realm = try! Realm()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        hideKeyboardWhenTappedAround()
+                
         nameTextField.delegate = self
         themeTextField.delegate = self
         presentTextField.delegate = self
@@ -56,22 +56,21 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
         super.viewWillAppear(animated)
         //FAアイコン。
         fontAwesomeIconSet()
-//        configureObserver()
+        //ContentScrollable監視開始
+        configureObserver()
         
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        removeObserver()
         super.viewWillDisappear(animated)
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-        self.next?.touchesBegan(touches, with: event)
+        //ContentScrollable監視終了
+        removeObserver()
+        
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        return true
     }
     
     func fontAwesomeIconSet(){
