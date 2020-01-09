@@ -18,6 +18,7 @@ class BankViewController: UIViewController {
     @IBOutlet weak var presentCostLabel: UILabel!
     @IBOutlet weak var progressLabel: UILabel!
     @IBOutlet weak var progressView: MBCircularProgressBarView!
+    @IBOutlet weak var editSavingButton: UIButton!
     
     let realm = try! Realm()
     var posts: Results<Post>!
@@ -26,13 +27,26 @@ class BankViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         loadPosts()
         bankLoad()
         indicateProgress()
         
     }
     
-    @IBAction func editSavingButton(_ sender: UIButton) {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        if bank.id != 0 {
+            
+            editSavingButton.isEnabled = true
+        } else {
+            editSavingButton.isEnabled = false
+        }
+        
+    }
+    
+    @IBAction func PushEditSavingButton(_ sender: UIButton) {
                 
         let alert = UIAlertController(title: "貯金額を編集しますか？", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default) { (action) in
