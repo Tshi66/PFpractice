@@ -9,6 +9,7 @@
 import UIKit
 import RealmSwift
 import Validator
+import MBCircularProgressBar
 
 class PostOneViewController: UIViewController {
     
@@ -34,6 +35,7 @@ class PostOneViewController: UIViewController {
     @IBOutlet weak var balanceLabel: UILabel!
     @IBOutlet weak var notificationButton: UIButton!
     @IBOutlet weak var notificationLabel: UILabel!
+    @IBOutlet weak var subProgressView: MBCircularProgressBarView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -170,6 +172,7 @@ class PostOneViewController: UIViewController {
         
         alert.addTextField { (editSavingTextField) in
             editSavingTextField.placeholder = "\(self.post.deposit)"
+            editSavingTextField.keyboardType = .numberPad
             self.textField = editSavingTextField
         }
         
@@ -228,6 +231,13 @@ class PostOneViewController: UIViewController {
         } else {
             notificationLabel.isHidden = true
         }
+        
+        //subProgressViewの数値設定
+        UIView.animate(withDuration: 1.0) {
+            self.subProgressView.value = CGFloat(self.post.deposit)
+        }
+        self.subProgressView.maxValue = CGFloat(post.budget)
+        
     }
     
     func remainingTime(date: String) -> Int {

@@ -27,7 +27,7 @@ class BankViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         loadPosts()
         bankLoad()
         indicateProgress()
@@ -37,10 +37,9 @@ class BankViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
+        editSavingButton.isEnabled = true
+        
         if bank.id != 0 {
-            
-            editSavingButton.isEnabled = true
-        } else {
             editSavingButton.isEnabled = false
         }
         
@@ -61,6 +60,7 @@ class BankViewController: UIViewController {
         alert.addTextField { (editSavingTextField) in
             self.bankLoad()
             editSavingTextField.placeholder = "\(self.bank.saving)"
+            editSavingTextField.keyboardType = .numberPad
             self.textField = editSavingTextField
         }
         
@@ -84,6 +84,7 @@ class BankViewController: UIViewController {
         }
         
         alert.addTextField { (inputSavingTextField) in
+            inputSavingTextField.keyboardType = .numberPad
             inputSavingTextField.placeholder = "貯金額を入力してください。"
             
             self.textField = inputSavingTextField
@@ -103,7 +104,7 @@ class BankViewController: UIViewController {
         sumDepositLabel.text = "\(sumDeposit)円"
         presentCostLabel.text = "\(sumBudget)円"
         
-        let amount = sumBudget - sumDeposit
+        let amount = sumBudget - bank.saving
         
         if amount < 0 {
             progressLabel.text = "余り \(-(amount))円"
@@ -114,7 +115,7 @@ class BankViewController: UIViewController {
         }
         
         UIView.animate(withDuration: 1.0) {
-            self.progressView.value = CGFloat(sumDeposit)
+            self.progressView.value = CGFloat(self.bank.saving)
         }
         
         progressView.maxValue = CGFloat(sumBudget)

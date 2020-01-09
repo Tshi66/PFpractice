@@ -17,7 +17,7 @@ class PostTableViewController: UITableViewController {
     @IBOutlet weak var presentCostLabel: UILabel!
     @IBOutlet weak var sumDepositLabel: UILabel!
     @IBOutlet weak var progressLabel: UILabel!
-    @IBOutlet weak var progressView: MBCircularProgressBarView!
+    @IBOutlet weak var mainProgressView: MBCircularProgressBarView!
     
     var posts: Results<Post>!
     var post = Post()
@@ -33,7 +33,7 @@ class PostTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
-        indicateProgress()
+        indicateMainProgress()
         
     }
 
@@ -118,6 +118,12 @@ class PostTableViewController: UITableViewController {
         cell.photoImageView.image = post.photo
         cell.photoImageView.layer.cornerRadius = cell.photoImageView.frame.size.width * 0.5
         
+        //subProgressViewの数値設定
+        UIView.animate(withDuration: 1.0) {
+            cell.subProgressView.value = CGFloat(post.deposit)
+        }
+        cell.subProgressView.maxValue = CGFloat(post.budget)
+        
         return cell
     }
     
@@ -136,7 +142,7 @@ class PostTableViewController: UITableViewController {
         }
     }
     
-    func indicateProgress(){
+    func indicateMainProgress(){
         let sumBudget: Int = posts.sum(ofProperty: "budget")
         let sumDeposit: Int = posts.sum(ofProperty: "deposit")
         
@@ -145,7 +151,7 @@ class PostTableViewController: UITableViewController {
         sumDepositLabel.text = "\(sumDeposit)円"
         presentCostLabel.text = "\(sumBudget)円"
         
-        let amount = sumBudget - sumDeposit
+        let amount = sumBudget - bank.saving
         
         if amount < 0 {
             progressLabel.text = "余り \(-(amount))円"
@@ -156,10 +162,11 @@ class PostTableViewController: UITableViewController {
         }
         
         UIView.animate(withDuration: 1.0) {
-            self.progressView.value = CGFloat(sumDeposit)
+            self.mainProgressView.value = CGFloat(self.bank.saving)
         }
         
-        progressView.maxValue = CGFloat(sumBudget)
+        mainProgressView.maxValue = CGFloat(sumBudget)
+        
     }
     
     func loadPosts(){

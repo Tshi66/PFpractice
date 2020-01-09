@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBCircularProgressBar
 
 class PostTableViewCell: UITableViewCell {
     
@@ -19,8 +20,7 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var budgetLabel: UILabel!
     @IBOutlet weak var notificationLabel: UILabel!
-    
-    
+    @IBOutlet weak var subProgressView: MBCircularProgressBarView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
