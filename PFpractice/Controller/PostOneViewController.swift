@@ -18,6 +18,7 @@ class PostOneViewController: UIViewController {
     var bank = Bank()
     let realm = try! Realm()
     var textField = UITextField()
+    let center = UNUserNotificationCenter.current()
     
     @IBOutlet weak var backImage: UIImageView!
     @IBOutlet weak var heroImage: UIImageView!
@@ -281,7 +282,19 @@ class PostOneViewController: UIViewController {
     func deletePost(post: Post) {
         do {
             try realm.write {
-                bank.saving += post.deposit
+                
+                if post.deposit > 0{
+                    bank.saving += post.deposit
+                }
+                
+                //通知が設定されていれば、それも削除。
+                if post.info != nil {
+                    let identifier = "postNotification" + String(self.post.id)
+                    self.center.removePendingNotificationRequests(withIdentifiers: [identifier])
+                    
+                    self.navigationController?.popViewController(animated: true)
+                    realm.delete(post.info!)
+                }
                 realm.delete(post)
             }
         } catch {

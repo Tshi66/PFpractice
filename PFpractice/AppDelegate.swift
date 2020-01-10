@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 ////        window!.makeKeyAndVisible()
 //        print("\(window?.rootViewController)を表示するよ")
         
-//        print(Realm.Configuration.defaultConfiguration.fileURL)
+        print(Realm.Configuration.defaultConfiguration.fileURL)
 //
 //        let config = Realm.Configuration(
 //                    schemaVersion: 1,
