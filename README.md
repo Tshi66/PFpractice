@@ -7,7 +7,10 @@ Bank（自分の貯金箱）から各ポストにお金振り替えする。
 ※本来は実際の銀行口座と連携したかったですが、厳しそうだったので仮想口座で妥協しました。
 
 ![20200110_214810](https://user-images.githubusercontent.com/47974150/72154744-c8ac6700-33f4-11ea-9583-ce14a7c8f592.GIF)
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
 ![20200110_215123](https://user-images.githubusercontent.com/47974150/72154768-dcf06400-33f4-11ea-88df-ef9d29ce66dc.GIF)
+&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+![20200111_013241 2](https://user-images.githubusercontent.com/47974150/72169500-901b8600-3412-11ea-86e7-3c040062c9d5.GIF)
 
 # 製作者
 + Tshi66 (https://github.com/Tshi66)
