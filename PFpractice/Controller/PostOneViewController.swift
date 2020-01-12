@@ -68,6 +68,11 @@ class PostOneViewController: UIViewController {
             let nextVC: PostNotificationTableViewController = (segue.destination as? PostNotificationTableViewController)!
             
             nextVC.post = post
+            
+        case "toPostFinished":
+            let nextVC: PostToFinishedViewController = (segue.destination as? PostToFinishedViewController)!
+            
+            nextVC.post = post
         default:
             print("error")
         }
@@ -130,7 +135,27 @@ class PostOneViewController: UIViewController {
             
             self.updatePost(post: self.post)
             
-            self.navigationController?.popViewController(animated: true)
+            //通知が設定されていれば、削除。
+            if self.post.info != nil {
+                //通知リクエストの削除
+                let identifier = "postNotification" + String(self.post.id)
+                self.center.removePendingNotificationRequests(withIdentifiers: [identifier])
+                
+                //realmから通知データを削除
+                do {
+                    try self.realm.write {
+                        self.realm.delete(self.post.info!)
+                    }
+                } catch {
+                    print("Error delete post.info \(error)")
+                }
+                
+            }
+            
+//            let PostToFinishedViewController = self.storyboard?.instantiateViewController(withIdentifier: "PostToFinished") as! PostToFinishedViewController
+//            self.present(PostToFinishedViewController, animated: true, completion: nil)
+            
+            self.performSegue(withIdentifier: "toPostFinished", sender: nil)
         }
         
         let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel) { (action: UIAlertAction!) in
@@ -314,7 +339,7 @@ class PostOneViewController: UIViewController {
         var depositRules = ValidationRuleSet<String>()
         depositRules.add(rule: stringRule)
         depositRules.add(rule: moneyRule)
-
+        
         if caseNumber == 0 {
             
             let depositValidation = textField.validate(rules: depositRules)
@@ -394,7 +419,7 @@ class PostOneViewController: UIViewController {
                     }
                 }
             }
-                        
+            
         case .invalid(let failures):
             let alert = UIAlertController(title: "エラー",
                                           message: "\(String(describing: (failures.first as? ExampleValidationError)?.message))", preferredStyle: .alert)

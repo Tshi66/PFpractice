@@ -61,6 +61,8 @@
 		85BCD5D9238061AB002828E3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85BCD5D7238061AB002828E3 /* LaunchScreen.storyboard */; };
 		85BEEEAE23C50A2000EE80EF /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BEEEAD23C50A2000EE80EF /* OnboardingView.swift */; };
 		85BEEEB023C71AAF00EE80EF /* hideKeyboardWhenTappedAround.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BEEEAF23C71AAF00EE80EF /* hideKeyboardWhenTappedAround.swift */; };
+		85BEEEB223CB07B900EE80EF /* PostToFinishedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BEEEB123CB07B900EE80EF /* PostToFinishedViewController.swift */; };
+		85BEEEB423CB956400EE80EF /* FinishedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BEEEB323CB956400EE80EF /* FinishedTableViewCell.swift */; };
 		85C734822382A4990026CAFE /* Home@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 85C734792382A4990026CAFE /* Home@2x.png */; };
 		85C734832382A4990026CAFE /* Home@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 85C7347A2382A4990026CAFE /* Home@3x.png */; };
 		85C734842382A4990026CAFE /* プレゼントOK.png in Resources */ = {isa = PBXBuildFile; fileRef = 85C7347B2382A4990026CAFE /* プレゼントOK.png */; };
@@ -149,6 +151,8 @@
 		85BCD5DA238061AB002828E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		85BEEEAD23C50A2000EE80EF /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		85BEEEAF23C71AAF00EE80EF /* hideKeyboardWhenTappedAround.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hideKeyboardWhenTappedAround.swift; sourceTree = "<group>"; };
+		85BEEEB123CB07B900EE80EF /* PostToFinishedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostToFinishedViewController.swift; sourceTree = "<group>"; };
+		85BEEEB323CB956400EE80EF /* FinishedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishedTableViewCell.swift; sourceTree = "<group>"; };
 		85C734792382A4990026CAFE /* Home@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Home@2x.png"; sourceTree = "<group>"; };
 		85C7347A2382A4990026CAFE /* Home@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Home@3x.png"; sourceTree = "<group>"; };
 		85C7347B2382A4990026CAFE /* プレゼントOK.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "プレゼントOK.png"; sourceTree = "<group>"; };
@@ -252,6 +256,7 @@
 				8500D7ED23990B2000BE9C7E /* BankViewController.swift */,
 				85CC080F23ABED24000AD3C7 /* PostNotificationTableViewController.swift */,
 				85BCD5D0238061A9002828E3 /* OnboardingViewController.swift */,
+				85BEEEB123CB07B900EE80EF /* PostToFinishedViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -264,6 +269,7 @@
 				85BCD5D7238061AB002828E3 /* LaunchScreen.storyboard */,
 				85BEEEAD23C50A2000EE80EF /* OnboardingView.swift */,
 				854631BD23850DF0004E7514 /* PostTableViewCell.swift */,
+				85BEEEB323CB956400EE80EF /* FinishedTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -564,9 +570,11 @@
 				8500D7EA239845C800BE9C7E /* FinishedTableViewController.swift in Sources */,
 				85BCD5CF238061A9002828E3 /* SceneDelegate.swift in Sources */,
 				854631BE23850DF0004E7514 /* PostTableViewCell.swift in Sources */,
+				85BEEEB423CB956400EE80EF /* FinishedTableViewCell.swift in Sources */,
 				854631C423852560004E7514 /* PostTableViewController.swift in Sources */,
 				85CC081023ABED24000AD3C7 /* PostNotificationTableViewController.swift in Sources */,
 				850A072B2381C323006F4827 /* TabBarController.swift in Sources */,
+				85BEEEB223CB07B900EE80EF /* PostToFinishedViewController.swift in Sources */,
 				8500D7E823981DEF00BE9C7E /* UITextField.swift in Sources */,
 				85BEEEAE23C50A2000EE80EF /* OnboardingView.swift in Sources */,
 				854631C223851BAA004E7514 /* Post.swift in Sources */,
