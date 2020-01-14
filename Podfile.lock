@@ -1,5 +1,6 @@
 PODS:
   - FontAwesome.swift (1.8.3)
+  - Loaf (0.5.0)
   - lottie-ios (3.1.5)
   - MBCircularProgressBar (0.3.5)
   - paper-onboarding (6.1.4)
@@ -12,6 +13,7 @@ PODS:
 
 DEPENDENCIES:
   - FontAwesome.swift
+  - Loaf
   - lottie-ios
   - MBCircularProgressBar
   - paper-onboarding
@@ -21,6 +23,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - FontAwesome.swift
+    - Loaf
     - lottie-ios
     - MBCircularProgressBar
     - paper-onboarding
@@ -30,6 +33,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   FontAwesome.swift: 2a3235131a6caffc6b2ccba318e94d793b2fd342
+  Loaf: 0800b444431366bc395d54267975d4ad4ad5c99c
   lottie-ios: 32bf84389337d86fbc8b12266e88452e0abf1dee
   MBCircularProgressBar: 0b795b722a5eb5b0923822f90474e2576a1a7855
   paper-onboarding: d3f16416e6f42add686117e8b32bfffaad899a79
@@ -37,6 +41,6 @@ SPEC CHECKSUMS:
   RealmSwift: 402f1e379a8ef82c635313037b043f0f06de880c
   Validator: 80a6f567220c962dfd2d9928ae98a8c1d164f6f4
 
-PODFILE CHECKSUM: c6d86bf89e8f2d388bc2bac1add31450a612748b
+PODFILE CHECKSUM: 4f03e90a9766192e0166e91769307482bf3fdbca
 
 COCOAPODS: 1.8.4
