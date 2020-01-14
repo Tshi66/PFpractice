@@ -42,54 +42,20 @@ class FinishedTableViewController: UITableViewController {
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellIdentifier = "PostTableViewCell"
+        let cellIdentifier = "FinishedTableViewCell"
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? PostTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? FinishedTableViewCell else {
                 
             fatalError("dequeueできませんでした。")
         }
         
         let post = posts[indexPath.row]
         
-        cell.nameLabel.text = post.name
+        //アイコンを表示
+        setIconFromFontAwesome(cell: cell)
         
-        
-        let font = UIFont.fontAwesome(ofSize: 14.0, style: .regular)
-        let color = UIColor.init(red: 219/255, green: 68/255, blue: 55/255, alpha: 1.0)
-
-        //アイコンとラベルテキストを表示。アイコンのみを着色する。
-        
-        let themeIcon = String.fontAwesomeIcon(name: .heart)
-        let themeLabelText = themeIcon + "  " + post.theme
-        let attrThemeLabel = NSMutableAttributedString(string: themeLabelText)
-        attrThemeLabel.addAttribute(.foregroundColor, value: color, range: NSMakeRange(0, 1))
-        cell.themeLabel.font = font
-        cell.themeLabel.attributedText = attrThemeLabel
-        
-        let presentIcon = String.fontAwesomeIcon(name: .gem)
-        let presentLabelText = presentIcon + "  " + post.present
-        let attrPresentLabel = NSMutableAttributedString(string: presentLabelText)
-        attrPresentLabel.addAttribute(.foregroundColor, value: color, range: NSMakeRange(0, 1))
-        cell.presentLabel.font = font
-        cell.presentLabel.attributedText = attrPresentLabel
-        
-        let dateIcon = String.fontAwesomeIcon(name: .calendarAlt)
-        let dateLabelText = dateIcon + "   " + post.date
-        let attrDateLabel = NSMutableAttributedString(string: dateLabelText)
-        attrDateLabel.addAttribute(.foregroundColor, value: color, range: NSMakeRange(0, 1))
-        cell.dateLabel.font = font
-        cell.dateLabel.attributedText = attrDateLabel
- 
-        let budgetIcon = String.fontAwesomeIcon(name: .moneyBillAlt)
-        let budgetLabelText = budgetIcon + "  " + "\(post.budget)円"
-        let attrBudgetLabel = NSMutableAttributedString(string: budgetLabelText)
-        attrBudgetLabel.addAttribute(.foregroundColor, value: color, range: NSMakeRange(0, 1))
-        cell.budgetLabel.font = font
-        cell.budgetLabel.attributedText = attrBudgetLabel
-        
-        //photoを丸く表示
-        cell.photoImageView.image = post.photo
-        cell.photoImageView.layer.cornerRadius = cell.photoImageView.frame.size.width * 0.5
+        //各ラベルとイメージを表示
+        setPostLabelAndImage(cell: cell, post: post)
         
         return cell
     }
@@ -99,6 +65,38 @@ class FinishedTableViewController: UITableViewController {
         posts = realm.objects(Post.self).filter("finished = true")
         
         self.tableView.reloadData()
+    }
+    
+    func setPostLabelAndImage(cell: FinishedTableViewCell, post: Post){
+        
+        cell.nameLabel.text = post.name
+        cell.themeLabel.text = post.realTheme
+        cell.presentLabel.text = post.realPresent
+        cell.dateLabel.text = post.realDate
+        cell.budgetLabel.text = String(post.realCost)
+        //photoを丸く表示
+        cell.photoImageView.image = post.photo
+        cell.photoImageView.layer.cornerRadius = cell.photoImageView.frame.size.width * 0.5
+    }
+    
+    func setIconFromFontAwesome(cell: FinishedTableViewCell){
+        
+        let font = UIFont.fontAwesome(ofSize: 13.0, style: .regular)
+        let color = UIColor.init(red: 219/255, green: 68/255, blue: 55/255, alpha: 1.0)
+        
+        //FAアイコン。
+        cell.themeIcon.font = font
+        cell.themeIcon.text = String.fontAwesomeIcon(name: .heart)
+        cell.themeIcon.textColor = color
+        cell.presentIcon.font = font
+        cell.presentIcon.text = String.fontAwesomeIcon(name: .gem)
+        cell.presentIcon.textColor = color
+        cell.dateIcon.font = font
+        cell.dateIcon.text = String.fontAwesomeIcon(name: .calendarAlt)
+        cell.dateIcon.textColor = color
+        cell.budgetIcon.font = font
+        cell.budgetIcon.text = String.fontAwesomeIcon(name: .moneyBillAlt)
+        cell.budgetIcon.textColor = color
     }
 }
 
