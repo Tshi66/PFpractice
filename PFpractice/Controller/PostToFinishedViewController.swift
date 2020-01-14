@@ -9,6 +9,7 @@
 import UIKit
 import RealmSwift
 import Validator
+import Lottie
 
 class PostToFinishedViewController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, ContentScrollable {
     
@@ -21,6 +22,8 @@ class PostToFinishedViewController: UIViewController, UINavigationControllerDele
     @IBOutlet weak var realPresentVdLabel: UILabel!
     @IBOutlet weak var realDateVdLabel: UILabel!
     @IBOutlet weak var realCostVdLabel: UILabel!
+    @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var animationView: AnimationView!
     @IBOutlet weak var scrollView: UIScrollView!
     
     var post = Post()
@@ -39,6 +42,7 @@ class PostToFinishedViewController: UIViewController, UINavigationControllerDele
         realDateTextField.delegate = self
         realCostTextField.delegate = self
         
+        setAnimation()
         setDatePicker()
         setPostData()
         hideKeyboardWhenTappedAround()
@@ -60,6 +64,16 @@ class PostToFinishedViewController: UIViewController, UINavigationControllerDele
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+    }
+    
+    func setAnimation(){
+        
+        let explosionAnimation = Animation.named("explosion")
+        animationView.animation = explosionAnimation
+        animationView.loopMode = .loop
+        animationView.animationSpeed = 0.8
+        animationView.respectAnimationFrameRate = true
+        animationView.play()
     }
     
     func setPostData(){
@@ -100,7 +114,17 @@ class PostToFinishedViewController: UIViewController, UINavigationControllerDele
         
         validateTextField()
         
+        //アニメーションのデバック
+        if animationView.isAnimationPlaying == true {
+            print("再生中")
+        } else {
+            print("停止中")
+        }
+        
         if realThemeVdLabel.text == "ok" && realDateVdLabel.text == "ok" && realPresentVdLabel.text == "ok" && realCostVdLabel.text == "ok" {
+            
+            //アニメーションの停止
+            animationView.stop()
             
             modifyPost(post: post)
             
