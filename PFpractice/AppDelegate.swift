@@ -16,20 +16,8 @@ import RealmSwift
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-//        let introViewController = UIStoryboard.init(name: "Main", bundle: nil)
-//            .instantiateViewController(withIdentifier: "onBoarding") as! OnboardingViewController
-//        let navigationController = UINavigationController(rootViewController: introViewController)
-//        self.window?.rootViewController = navigationController
-
-//        let onboardingVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "onBoarding") as! OnboardingViewController
-////        window = UIWindow(frame: UIScreen.main.bounds)
-//        let navigationController = UINavigationController(rootViewController: onboardingVC)
-//        window?.rootViewController = navigationController
-////        window!.makeKeyAndVisible()
-//        print("\(window?.rootViewController)を表示するよ")
+        print(Realm.Configuration.defaultConfiguration.fileURL!)
         
-        print(Realm.Configuration.defaultConfiguration.fileURL)
-//
 //        let config = Realm.Configuration(
 //                    schemaVersion: 1,
 //                    migrationBlock: { migration, oldSchemaVersion in
@@ -45,13 +33,6 @@ import RealmSwift
                     print("first launch.")
                     //起動を判定するlaunchedBeforeという論理型のKeyをUserDefaultsに用意
                     UserDefaults.standard.set(true, forKey: "launchedBefore")
-
-//                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//                    //チュートリアル用のViewControllerのインスタンスを用意してwindowに渡す
-//                    let onboardingVC = storyboard.instantiateViewController(withIdentifier: "onBoarding") as! OnboardingViewController
-//                    window = UIWindow(frame: UIScreen.main.bounds)
-//                    window?.rootViewController = onboardingVC
-//                    window?.makeKeyAndVisible()
                     
                     let introViewController = UIStoryboard.init(name: "Main", bundle: nil)
                         .instantiateViewController(withIdentifier: "onBoarding") as! OnboardingViewController
@@ -63,7 +44,7 @@ import RealmSwift
                     print("Not first launch.")
 
                     //動作確認のために1回実行ごとに値をfalseに設定し直す
-                    UserDefaults.standard.set(false, forKey: "launchedBefore")
+//                    UserDefaults.standard.set(false, forKey: "launchedBefore")
                 }
 
         return true
