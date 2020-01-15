@@ -10,6 +10,7 @@ import UIKit
 import RealmSwift
 import Validator
 import MBCircularProgressBar
+import Loaf
 
 class PostOneViewController: UIViewController {
     
@@ -152,8 +153,8 @@ class PostOneViewController: UIViewController {
                 
             }
             
-//            let PostToFinishedViewController = self.storyboard?.instantiateViewController(withIdentifier: "PostToFinished") as! PostToFinishedViewController
-//            self.present(PostToFinishedViewController, animated: true, completion: nil)
+            //            let PostToFinishedViewController = self.storyboard?.instantiateViewController(withIdentifier: "PostToFinished") as! PostToFinishedViewController
+            //            self.present(PostToFinishedViewController, animated: true, completion: nil)
             
             self.performSegue(withIdentifier: "toPostFinished", sender: nil)
         }
@@ -170,9 +171,15 @@ class PostOneViewController: UIViewController {
         let alert = UIAlertController(title: "ポストの削除", message: "削除すると復元できません。", preferredStyle: .alert)
         let action = UIAlertAction(title: "削除", style: .destructive) { (action) in
             
-            self.deletePost(post: self.post)
+            //1つ前の画面に戻り、Loafでメッセージ表示
+            self.navigationController?.popViewController(animated: false)
             
-            self.navigationController?.popViewController(animated: true)
+            let name = self.post.name
+            let image = self.post.photo
+            Loaf("\(name)のポストを削除しました。", state: .custom(.init(backgroundColor: .systemGreen, icon: image)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
+            
+            //postを削除
+            self.deletePost(post: self.post)
         }
         
         let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel) { (action: UIAlertAction!) in
@@ -380,12 +387,17 @@ class PostOneViewController: UIViewController {
                     print("Error saving bank \(error)")
                 }
                 
+                //Loafを表示
+                setLoaf(message: "\(Int(self.textField.text!)!)円を入金しました。", state: .success)
+                
             } else {
                 
+                //入力した金額が予算額を超えない。
                 if Int(self.textField.text!)! > self.post.budget {
                     self.textField.text = String(self.post.budget)
                 }
                 
+                //入力した金額よりも、入金額が大きい場合
                 if Int(self.textField.text!)! < self.post.deposit {
                     do {
                         try self.realm.write {
@@ -396,6 +408,7 @@ class PostOneViewController: UIViewController {
                         print("Error saving bank \(error)")
                         
                     }
+                    
                 } else {
                     if Int(self.textField.text!)! - self.post.deposit > self.bank.saving {
                         do {
@@ -418,16 +431,19 @@ class PostOneViewController: UIViewController {
                         }
                     }
                 }
+                
+                //Loafを表示
+                setLoaf(message: "入金額を\(Int(self.post.deposit))円に変更しました。", state: .success)
             }
             
         case .invalid(let failures):
-            let alert = UIAlertController(title: "エラー",
-                                          message: "\(String(describing: (failures.first as? ExampleValidationError)?.message))", preferredStyle: .alert)
-            let action = UIAlertAction(title: "OK", style: .default) { (action) in
-            }
-            
-            alert.addAction(action)
-            present(alert, animated: true, completion: nil)
+            //Loafでエラーメッセージ表示
+            setLoaf(message: "入金額が反映されませんでした。\nエラー: \((String(describing: (failures.first as! ExampleValidationError).message)))", state: .error)
         }
+    }
+    
+    func setLoaf(message: String, state: Loaf.State) {
+        
+        Loaf(message, state: state, location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
     }
 }

@@ -66,14 +66,15 @@ class FinishedTableViewController: UITableViewController {
             
             let deletePost = self.posts![indexPath.row]
             
-            Loaf("\(deletePost.name)のポストが削除されました", state: .success, location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
+            let name = deletePost.name
+            let image = deletePost.photo
+            Loaf("\(name)のポストを削除しました。", state: .custom(.init(backgroundColor: .systemGreen, icon: image)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
             
             try! realm.write {
                 realm.delete(deletePost)
             }
             
             self.tableView.reloadData()
-            
             
         }
     }

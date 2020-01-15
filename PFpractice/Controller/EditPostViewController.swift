@@ -9,6 +9,7 @@
 import UIKit
 import RealmSwift
 import Validator
+import Loaf
 
 class EditPostViewController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, ContentScrollable {
 
@@ -137,6 +138,9 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         if nameVdLabel.text == "ok" && themeVdLabel.text == "ok" && presentVdLabel.text == "ok" && dateVdLabel.text == "ok" && budgetVdLabel.text == "ok"  {
             
             saveAlert()
+        } else {
+            
+            Loaf("ポストが編集されませんでした。", state: .error, location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
         }
         
         
@@ -147,9 +151,11 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         let alert = UIAlertController(title: "ポストを編集しますか？", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default) { (action) in
                         
-            self.navigationController?.popToRootViewController(animated: true)
-            
             self.updatePost(post: self.post)
+            
+            //1つ前の画面に戻り、Loafでメッセージ表示
+            let image = self.post.photo
+            Loaf("\(self.post.name)のポストを編集しました。", state: .custom(.init(backgroundColor: .systemGreen, icon: image)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: ((self.navigationController?.popViewController(animated: false))!)).show()
         }
         
         let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel) { (action: UIAlertAction!) in

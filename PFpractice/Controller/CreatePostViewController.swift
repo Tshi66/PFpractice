@@ -9,6 +9,7 @@
 import UIKit
 import RealmSwift
 import Validator
+import Loaf
 
 class CreatePostViewController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, ContentScrollable {
 
@@ -125,6 +126,10 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
         if nameVdLabel.text == "ok" && themeVdLabel.text == "ok" && presentVdLabel.text == "ok" && dateVdLabel.text == "ok" && budgetVdLabel.text == "ok"  {
             
             saveAlert()
+            
+        } else {
+            
+            Loaf("ポストが作成されませんでした。", state: .error, location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
         }
         
     }
@@ -152,7 +157,10 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
             post.backImage = self.backImageView.image
             post.photo = self.heroImageView.image
                         
-            self.navigationController?.popViewController(animated: true)
+            //1つ前の画面に戻り、Loafでメッセージ表示
+            let image = post.photo
+            let name = post.name
+            Loaf("\(String(describing: name))のポストを作成しました。", state: .custom(.init(backgroundColor: .systemGreen, icon: image)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: ((self.navigationController?.popViewController(animated: false))!)).show()
             
             self.save(post: post)
         }

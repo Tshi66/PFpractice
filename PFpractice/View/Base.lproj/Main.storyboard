@@ -62,7 +62,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="4Yl-Rp-0al">
-                                        <rect key="frame" x="27" y="76" width="360" height="573"/>
+                                        <rect key="frame" x="27" y="48" width="360" height="629"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iWE-uF-tcG" customClass="MBCircularProgressBarView">
                                                 <rect key="frame" x="20" y="0.0" width="320" height="320"/>
@@ -193,10 +193,10 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="44" translatesAutoresizingMaskIntoConstraints="NO" id="hcs-6U-vAx">
-                                                <rect key="frame" x="152" y="517" width="56" height="56"/>
+                                                <rect key="frame" x="124" y="517" width="112" height="112"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zj3-J5-1hJ">
-                                                        <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="112" height="112"/>
                                                         <state key="normal" image="nyukin" backgroundImage="楕円形"/>
                                                         <connections>
                                                             <action selector="inputSavingButton:" destination="Mao-WQ-xCz" eventType="touchUpInside" id="6N0-wl-LGj"/>
@@ -904,16 +904,16 @@
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gZM-tW-OdJ">
                                 <rect key="frame" x="0.0" y="88" width="414" height="180"/>
-                                <color key="backgroundColor" red="1" green="0.67450980390000004" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="1" green="0.8862745098" blue="0.87843137250000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="180" id="5dg-aB-eWH"/>
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="EwE-PO-XuP">
-                                <rect key="frame" x="-42.5" y="166" width="499" height="671.5"/>
+                                <rect key="frame" x="50.5" y="166" width="313" height="615.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="wxj-5D-Yyc">
-                                        <rect key="frame" x="124.5" y="0.0" width="250" height="303"/>
+                                        <rect key="frame" x="31.5" y="0.0" width="250" height="303"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RlA-ON-2Nu" customClass="MBCircularProgressBarView">
                                                 <rect key="frame" x="0.0" y="0.0" width="250" height="250"/>
@@ -964,7 +964,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="xxg-IT-vuV">
-                                        <rect key="frame" x="93" y="333" width="313" height="196.5"/>
+                                        <rect key="frame" x="0.0" y="333" width="313" height="196.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Vpr-OL-r2b">
                                                 <rect key="frame" x="0.0" y="0.0" width="252" height="24"/>
@@ -1141,31 +1141,31 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="frA-Xc-MVb">
-                                        <rect key="frame" x="0.0" y="559.5" width="499" height="112"/>
+                                        <rect key="frame" x="19" y="559.5" width="275" height="56"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hwh-mx-vFa">
-                                                <rect key="frame" x="0.0" y="0.0" width="112" height="112"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
                                                 <state key="normal" image="振り替え" backgroundImage="楕円形"/>
                                                 <connections>
                                                     <action selector="depositButton:" destination="Igr-a7-kAd" eventType="touchUpInside" id="4cD-Oc-ajv"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LMs-E9-dEq">
-                                                <rect key="frame" x="129" y="0.0" width="112" height="112"/>
+                                                <rect key="frame" x="73" y="0.0" width="56" height="56"/>
                                                 <state key="normal" image="通知オフ" backgroundImage="楕円形"/>
                                                 <connections>
                                                     <segue destination="Gho-sX-FpI" kind="show" identifier="postInfo" id="HYR-0L-kIu"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Kr-DR-hRE">
-                                                <rect key="frame" x="258" y="0.0" width="112" height="112"/>
+                                                <rect key="frame" x="146" y="0.0" width="56" height="56"/>
                                                 <state key="normal" image="ゴミ箱" backgroundImage="楕円形"/>
                                                 <connections>
                                                     <action selector="deleteButton:" destination="Igr-a7-kAd" eventType="touchUpInside" id="bpj-sI-hSZ"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lyM-Ei-eLD">
-                                                <rect key="frame" x="387" y="0.0" width="112" height="112"/>
+                                                <rect key="frame" x="219" y="0.0" width="56" height="56"/>
                                                 <state key="normal" image="プレゼント完了" backgroundImage="楕円形"/>
                                                 <connections>
                                                     <action selector="finishedButton:" destination="Igr-a7-kAd" eventType="touchUpInside" id="ubk-Yw-fB0"/>
@@ -1452,7 +1452,7 @@
                                 <subviews>
                                     <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zGl-i2-uwL">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="196"/>
-                                        <color key="backgroundColor" red="1" green="0.67450980390000004" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="1" green="0.8862745098" blue="0.87843137250000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="196" id="rVr-qx-ccC"/>
