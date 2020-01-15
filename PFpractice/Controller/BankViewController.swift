@@ -10,6 +10,7 @@ import UIKit
 import RealmSwift
 import MBCircularProgressBar
 import Validator
+import Loaf
 
 class BankViewController: UIViewController {
     
@@ -31,17 +32,6 @@ class BankViewController: UIViewController {
         loadPosts()
         bankLoad()
         indicateProgress()
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        
-        editSavingButton.isEnabled = true
-        
-        if bank.id != 0 {
-            editSavingButton.isEnabled = false
-        }
         
     }
     
@@ -181,23 +171,12 @@ class BankViewController: UIViewController {
             let pattern = pattern
             
             if pattern == 0 {
-                
-                do {
-                    try self.realm.write {
-                        self.bank.saving = Int(textField.text!)!
-                    }
-                } catch {
-                    print("Error saving bank \(error)")
-                }
-                
-            } else {
-                
+                                
                 if self.realm.objects(Bank.self).filter("id = 0").first != nil{
                     
                     do {
                         try self.realm.write {
-                            self.bank.saving += Int(self.textField.text!)!
-                            print(self.bank.saving)
+                            self.bank.saving = Int(textField.text!)!
                         }
                     } catch {
                         print("Error saving bank \(error)")
@@ -205,28 +184,62 @@ class BankViewController: UIViewController {
                     
                 } else {
                     
+                    //Bankデータを新規作成
+                    save()
+                    
+                    do {
+                        self.bankLoad()
+                        try self.realm.write {
+                            self.bank.saving = Int(self.textField.text!)!
+                        }
+                    } catch {
+                        print("Error saving bank \(error)")
+                    }
+                }
+                
+                //貯金額変更を知らせる,Loaf
+                setLoaf(message: "貯金額を\(self.bank.saving)円に変更しました", state: .success)
+                
+            //pattern == 1
+            } else {
+                
+                if self.realm.objects(Bank.self).filter("id = 0").first != nil{
+                    
+                    do {
+                        try self.realm.write {
+                            self.bank.saving += Int(self.textField.text!)!
+                        }
+                    } catch {
+                        print("Error saving bank \(error)")
+                    }
+                    
+                } else {
+                    
+                    //Bankデータを新規作成
                     self.save()
                     
                     do {
                         self.bankLoad()
                         try self.realm.write {
                             self.bank.saving += Int(self.textField.text!)!
-                            print(self.realm.objects(Bank.self).filter("saving > 0"))
                         }
                     } catch {
                         print("Error saving bank \(error)")
                     }
                 }
+                
+                //貯金を知らせる,Loaf
+                setLoaf(message: "\(self.bank.saving)円を貯金しました", state: .success)
             }
                         
         case .invalid(let failures):
-            let alert = UIAlertController(title: "エラー",
-                                          message: "\(String(describing: (failures.first as? ExampleValidationError)?.message))", preferredStyle: .alert)
-            let action = UIAlertAction(title: "OK", style: .default) { (action) in
-            }
-            
-            alert.addAction(action)
-            present(alert, animated: true, completion: nil)
+            //Loafでエラーメッセージ表示
+            setLoaf(message: "貯金額が反映されませんでした。\nエラー: \((String(describing: (failures.first as! ExampleValidationError).message)))", state: .error)
         }
+    }
+    
+    func setLoaf(message: String, state: Loaf.State) {
+        
+        Loaf(message, state: state, location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
     }
 }

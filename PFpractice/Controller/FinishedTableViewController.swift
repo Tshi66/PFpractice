@@ -9,6 +9,7 @@
 import UIKit
 import FontAwesome_swift
 import RealmSwift
+import Loaf
 
 class FinishedTableViewController: UITableViewController {
     //MARC: Properties
@@ -28,24 +29,24 @@ class FinishedTableViewController: UITableViewController {
         tableView.reloadData()
         
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
+        
         return posts.count
     }
-
-
+    
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "FinishedTableViewCell"
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? FinishedTableViewCell else {
-                
+            
             fatalError("dequeueできませんでした。")
         }
         
@@ -58,6 +59,24 @@ class FinishedTableViewController: UITableViewController {
         setPostLabelAndImage(cell: cell, post: post)
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCell.EditingStyle.delete {
+            
+            let deletePost = self.posts![indexPath.row]
+            
+            let name = deletePost.name
+            let image = deletePost.photo
+            Loaf("\(name)のポストを削除しました。", state: .custom(.init(backgroundColor: .systemGreen, icon: image)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
+            
+            try! realm.write {
+                realm.delete(deletePost)
+            }
+            
+            self.tableView.reloadData()
+            
+        }
     }
     
     func loadPosts(){

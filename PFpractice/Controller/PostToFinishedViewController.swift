@@ -10,6 +10,7 @@ import UIKit
 import RealmSwift
 import Validator
 import Lottie
+import Loaf
 
 class PostToFinishedViewController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, ContentScrollable {
     
@@ -34,6 +35,7 @@ class PostToFinishedViewController: UIViewController, UINavigationControllerDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //全体表示をオンにする
         navigationController?.isNavigationBarHidden = true
         tabBarController?.tabBar.isHidden = true
         
@@ -114,12 +116,12 @@ class PostToFinishedViewController: UIViewController, UINavigationControllerDele
         
         validateTextField()
         
-        //アニメーションのデバック
-        if animationView.isAnimationPlaying == true {
-            print("再生中")
-        } else {
-            print("停止中")
-        }
+//        //アニメーションのデバック
+//        if animationView.isAnimationPlaying == true {
+//            print("再生中")
+//        } else {
+//            print("停止中")
+//        }
         
         if realThemeVdLabel.text == "ok" && realDateVdLabel.text == "ok" && realPresentVdLabel.text == "ok" && realCostVdLabel.text == "ok" {
             
@@ -128,10 +130,16 @@ class PostToFinishedViewController: UIViewController, UINavigationControllerDele
             
             modifyPost(post: post)
             
+            //全体表示をオフにする
             navigationController?.isNavigationBarHidden = false
             tabBarController?.tabBar.isHidden = false
+            
             self.navigationController?.popToRootViewController(animated: true)
             
+            //Loafでメッセージ表示
+            let image = post.photo
+            let name = post.name
+            Loaf("\(String(describing: name))のポストが「プレゼント完了」に追加されました。", state: .custom(.init(backgroundColor: .systemGreen, icon: image)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
         }
     }
     
@@ -197,8 +205,17 @@ class PostToFinishedViewController: UIViewController, UINavigationControllerDele
         switch result {
         case .valid:
             label.text = "ok"
+            
         case .invalid(let failures):
             label.text = (failures.first as? ExampleValidationError)?.message
+            
+            //Loafでエラーメッセージ表示
+            setLoaf(message: "変更が反映されませんでした。\nエラー: \((String(describing: (failures.first as! ExampleValidationError).message)))", state: .error)
         }
+    }
+    
+    func setLoaf(message: String, state: Loaf.State) {
+        
+        Loaf(message, state: state, location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
     }
 }

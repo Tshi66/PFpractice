@@ -13,5 +13,6 @@ pod 'RealmSwift'
 pod "MBCircularProgressBar"
 pod 'Validator'
 pod 'lottie-ios'
+pod 'Loaf'
 
 end

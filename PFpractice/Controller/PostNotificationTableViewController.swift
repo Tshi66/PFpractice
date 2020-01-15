@@ -10,6 +10,7 @@ import UIKit
 import RealmSwift
 import UserNotifications
 import Validator
+import Loaf
 
 class PostNotificationTableViewController: UITableViewController,UIPickerViewDelegate,UNUserNotificationCenterDelegate {
     
@@ -255,7 +256,12 @@ class PostNotificationTableViewController: UITableViewController,UIPickerViewDel
         }
         
         setNotification()
-        self.navigationController?.popViewController(animated: true)
+        
+        //1つ前の画面に戻り、Loafでメッセージ表示
+        self.navigationController?.popViewController(animated: false)
+        
+        let image = UIImage(named: "通知")
+        Loaf("通知を設定しました。", state: .custom(.init(backgroundColor: .gray, icon: image)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
     }
     
     @IBAction func deleteButton(_ sender: UIButton) {
@@ -273,7 +279,9 @@ class PostNotificationTableViewController: UITableViewController,UIPickerViewDel
             let identifier = "postNotification" + String(self.post.id)
             self.center.removePendingNotificationRequests(withIdentifiers: [identifier])
             
-            self.navigationController?.popViewController(animated: true)
+            //1つ前の画面に戻り、Loafでメッセージ表示
+            let image = UIImage(named: "通知オフ")
+            Loaf("通知を削除しました。", state: .custom(.init(backgroundColor: .gray, icon: image)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: ((self.navigationController?.popViewController(animated: false))!)).show()
         }
         
         let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel) { (action: UIAlertAction!) in
@@ -445,13 +453,14 @@ class PostNotificationTableViewController: UITableViewController,UIPickerViewDel
             tableView.reloadData()
             
         case .invalid(let failures):
-            let alert = UIAlertController(title: "エラー",
-                                          message: "\(String(describing: (failures.first as? ExampleValidationError)?.message))", preferredStyle: .alert)
-            let action = UIAlertAction(title: "OK", style: .default) { (action) in
-            }
-            
-            alert.addAction(action)
-            present(alert, animated: true, completion: nil)
+
+            //Loafでエラーメッセージ表示
+            setLoaf(message: "設定できませんでした。\nエラー: \((String(describing: (failures.first as! ExampleValidationError).message)))", state: .error)
         }
+    }
+    
+    func setLoaf(message: String, state: Loaf.State) {
+        
+        Loaf(message, state: state, location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
     }
 }
