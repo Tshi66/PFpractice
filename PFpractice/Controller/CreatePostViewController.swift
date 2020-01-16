@@ -236,10 +236,13 @@ extension CreatePostViewController: UIImagePickerControllerDelegate{
         
         let pickerImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
         
+        //pickeで取得したUIImageのサイズを90％カットする。（realmが5MB以下対応だから）
+        let resizedImage = pickerImage?.resized(withPercentage: 0.1)
+        
         if tapId == 0 {
-            heroImage = pickerImage
+            heroImage = resizedImage
         } else {
-            backImgae = pickerImage
+            backImgae = resizedImage
         }
         
         picker.dismiss(animated: true) {

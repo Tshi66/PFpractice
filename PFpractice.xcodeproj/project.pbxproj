@@ -53,6 +53,7 @@
 		858C1E06238D9CC900CDD91D /* No@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 858C1E00238D9CC900CDD91D /* No@3x.png */; };
 		858C1E07238D9CC900CDD91D /* Yes@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 858C1E01238D9CC900CDD91D /* Yes@3x.png */; };
 		858E6BB823CDF392000C1453 /* explosion.json in Resources */ = {isa = PBXBuildFile; fileRef = 858E6BB723CDF392000C1453 /* explosion.json */; };
+		858E6BBC23D09A16000C1453 /* UIImageResize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858E6BBB23D09A16000C1453 /* UIImageResize.swift */; };
 		85B25AAC23966BC500E04A68 /* ContentScrollable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B25AAB23966BC500E04A68 /* ContentScrollable.swift */; };
 		85BCD5CD238061A9002828E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BCD5CC238061A9002828E3 /* AppDelegate.swift */; };
 		85BCD5CF238061A9002828E3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BCD5CE238061A9002828E3 /* SceneDelegate.swift */; };
@@ -142,6 +143,7 @@
 		858C1E00238D9CC900CDD91D /* No@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "No@3x.png"; sourceTree = "<group>"; };
 		858C1E01238D9CC900CDD91D /* Yes@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Yes@3x.png"; sourceTree = "<group>"; };
 		858E6BB723CDF392000C1453 /* explosion.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = explosion.json; sourceTree = "<group>"; };
+		858E6BBB23D09A16000C1453 /* UIImageResize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageResize.swift; sourceTree = "<group>"; };
 		85B25AAB23966BC500E04A68 /* ContentScrollable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentScrollable.swift; sourceTree = "<group>"; };
 		85BCD5C9238061A9002828E3 /* PFpractice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PFpractice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85BCD5CC238061A9002828E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -334,6 +336,7 @@
 				85B25AAB23966BC500E04A68 /* ContentScrollable.swift */,
 				8500D7E723981DEF00BE9C7E /* UITextField.swift */,
 				85BEEEAF23C71AAF00EE80EF /* hideKeyboardWhenTappedAround.swift */,
+				858E6BBB23D09A16000C1453 /* UIImageResize.swift */,
 			);
 			path = Extention;
 			sourceTree = "<group>";
@@ -577,6 +580,7 @@
 			files = (
 				85BCD5D1238061A9002828E3 /* OnboardingViewController.swift in Sources */,
 				853FE56F2387C250003F3E2D /* PostOneViewController.swift in Sources */,
+				858E6BBC23D09A16000C1453 /* UIImageResize.swift in Sources */,
 				85BCD5CD238061A9002828E3 /* AppDelegate.swift in Sources */,
 				85B25AAC23966BC500E04A68 /* ContentScrollable.swift in Sources */,
 				8500D7EA239845C800BE9C7E /* FinishedTableViewController.swift in Sources */,
