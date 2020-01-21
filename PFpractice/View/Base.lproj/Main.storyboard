@@ -257,11 +257,11 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <subviews>
                                     <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gFX-0q-FD6">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="196"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="220"/>
                                         <color key="backgroundColor" red="1" green="0.8862745098" blue="0.87843137250000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <gestureRecognizers/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="196" id="8FR-wl-WbH"/>
+                                            <constraint firstAttribute="height" constant="220" id="8FR-wl-WbH"/>
                                         </constraints>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="CJC-OZ-71c" appends="YES" id="SbD-Pu-x9K"/>
@@ -918,11 +918,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gZM-tW-OdJ">
-                                <rect key="frame" x="0.0" y="88" width="414" height="180"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gZM-tW-OdJ">
+                                <rect key="frame" x="0.0" y="88" width="414" height="220"/>
                                 <color key="backgroundColor" red="1" green="0.8862745098" blue="0.87843137250000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="180" id="5dg-aB-eWH"/>
+                                    <constraint firstAttribute="height" constant="220" id="5dg-aB-eWH"/>
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="EwE-PO-XuP">
@@ -1467,11 +1467,11 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zGl-i2-uwL">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="196"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="220"/>
                                         <color key="backgroundColor" red="1" green="0.8862745098" blue="0.87843137250000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <gestureRecognizers/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="196" id="rVr-qx-ccC"/>
+                                            <constraint firstAttribute="height" constant="220" id="rVr-qx-ccC"/>
                                         </constraints>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="DRN-wr-gYH" appends="YES" id="ckd-Ql-XkK"/>
