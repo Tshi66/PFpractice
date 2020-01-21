@@ -10,9 +10,10 @@ import UIKit
 import RealmSwift
 import Validator
 import Loaf
+import CropViewController
 
 class CreatePostViewController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, ContentScrollable {
-
+    
     //MARC: Properties
     @IBOutlet weak var themeIcon: UILabel!
     @IBOutlet weak var presentIcon: UILabel!
@@ -34,15 +35,16 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
     
     var heroImage:UIImage?
     var backImgae:UIImage?
-    var tapId = 0
+    var tapId:String = ""
     var datePicker = UIDatePicker()
     let realm = try! Realm()
+    var croppingStyle = CropViewCroppingStyle.default
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         hideKeyboardWhenTappedAround()
-                
+        
         nameTextField.delegate = self
         themeTextField.delegate = self
         presentTextField.delegate = self
@@ -61,7 +63,7 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
         configureObserver()
         
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         //ContentScrollable監視終了
@@ -77,7 +79,7 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
     func fontAwesomeIconSet(){
         let font = UIFont.fontAwesome(ofSize: 20.0, style: .regular)
         let color = UIColor.init(red: 219/255, green: 68/255, blue: 55/255, alpha: 1.0)
-
+        
         themeIcon.font = font
         themeIcon.text = String.fontAwesomeIcon(name: .heart)
         themeIcon.textColor = color
@@ -120,7 +122,7 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
     
     
     @IBAction func createPostButton(_ sender: UIButton) {
-    
+        
         validateTextField()
         
         if nameVdLabel.text == "ok" && themeVdLabel.text == "ok" && presentVdLabel.text == "ok" && dateVdLabel.text == "ok" && budgetVdLabel.text == "ok"  {
@@ -156,7 +158,7 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
             post.budget = Int(self.budgetTextField.text!)!
             post.backImage = self.backImageView.image
             post.photo = self.heroImageView.image
-                        
+            
             //1つ前の画面に戻り、Loafでメッセージ表示
             let image = post.photo
             let name = post.name
@@ -175,11 +177,11 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
     
     @IBAction func backTapGesture(_ sender: UITapGestureRecognizer) {
         setImgPicker()
-        tapId = 1
+        tapId = "backImage"
     }
     @IBAction func heroTapGesture(_ sender: UITapGestureRecognizer) {
         setImgPicker()
-        tapId = 0
+        tapId = "heroImage"
     }
     func setImgPicker(){
         let picker = UIImagePickerController()
@@ -225,7 +227,7 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
     
 }
 
-extension CreatePostViewController: UIImagePickerControllerDelegate{
+extension CreatePostViewController: UIImagePickerControllerDelegate, CropViewControllerDelegate{
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
@@ -234,24 +236,63 @@ extension CreatePostViewController: UIImagePickerControllerDelegate{
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        let pickerImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+        guard let pickerImage = (info[UIImagePickerController.InfoKey.originalImage] as? UIImage) else { return }
         
-        //pickeで取得したUIImageのサイズを90％カットする。（realmが5MB以下対応だから）
-        let resizedImage = pickerImage?.resized(withPercentage: 0.1)
+        //pickerで取得したUIImageのデータサイズをカットする。（realmが5MB以下対応だから）
+        let resizedImage:UIImage = pickerImage.resized(withPercentage: 0.3)!
         
-        if tapId == 0 {
-            heroImage = resizedImage
+        if tapId == "heroImage" {
+            
+            croppingStyle = .circular
         } else {
-            backImgae = resizedImage
+            
+            croppingStyle = .default
+        }
+        
+        let cropController = CropViewController(croppingStyle: croppingStyle, image: resizedImage)
+        cropController.delegate = self
+             
+        if croppingStyle == .circular {
+            
+            cropController.title = "プロフィール画像"
+            
+        } else {
+            
+            cropController.customAspectRatio = backImageView.frame.size
+            cropController.aspectRatioPickerButtonHidden = true
+            cropController.resetAspectRatioEnabled = false
+            cropController.rotateButtonsHidden = true
+            cropController.cropView.cropBoxResizeEnabled = false
+            cropController.title = "背景画像"
         }
         
         picker.dismiss(animated: true) {
-            if self.tapId == 0 {
-                self.heroImageView.image = self.heroImage
-                self.heroImageView.layer.cornerRadius = self.heroImageView.frame.size.width * 0.5
-            } else {
-                self.backImageView.image = self.backImgae
-            }
+            
+            self.present(cropController, animated: true, completion: nil)
+            
         }
+    }
+    
+    func cropViewController(_ cropViewController: CropViewController, didCropToCircularImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+        updateImageViewWithImage(image, fromCropViewController: cropViewController)
+    }
+    
+    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+        updateImageViewWithImage(image, fromCropViewController: cropViewController)
+    }
+    
+    func updateImageViewWithImage(_ image: UIImage, fromCropViewController cropViewController: CropViewController) {
+        
+        if tapId == "heroImage" {
+            
+            self.heroImageView.image = image
+            
+        } else {
+            
+            self.backImageView.image = image
+        }
+        
+        croppingStyle = .default
+        cropViewController.dismiss(animated: true, completion: nil)
     }
 }
