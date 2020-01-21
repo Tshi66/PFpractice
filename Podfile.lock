@@ -1,4 +1,5 @@
 PODS:
+  - CropViewController (2.5.2)
   - FontAwesome.swift (1.8.3)
   - Loaf (0.5.0)
   - lottie-ios (3.1.5)
@@ -12,6 +13,7 @@ PODS:
   - Validator (3.2.1)
 
 DEPENDENCIES:
+  - CropViewController
   - FontAwesome.swift
   - Loaf
   - lottie-ios
@@ -22,6 +24,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - CropViewController
     - FontAwesome.swift
     - Loaf
     - lottie-ios
@@ -32,6 +35,7 @@ SPEC REPOS:
     - Validator
 
 SPEC CHECKSUMS:
+  CropViewController: 1aac40093c5739e60d992b04724a55d12a689a4c
   FontAwesome.swift: 2a3235131a6caffc6b2ccba318e94d793b2fd342
   Loaf: 0800b444431366bc395d54267975d4ad4ad5c99c
   lottie-ios: 32bf84389337d86fbc8b12266e88452e0abf1dee
@@ -41,6 +45,6 @@ SPEC CHECKSUMS:
   RealmSwift: 402f1e379a8ef82c635313037b043f0f06de880c
   Validator: 80a6f567220c962dfd2d9928ae98a8c1d164f6f4
 
-PODFILE CHECKSUM: 4f03e90a9766192e0166e91769307482bf3fdbca
+PODFILE CHECKSUM: 94754b48079176f564f181e622bd7ca046c0eda9
 
 COCOAPODS: 1.8.4

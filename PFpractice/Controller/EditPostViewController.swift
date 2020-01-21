@@ -10,6 +10,7 @@ import UIKit
 import RealmSwift
 import Validator
 import Loaf
+import CropViewController
 
 class EditPostViewController: UIViewController, UINavigationControllerDelegate, UITextFieldDelegate, ContentScrollable {
 
@@ -34,11 +35,13 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
     
     var heroImage:UIImage?
     var backImgae:UIImage?
-    var tapId = 0
+    var tapId:String = ""
     var datePicker = UIDatePicker()
     var post = Post()
     var bank = Bank()
     let realm = try! Realm()
+    var croppingStyle = CropViewCroppingStyle.default
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -203,12 +206,12 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
     
     @IBAction func backTapGesture(_ sender: UITapGestureRecognizer) {
         setImgPicker()
-        tapId = 1
+        tapId = "backImage"
     }
     
     @IBAction func heroTapGesture(_ sender: UITapGestureRecognizer) {
         setImgPicker()
-        tapId = 0
+        tapId = "heroImage"
     }
     
     func setImgPicker(){
@@ -253,7 +256,38 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
 
 }
 
-extension EditPostViewController: UIImagePickerControllerDelegate{
+//extension EditPostViewController: UIImagePickerControllerDelegate{
+//
+//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+//        dismiss(animated: true, completion: nil)
+//
+//    }
+//
+//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+//
+//        let pickerImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+//
+//        //pickeで取得したUIImageのサイズを90％カットする。（realmが5MB以下対応だから）
+//        let resizedImage = pickerImage?.resized(withPercentage: 0.1)
+//
+//        if tapId == 0 {
+//            heroImage = resizedImage
+//        } else {
+//            backImgae = resizedImage
+//        }
+//
+//        picker.dismiss(animated: true) {
+//            if self.tapId == 0 {
+//                self.heroImageView.image = self.heroImage
+//                self.heroImageView.layer.cornerRadius = self.heroImageView.frame.size.width * 0.5
+//            } else {
+//                self.backImageView.image = self.backImgae
+//            }
+//        }
+//    }
+//}
+
+extension EditPostViewController: UIImagePickerControllerDelegate, CropViewControllerDelegate{
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
@@ -262,24 +296,63 @@ extension EditPostViewController: UIImagePickerControllerDelegate{
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        let pickerImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
+        guard let pickerImage = (info[UIImagePickerController.InfoKey.originalImage] as? UIImage) else { return }
         
-        //pickeで取得したUIImageのサイズを90％カットする。（realmが5MB以下対応だから）
-        let resizedImage = pickerImage?.resized(withPercentage: 0.1)
+        //pickerで取得したUIImageのデータサイズをカットする。（realmが5MB以下対応だから）
+        let resizedImage:UIImage = pickerImage.resized(withPercentage: 0.3)!
         
-        if tapId == 0 {
-            heroImage = resizedImage
+        if tapId == "heroImage" {
+            
+            croppingStyle = .circular
         } else {
-            backImgae = resizedImage
+            
+            croppingStyle = .default
+        }
+        
+        let cropController = CropViewController(croppingStyle: croppingStyle, image: resizedImage)
+        cropController.delegate = self
+             
+        if croppingStyle == .circular {
+            
+            cropController.title = "プロフィール画像"
+            
+        } else {
+            
+            cropController.customAspectRatio = backImageView.frame.size
+            cropController.aspectRatioPickerButtonHidden = true
+            cropController.resetAspectRatioEnabled = false
+            cropController.rotateButtonsHidden = true
+            cropController.cropView.cropBoxResizeEnabled = false
+            cropController.title = "背景画像"
         }
         
         picker.dismiss(animated: true) {
-            if self.tapId == 0 {
-                self.heroImageView.image = self.heroImage
-                self.heroImageView.layer.cornerRadius = self.heroImageView.frame.size.width * 0.5
-            } else {
-                self.backImageView.image = self.backImgae
-            }
+            
+            self.present(cropController, animated: true, completion: nil)
+            
         }
+    }
+    
+    func cropViewController(_ cropViewController: CropViewController, didCropToCircularImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+        updateImageViewWithImage(image, fromCropViewController: cropViewController)
+    }
+    
+    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+        updateImageViewWithImage(image, fromCropViewController: cropViewController)
+    }
+    
+    func updateImageViewWithImage(_ image: UIImage, fromCropViewController cropViewController: CropViewController) {
+        
+        if tapId == "heroImage" {
+            
+            self.heroImageView.image = image
+            
+        } else {
+            
+            self.backImageView.image = image
+        }
+        
+        croppingStyle = .default
+        cropViewController.dismiss(animated: true, completion: nil)
     }
 }
