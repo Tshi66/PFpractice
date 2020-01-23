@@ -45,6 +45,9 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //FAアイコン。
+        iconSetToLabel()
+        
         hideKeyboardWhenTappedAround()
         
         nameTextField.delegate = self
@@ -59,8 +62,7 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //FAアイコン。
-        iconSetToLabel()
+        
         //ContentScrollable監視開始
         configureObserver()
         
@@ -88,7 +90,7 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
         
         validateTextField()
         
-        if nameVdLabel.text == "ok" && themeVdLabel.text == "ok" && presentVdLabel.text == "ok" && dateVdLabel.text == "ok" && budgetVdLabel.text == "ok"  {
+        if nameVdLabel.text == "ok" && themeVdLabel.text == "ok" && presentVdLabel.text == "ok" && dateVdLabel.text == "ok" && budgetVdLabel.text == "ok" {
             
             saveAlert()
             
@@ -169,12 +171,11 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
             
             self.inputContentToPost()
             
-            //1つ前の画面に戻り、Loafでメッセージ表示
+            //1つ前の画面に戻る
             self.navigationController?.popViewController(animated: false)
             
-            let image = self.post.photo
-            let name = self.post.name
-            Loaf("\(String(describing: name))のポストを作成しました。", state: .custom(.init(backgroundColor: .systemGreen, icon: image)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
+            //Loafでメッセージ表示
+            self.loafOfCreated()
             
             //postをrealmに保存
             self.realmAddPost(post: self.post)
@@ -186,6 +187,13 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
         alert.addAction(action)
         alert.addAction(cancelAction)
         present(alert, animated: true, completion: nil)
+    }
+    
+    func loafOfCreated() {
+        
+        let image = self.post.photo
+        let name = self.post.name
+        Loaf("\(String(describing: name))のポストを作成しました。", state: .custom(.init(backgroundColor: .systemGreen, icon: image)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
     }
     
     func inputContentToPost() {
@@ -250,13 +258,16 @@ extension CreatePostViewController: UIImagePickerControllerDelegate, CropViewCon
         //pickerで取得したUIImageのデータサイズをカットする。（realmが5MB以下対応だから）
         let resizedImage:UIImage = pickerImage.resized(withPercentage: 0.3)!
         
-        if tapId == "heroImage" {
+        croppingStyle = {
             
-            croppingStyle = .circular
-        } else {
-            
-            croppingStyle = .default
-        }
+            if tapId == "heroImage" {
+                
+                return .circular
+            } else {
+                
+                return .default
+            }
+        }()
         
         let cropController = CropViewController(croppingStyle: croppingStyle, image: resizedImage)
         cropController.delegate = self

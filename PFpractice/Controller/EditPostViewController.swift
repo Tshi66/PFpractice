@@ -62,7 +62,7 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //FAアイコン。
-        fontAwesomeIconSet()
+        iconSetToLabel()
         
         configureObserver()
         
@@ -72,6 +72,38 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         super.viewWillDisappear(animated)
         
         removeObserver()
+    }
+    
+    //MARC: IBAction
+    
+    @IBAction func editPostButton(_ sender: UIButton) {
+        
+        validateTextField()
+        
+        if nameVdLabel.text == "ok" && themeVdLabel.text == "ok" && presentVdLabel.text == "ok" && dateVdLabel.text == "ok" && budgetVdLabel.text == "ok"  {
+            
+            saveAlert()
+        } else {
+            
+            Loaf("ポストが編集されませんでした。", state: .error, location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
+        }
+    }
+    
+    @IBAction func backTapGesture(_ sender: UITapGestureRecognizer) {
+        setImgPicker()
+        tapId = "backImage"
+    }
+    
+    @IBAction func heroTapGesture(_ sender: UITapGestureRecognizer) {
+        setImgPicker()
+        tapId = "heroImage"
+    }
+    
+    func setImgPicker(){
+        let picker = UIImagePickerController()
+        picker.sourceType = .photoLibrary
+        picker.delegate = self
+        present(picker, animated: true, completion: nil)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -90,22 +122,23 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         heroImageView.layer.cornerRadius = heroImageView.frame.size.width * 0.5
     }
     
-    func fontAwesomeIconSet(){
+    func iconSetToLabel(){
+        
+        fontAwesomeIconSet(iconLabel: themeIcon, iconName: .fontAwesomeIcon(name: .heart))
+        fontAwesomeIconSet(iconLabel: presentIcon, iconName: .fontAwesomeIcon(name: .gem))
+        fontAwesomeIconSet(iconLabel: dateIcon, iconName: .fontAwesomeIcon(name: .calendarAlt))
+        fontAwesomeIconSet(iconLabel: budgetIcon, iconName: .fontAwesomeIcon(name: .moneyBillAlt))
+        
+    }
+    
+    func fontAwesomeIconSet(iconLabel: UILabel, iconName: String) {
         let font = UIFont.fontAwesome(ofSize: 20.0, style: .regular)
         let color = UIColor.init(red: 219/255, green: 68/255, blue: 55/255, alpha: 1.0)
-
-        themeIcon.font = font
-        themeIcon.text = String.fontAwesomeIcon(name: .heart)
-        themeIcon.textColor = color
-        presentIcon.font = font
-        presentIcon.text = String.fontAwesomeIcon(name: .gem)
-        presentIcon.textColor = color
-        dateIcon.font = font
-        dateIcon.text = String.fontAwesomeIcon(name: .calendarAlt)
-        dateIcon.textColor = color
-        budgetIcon.font = font
-        budgetIcon.text = String.fontAwesomeIcon(name: .moneyBillAlt)
-        budgetIcon.textColor = color
+        let fontAwesomeIcon = iconName
+        
+        iconLabel.font = font
+        iconLabel.text = fontAwesomeIcon
+        iconLabel.textColor = color
     }
     
     func setDatePicker() {
@@ -132,33 +165,19 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         dateTextField.text = "\(formatter.string(from: datePicker.date))"
     }
     
-    //MARC: IBAction
-    
-    @IBAction func editPostButton(_ sender: UIButton) {
-        
-        validateTextField()
-        
-        if nameVdLabel.text == "ok" && themeVdLabel.text == "ok" && presentVdLabel.text == "ok" && dateVdLabel.text == "ok" && budgetVdLabel.text == "ok"  {
-            
-            saveAlert()
-        } else {
-            
-            Loaf("ポストが編集されませんでした。", state: .error, location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
-        }
-        
-        
-    }
-    
     func saveAlert() {
         
         let alert = UIAlertController(title: "ポストを編集しますか？", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default) { (action) in
                         
-            self.updatePost(post: self.post)
+            self.updateRealmData(post: self.post)
             
             //1つ前の画面に戻り、Loafでメッセージ表示
+            self.navigationController?.popViewController(animated: false)
+            
             let image = self.post.photo
-            Loaf("\(self.post.name)のポストを編集しました。", state: .custom(.init(backgroundColor: .systemGreen, icon: image)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: ((self.navigationController?.popViewController(animated: false))!)).show()
+            let name = self.post.name
+            Loaf("\(name)のポストを編集しました。", state: .custom(.init(backgroundColor: .systemGreen, icon: image)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
         }
         
         let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel) { (action: UIAlertAction!) in
@@ -204,45 +223,34 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         }
     }
     
-    @IBAction func backTapGesture(_ sender: UITapGestureRecognizer) {
-        setImgPicker()
-        tapId = "backImage"
-    }
-    
-    @IBAction func heroTapGesture(_ sender: UITapGestureRecognizer) {
-        setImgPicker()
-        tapId = "heroImage"
-    }
-    
-    func setImgPicker(){
-        let picker = UIImagePickerController()
-        picker.sourceType = .photoLibrary
-        picker.delegate = self
-        present(picker, animated: true, completion: nil)
-    }
-    
-    func updatePost(post: Post){
+    func updateRealmData(post: Post){
         do {
             try realm.write {
             
+                //入力された予算額がポストへの入金額よりも大きい場合
                 if post.deposit > Int(self.budgetTextField.text!)! {
+                    //貯金額を増やす
                     bank.saving += (post.deposit - Int(self.budgetTextField.text!)!)
-                    
+                    //ポストへの入金額を減らす
                     post.deposit -= (post.deposit - Int(self.budgetTextField.text!)!)
                 }
                 
-                post.name = self.nameTextField.text!
-                post.theme = self.themeTextField.text!
-                post.present = self.presentTextField.text!
-                post.date = self.dateTextField.text!
-                post.budget = Int(self.budgetTextField.text!)!
-                post.backImage = self.backImageView.image
-                post.photo = self.heroImageView.image
-                
+                inputContentToPost()
             }
         } catch {
-            print("Error saving post \(error)")
+            print("Error update RealmData(post) \(error)")
         }
+    }
+    
+    func inputContentToPost() {
+        
+        post.name = self.nameTextField.text!
+        post.theme = self.themeTextField.text!
+        post.present = self.presentTextField.text!
+        post.date = self.dateTextField.text!
+        post.budget = Int(self.budgetTextField.text!)!
+        post.backImage = self.backImageView.image
+        post.photo = self.heroImageView.image
     }
     
     func bankLoad() {
@@ -255,37 +263,6 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
     }
 
 }
-
-//extension EditPostViewController: UIImagePickerControllerDelegate{
-//
-//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-//        dismiss(animated: true, completion: nil)
-//
-//    }
-//
-//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-//
-//        let pickerImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage
-//
-//        //pickeで取得したUIImageのサイズを90％カットする。（realmが5MB以下対応だから）
-//        let resizedImage = pickerImage?.resized(withPercentage: 0.1)
-//
-//        if tapId == 0 {
-//            heroImage = resizedImage
-//        } else {
-//            backImgae = resizedImage
-//        }
-//
-//        picker.dismiss(animated: true) {
-//            if self.tapId == 0 {
-//                self.heroImageView.image = self.heroImage
-//                self.heroImageView.layer.cornerRadius = self.heroImageView.frame.size.width * 0.5
-//            } else {
-//                self.backImageView.image = self.backImgae
-//            }
-//        }
-//    }
-//}
 
 extension EditPostViewController: UIImagePickerControllerDelegate, CropViewControllerDelegate{
     
