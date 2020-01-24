@@ -216,21 +216,18 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
         //20../../..の型でないとエラー
         let dateRule = ValidationRulePattern(pattern: "20../../..", error: ExampleValidationError("日付を入力して下さい"))
         
-        let nameValidation = nameTextField.validate(rule: stringRule)
-        reflectValidateResalut(result: nameValidation, label: nameVdLabel)
+        applyRuleToTF(textField: nameTextField, rule: stringRule, VDLabel: nameVdLabel)
+        applyRuleToTF(textField: themeTextField, rule: stringRule, VDLabel: themeVdLabel)
+        applyRuleToTF(textField: presentTextField, rule: stringRule, VDLabel: presentVdLabel)
+        applyRuleToTF(textField: dateTextField, rule: dateRule, VDLabel: dateVdLabel)
+        applyRuleToTF(textField: budgetTextField, rule: budgetRule, VDLabel: budgetVdLabel)
         
-        let themeValidation = themeTextField.validate(rule: stringRule)
-        reflectValidateResalut(result: themeValidation, label: themeVdLabel)
+    }
+    
+    func applyRuleToTF(textField: UITextField, rule: ValidationRulePattern, VDLabel: UILabel) {
         
-        let presentValidation = presentTextField.validate(rule: stringRule)
-        reflectValidateResalut(result: presentValidation, label: presentVdLabel)
-        
-        let dateValidation = dateTextField.validate(rule: dateRule)
-        reflectValidateResalut(result: dateValidation, label: dateVdLabel)
-        
-        let budgetValidation = budgetTextField.validate(rule: budgetRule)
-        reflectValidateResalut(result: budgetValidation, label: budgetVdLabel)
-        
+        let validateTF = textField.validate(rule: rule)
+        reflectValidateResalut(result: validateTF, label: VDLabel)
     }
     
     func reflectValidateResalut(result: ValidationResult, label: UILabel) {
@@ -312,7 +309,6 @@ extension CreatePostViewController: UIImagePickerControllerDelegate, CropViewCon
             self.backImageView.image = image
         }
         
-        croppingStyle = .default
         cropViewController.dismiss(animated: true, completion: nil)
     }
 }

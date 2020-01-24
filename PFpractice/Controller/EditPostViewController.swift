@@ -41,7 +41,6 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
     var bank = Bank()
     let realm = try! Realm()
     var croppingStyle = CropViewCroppingStyle.default
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -119,7 +118,7 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         budgetTextField.text = "\(post.budget)"
         backImageView.image = post.backImage
         heroImageView.image = post.photo
-        heroImageView.layer.cornerRadius = heroImageView.frame.size.width * 0.5
+//        heroImageView.layer.cornerRadius = heroImageView.frame.size.width * 0.5
     }
     
     func iconSetToLabel(){
@@ -174,7 +173,6 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
             
             //1つ前の画面に戻り、Loafでメッセージ表示
             self.navigationController?.popViewController(animated: false)
-            
             let image = self.post.photo
             let name = self.post.name
             Loaf("\(name)のポストを編集しました。", state: .custom(.init(backgroundColor: .systemGreen, icon: image)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
@@ -197,21 +195,18 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         //20../../..の型でないとエラー
         let dateRule = ValidationRulePattern(pattern: "20../../..", error: ExampleValidationError("日付を入力して下さい"))
         
-        let nameValidation = nameTextField.validate(rule: stringRule)
-        reflectValidateResalut(result: nameValidation, label: nameVdLabel)
+        applyRuleToTF(textField: nameTextField, rule: stringRule, VDLabel: nameVdLabel)
+        applyRuleToTF(textField: themeTextField, rule: stringRule, VDLabel: themeVdLabel)
+        applyRuleToTF(textField: presentTextField, rule: stringRule, VDLabel: presentVdLabel)
+        applyRuleToTF(textField: dateTextField, rule: dateRule, VDLabel: dateVdLabel)
+        applyRuleToTF(textField: budgetTextField, rule: budgetRule, VDLabel: budgetVdLabel)
         
-        let themeValidation = themeTextField.validate(rule: stringRule)
-        reflectValidateResalut(result: themeValidation, label: themeVdLabel)
+    }
+    
+    func applyRuleToTF(textField: UITextField, rule: ValidationRulePattern, VDLabel: UILabel) {
         
-        let presentValidation = presentTextField.validate(rule: stringRule)
-        reflectValidateResalut(result: presentValidation, label: presentVdLabel)
-        
-        let dateValidation = dateTextField.validate(rule: dateRule)
-        reflectValidateResalut(result: dateValidation, label: dateVdLabel)
-        
-        let budgetValidation = budgetTextField.validate(rule: budgetRule)
-        reflectValidateResalut(result: budgetValidation, label: budgetVdLabel)
-        
+        let validateTF = textField.validate(rule: rule)
+        reflectValidateResalut(result: validateTF, label: VDLabel)
     }
     
     func reflectValidateResalut(result: ValidationResult, label: UILabel) {
@@ -226,23 +221,32 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
     func updateRealmData(post: Post){
         do {
             try realm.write {
-            
-                //入力された予算額がポストへの入金額よりも大きい場合
-                if post.deposit > Int(self.budgetTextField.text!)! {
-                    //貯金額を増やす
-                    bank.saving += (post.deposit - Int(self.budgetTextField.text!)!)
-                    //ポストへの入金額を減らす
-                    post.deposit -= (post.deposit - Int(self.budgetTextField.text!)!)
-                }
                 
-                inputContentToPost()
+                modifySavingAndDeposit()
+                
+                updatePostOnRealm()
             }
         } catch {
             print("Error update RealmData(post) \(error)")
         }
     }
     
-    func inputContentToPost() {
+    func modifySavingAndDeposit() {
+        
+        let deposit = post.deposit
+        let inputtedBudgetOnTF = self.budgetTextField.text
+        let difference = deposit - Int(inputtedBudgetOnTF!)!
+        
+        //入力された予算額がポストへの入金額よりも大きい場合
+        if deposit > Int(inputtedBudgetOnTF!)! {
+            //貯金額を増やす
+            bank.saving += difference
+            //ポストへの入金額を減らす
+            post.deposit -= difference
+        }
+    }
+    
+    func updatePostOnRealm() {
         
         post.name = self.nameTextField.text!
         post.theme = self.themeTextField.text!
@@ -251,6 +255,7 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         post.budget = Int(self.budgetTextField.text!)!
         post.backImage = self.backImageView.image
         post.photo = self.heroImageView.image
+        
     }
     
     func bankLoad() {
@@ -329,7 +334,6 @@ extension EditPostViewController: UIImagePickerControllerDelegate, CropViewContr
             self.backImageView.image = image
         }
         
-        croppingStyle = .default
         cropViewController.dismiss(animated: true, completion: nil)
     }
 }
