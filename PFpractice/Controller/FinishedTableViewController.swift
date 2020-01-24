@@ -53,7 +53,7 @@ class FinishedTableViewController: UITableViewController {
         let post = posts[indexPath.row]
         
         //アイコンを表示
-        setIconFromFontAwesome(cell: cell)
+        iconSetToLabel(cell: cell)
         
         //各ラベルとイメージを表示
         setPostLabelAndImage(cell: cell, post: post)
@@ -70,12 +70,21 @@ class FinishedTableViewController: UITableViewController {
             let image = deletePost.photo
             Loaf("\(name)のポストを削除しました。", state: .custom(.init(backgroundColor: .systemGreen, icon: image)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
             
-            try! realm.write {
-                realm.delete(deletePost)
-            }
+            deletePostFromRealm(post: deletePost)
             
             self.tableView.reloadData()
             
+        }
+    }
+    
+    func deletePostFromRealm(post: Post) {
+        do {
+            try realm.write {
+                
+                realm.delete(post)
+            }
+        } catch {
+            print("Error deleting post \(error)")
         }
     }
     
@@ -93,29 +102,27 @@ class FinishedTableViewController: UITableViewController {
         cell.presentLabel.text = post.realPresent
         cell.dateLabel.text = post.realDate
         cell.budgetLabel.text = String(post.realCost)
-        //photoを丸く表示
         cell.photoImageView.image = post.photo
-        cell.photoImageView.layer.cornerRadius = cell.photoImageView.frame.size.width * 0.5
     }
     
-    func setIconFromFontAwesome(cell: FinishedTableViewCell){
+    func iconSetToLabel(cell: FinishedTableViewCell){
+        
+        fontAwesomeIconSet(iconLabel: cell.themeIcon, iconName: .fontAwesomeIcon(name: .heart))
+        fontAwesomeIconSet(iconLabel: cell.presentIcon, iconName: .fontAwesomeIcon(name: .gem))
+        fontAwesomeIconSet(iconLabel: cell.dateIcon, iconName: .fontAwesomeIcon(name: .calendarAlt))
+        fontAwesomeIconSet(iconLabel: cell.budgetIcon, iconName: .fontAwesomeIcon(name: .moneyBillAlt))
+        
+    }
+    
+    func fontAwesomeIconSet(iconLabel: UILabel, iconName: String) {
         
         let font = UIFont.fontAwesome(ofSize: 13.0, style: .regular)
         let color = UIColor.init(red: 219/255, green: 68/255, blue: 55/255, alpha: 1.0)
+        let fontAwesomeIcon = iconName
         
-        //FAアイコン。
-        cell.themeIcon.font = font
-        cell.themeIcon.text = String.fontAwesomeIcon(name: .heart)
-        cell.themeIcon.textColor = color
-        cell.presentIcon.font = font
-        cell.presentIcon.text = String.fontAwesomeIcon(name: .gem)
-        cell.presentIcon.textColor = color
-        cell.dateIcon.font = font
-        cell.dateIcon.text = String.fontAwesomeIcon(name: .calendarAlt)
-        cell.dateIcon.textColor = color
-        cell.budgetIcon.font = font
-        cell.budgetIcon.text = String.fontAwesomeIcon(name: .moneyBillAlt)
-        cell.budgetIcon.textColor = color
+        iconLabel.font = font
+        iconLabel.text = fontAwesomeIcon
+        iconLabel.textColor = color
     }
 }
 
