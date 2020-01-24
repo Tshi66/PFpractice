@@ -36,6 +36,8 @@ class PostTableViewController: UITableViewController {
         
         tableView.reloadData()
         showMiniBankView()
+        loadPostsFromRealm()
+        loadBankFromRealm()
         
     }
 
