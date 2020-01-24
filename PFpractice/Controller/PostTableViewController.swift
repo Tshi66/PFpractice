@@ -27,17 +27,17 @@ class PostTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadPosts()
+        loadPostsFromRealm()
+        loadBankFromRealm()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         tableView.reloadData()
-        indicateMainProgress()
+        showMiniBankView()
         
     }
-
-    // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -50,6 +50,7 @@ class PostTableViewController: UITableViewController {
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cellIdentifier = "PostTableViewCell"
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? PostTableViewCell else {
@@ -57,72 +58,19 @@ class PostTableViewController: UITableViewController {
             fatalError("dequeueできませんでした。")
         }
         
-        let post = posts[indexPath.row]
+        post = posts[indexPath.row]
         
-        cell.nameLabel.text = post.name
+        //アイコンをセットする
+        iconSetToLabel(cell: cell)
         
+        //ポストデータを表示
+        showPostData(cell: cell)
         
-        let font = UIFont.fontAwesome(ofSize: 14.0, style: .regular)
-        let color = UIColor.init(red: 219/255, green: 68/255, blue: 55/255, alpha: 1.0)
-
-        //アイコンとラベルテキストを表示。アイコンのみを着色する。
-        let themeIcon = String.fontAwesomeIcon(name: .heart)
-        let themeLabelText = themeIcon + "  " + post.theme
-        let attrThemeLabel = NSMutableAttributedString(string: themeLabelText)
-        attrThemeLabel.addAttribute(.foregroundColor, value: color, range: NSMakeRange(0, 1))
-        cell.themeLabel.font = font
-        cell.themeLabel.attributedText = attrThemeLabel
+        //通知の有無を表示
+        showNotificationLabel(cell: cell)
         
-        let presentIcon = String.fontAwesomeIcon(name: .gem)
-        let presentLabelText = presentIcon + "  " + post.present
-        let attrPresentLabel = NSMutableAttributedString(string: presentLabelText)
-        attrPresentLabel.addAttribute(.foregroundColor, value: color, range: NSMakeRange(0, 1))
-        cell.presentLabel.font = font
-        cell.presentLabel.attributedText = attrPresentLabel
-        
-        let dateIcon = String.fontAwesomeIcon(name: .calendarAlt)
-        let dateLabelText = dateIcon + "   " + post.date
-        let attrDateLabel = NSMutableAttributedString(string: dateLabelText)
-        attrDateLabel.addAttribute(.foregroundColor, value: color, range: NSMakeRange(0, 1))
-        cell.dateLabel.font = font
-        cell.dateLabel.attributedText = attrDateLabel
- 
-        let budgetIcon = String.fontAwesomeIcon(name: .moneyBillAlt)
-        let budgetLabelText = budgetIcon + "  " + "\(post.deposit) / \(post.budget)円"
-        let attrBudgetLabel = NSMutableAttributedString(string: budgetLabelText)
-        attrBudgetLabel.addAttribute(.foregroundColor, value: color, range: NSMakeRange(0, 1))
-        cell.budgetLabel.font = font
-        cell.budgetLabel.attributedText = attrBudgetLabel
-        
-        if remainingTime(date: post.date) < 0 {
-            
-            cell.remainingTimeLabel.text = "\(-(remainingTime(date: post.date)))日前"
-        } else {
-            
-            cell.remainingTimeLabel.text = "あと\(remainingTime(date: post.date))日"
-        }
-        
-        cell.notificationLabel.layer.cornerRadius = 3
-        cell.notificationLabel.clipsToBounds = true
-        
-        if post.info?.enable != nil {
-            cell.notificationLabel.isHidden = false
-            
-            cell.notificationLabel.text =
-                "[\(String(post.info!.repetition))] \(String(post.info!.date))、\(String(post.info!.time))"
-            
-        } else {
-            cell.notificationLabel.isHidden = true
-        }
-        
-        cell.photoImageView.image = post.photo
-        cell.photoImageView.layer.cornerRadius = cell.photoImageView.frame.size.width * 0.5
-        
-        //subProgressViewの数値設定
-        UIView.animate(withDuration: 1.0) {
-            cell.subProgressView.value = CGFloat(post.deposit)
-        }
-        cell.subProgressView.maxValue = CGFloat(post.budget)
+        //subProgressViewを表示
+        showSubProgressView(cell: cell)
         
         return cell
     }
@@ -142,50 +90,28 @@ class PostTableViewController: UITableViewController {
         }
     }
     
-    func indicateMainProgress(){
-        let sumBudget: Int = posts.sum(ofProperty: "budget")
-        let sumDeposit: Int = posts.sum(ofProperty: "deposit")
+    func showPostData(cell: PostTableViewCell) {
         
-        bankLoad()
-        savingLabel.text = "\(bank.saving)円"
-        sumDepositLabel.text = "\(sumDeposit)円"
-        presentCostLabel.text = "\(sumBudget)円"
+        cell.nameLabel.text = post.name
+        cell.themeLabel.text = post.theme
+        cell.presentLabel.text = post.present
+        cell.dateLabel.text = post.date
+        cell.budgetLabel.text = String("\(post.deposit) / \(post.budget)円")
+        cell.photoImageView.image = post.photo
         
-        let amount = sumBudget - bank.saving
-        
-        if amount < 0 {
-            progressLabel.text = "余り \(-(amount))円"
-            progressLabel.textColor = .blue
-        } else {
-            progressLabel.text = "あと \(amount)円"
-            progressLabel.textColor = .red
-        }
-        
-        UIView.animate(withDuration: 1.0) {
-            self.mainProgressView.value = CGFloat(self.bank.saving)
-        }
-        
-        mainProgressView.maxValue = CGFloat(sumBudget)
-        
-    }
-    
-    func loadPosts(){
-        
-        posts = realm.objects(Post.self).filter("finished = false")
-        
-        self.tableView.reloadData()
-    }
-    
-    func bankLoad() {
-        if realm.objects(Bank.self).filter("id = 0").first != nil{
+        cell.remainingTimeLabel.text = {
             
-            bank = realm.objects(Bank.self).filter("id = 0").first!
-        } else {
-            print("Bankデータが存在しません。")
-        }
+            let remainingDays = outputRemainingDays(date: post.date)
+            
+            if remainingDays < 0 {
+                return ("\(-(remainingDays))日前")
+            } else {
+                return ("あと\(remainingDays)日")
+            }
+        }()
     }
     
-    func remainingTime(date: String) -> Int {
+    func outputRemainingDays(date: String) -> Int {
         
         let now = Date()
         let dateFormatter = DateFormatter()
@@ -196,5 +122,98 @@ class PostTableViewController: UITableViewController {
 
         return (Calendar.current.dateComponents([.day], from: curDate!, to: repDate!)).day!
         
+    }
+    
+    func iconSetToLabel(cell: PostTableViewCell){
+        
+        fontAwesomeIconSet(iconLabel: cell.themeIcon, iconName: .fontAwesomeIcon(name: .heart))
+        fontAwesomeIconSet(iconLabel: cell.presentIcon, iconName: .fontAwesomeIcon(name: .gem))
+        fontAwesomeIconSet(iconLabel: cell.dateIcon, iconName: .fontAwesomeIcon(name: .calendarAlt))
+        fontAwesomeIconSet(iconLabel: cell.budgetIcon, iconName: .fontAwesomeIcon(name: .moneyBillAlt))
+        
+    }
+    
+    func fontAwesomeIconSet(iconLabel: UILabel, iconName: String) {
+        
+        let font = UIFont.fontAwesome(ofSize: 14.0, style: .regular)
+        let color = UIColor.init(red: 219/255, green: 68/255, blue: 55/255, alpha: 1.0)
+        let fontAwesomeIcon = iconName
+        
+        iconLabel.font = font
+        iconLabel.text = fontAwesomeIcon
+        iconLabel.textColor = color
+    }
+    
+    func showNotificationLabel(cell: PostTableViewCell) {
+        
+        cell.notificationLabel.layer.cornerRadius = 3
+        cell.notificationLabel.clipsToBounds = true
+        
+        if post.info?.enable != nil {
+            cell.notificationLabel.isHidden = false
+            
+            cell.notificationLabel.text =
+                "[\(String(post.info!.repetition))] \(String(post.info!.date))、\(String(post.info!.time))"
+            
+        } else {
+            cell.notificationLabel.isHidden = true
+        }
+    }
+    
+    func showSubProgressView(cell: PostTableViewCell){
+        
+        UIView.animate(withDuration: 1.0) {
+            cell.subProgressView.value = CGFloat(self.post.deposit)
+        }
+        cell.subProgressView.maxValue = CGFloat(post.budget)
+    }
+    
+    func showMiniBankView(){
+        
+        let sumBudget: Int = posts.sum(ofProperty: "budget")
+        let sumDeposit: Int = posts.sum(ofProperty: "deposit")
+                
+        savingLabel.text = "\(bank.saving)円"
+        sumDepositLabel.text = "\(sumDeposit)円"
+        presentCostLabel.text = "\(sumBudget)円"
+        
+        //mainProgressViewを表示
+        showMainProgressView(sumBudget: sumBudget)
+    }
+    
+    func showMainProgressView(sumBudget: Int) {
+                
+        (text: progressLabel.text, color: progressLabel.textColor) = {
+            
+            let amount = sumBudget - bank.saving
+            
+            if amount < 0 {
+                return (text: "余り \(-(amount))円", color: .blue)
+                
+            } else {
+                return (text: "あと \(amount)円", color: .red)
+            }
+        }()
+        
+        UIView.animate(withDuration: 1.0) {
+            self.mainProgressView.value = CGFloat(self.bank.saving)
+        }
+        
+        mainProgressView.maxValue = CGFloat(sumBudget)
+    }
+    
+    func loadPostsFromRealm(){
+        
+        posts = realm.objects(Post.self).filter("finished = false")
+        
+    }
+    
+    func loadBankFromRealm() {
+        if realm.objects(Bank.self).filter("id = 0").first != nil{
+            
+            bank = realm.objects(Bank.self).filter("id = 0").first!
+        } else {
+            print("Bankデータが存在しません。")
+        }
     }
 }

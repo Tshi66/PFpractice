@@ -12,6 +12,10 @@ import MBCircularProgressBar
 class PostTableViewCell: UITableViewCell {
     
     //MARC: Properties
+    @IBOutlet weak var themeIcon: UILabel!
+    @IBOutlet weak var presentIcon: UILabel!
+    @IBOutlet weak var dateIcon: UILabel!
+    @IBOutlet weak var budgetIcon: UILabel!
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var remainingTimeLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!

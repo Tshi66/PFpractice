@@ -39,9 +39,14 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
     var datePicker = UIDatePicker()
     let realm = try! Realm()
     var croppingStyle = CropViewCroppingStyle.default
+    //ユニークなIdを付与する
+    var post = Post.create()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //FAアイコン。
+        iconSetToLabel()
         
         hideKeyboardWhenTappedAround()
         
@@ -57,8 +62,7 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //FAアイコン。
-        fontAwesomeIconSet()
+        
         //ContentScrollable監視開始
         configureObserver()
         
@@ -68,44 +72,6 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
         super.viewWillDisappear(animated)
         //ContentScrollable監視終了
         removeObserver()
-        
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    
-    func fontAwesomeIconSet(){
-        let font = UIFont.fontAwesome(ofSize: 20.0, style: .regular)
-        let color = UIColor.init(red: 219/255, green: 68/255, blue: 55/255, alpha: 1.0)
-        
-        themeIcon.font = font
-        themeIcon.text = String.fontAwesomeIcon(name: .heart)
-        themeIcon.textColor = color
-        presentIcon.font = font
-        presentIcon.text = String.fontAwesomeIcon(name: .gem)
-        presentIcon.textColor = color
-        dateIcon.font = font
-        dateIcon.text = String.fontAwesomeIcon(name: .calendarAlt)
-        dateIcon.textColor = color
-        budgetIcon.font = font
-        budgetIcon.text = String.fontAwesomeIcon(name: .moneyBillAlt)
-        budgetIcon.textColor = color
-    }
-    
-    func setDatePicker() {
-        datePicker.datePickerMode = UIDatePicker.Mode.date
-        datePicker.timeZone = NSTimeZone.local
-        datePicker.locale = Locale.current
-        
-        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 40))
-        let spacelItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
-        let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
-        toolbar.setItems([spacelItem, doneItem], animated: true)
-        
-        dateTextField.inputView = datePicker
-        dateTextField.inputAccessoryView = toolbar
         
     }
     
@@ -120,12 +86,11 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
     
     //MARC: IBAction
     
-    
     @IBAction func createPostButton(_ sender: UIButton) {
         
         validateTextField()
         
-        if nameVdLabel.text == "ok" && themeVdLabel.text == "ok" && presentVdLabel.text == "ok" && dateVdLabel.text == "ok" && budgetVdLabel.text == "ok"  {
+        if nameVdLabel.text == "ok" && themeVdLabel.text == "ok" && presentVdLabel.text == "ok" && dateVdLabel.text == "ok" && budgetVdLabel.text == "ok" {
             
             saveAlert()
             
@@ -134,45 +99,6 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
             Loaf("ポストが作成されませんでした。", state: .error, location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
         }
         
-    }
-    
-    func save(post: Post){
-        do {
-            try realm.write {
-                realm.add(post)
-            }
-        } catch {
-            print("Error saving post \(error)")
-        }
-    }
-    
-    func saveAlert(){
-        let alert = UIAlertController(title: "ポストを新規作成しますか？", message: "", preferredStyle: .alert)
-        let action = UIAlertAction(title: "作成", style: .default) { (action) in
-            
-            let post = Post.create()
-            post.name = self.nameTextField.text!
-            post.theme = self.themeTextField.text!
-            post.present = self.presentTextField.text!
-            post.date = self.dateTextField.text!
-            post.budget = Int(self.budgetTextField.text!)!
-            post.backImage = self.backImageView.image
-            post.photo = self.heroImageView.image
-            
-            //1つ前の画面に戻り、Loafでメッセージ表示
-            let image = post.photo
-            let name = post.name
-            Loaf("\(String(describing: name))のポストを作成しました。", state: .custom(.init(backgroundColor: .systemGreen, icon: image)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: ((self.navigationController?.popViewController(animated: false))!)).show()
-            
-            self.save(post: post)
-        }
-        
-        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel) { (action: UIAlertAction!) in
-        }
-        
-        alert.addAction(action)
-        alert.addAction(cancelAction)
-        present(alert, animated: true, completion: nil)
     }
     
     @IBAction func backTapGesture(_ sender: UITapGestureRecognizer) {
@@ -190,6 +116,97 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
         present(picker, animated: true, completion: nil)
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func iconSetToLabel(){
+        
+        fontAwesomeIconSet(iconLabel: themeIcon, iconName: .fontAwesomeIcon(name: .heart))
+        fontAwesomeIconSet(iconLabel: presentIcon, iconName: .fontAwesomeIcon(name: .gem))
+        fontAwesomeIconSet(iconLabel: dateIcon, iconName: .fontAwesomeIcon(name: .calendarAlt))
+        fontAwesomeIconSet(iconLabel: budgetIcon, iconName: .fontAwesomeIcon(name: .moneyBillAlt))
+        
+    }
+    
+    func fontAwesomeIconSet(iconLabel: UILabel, iconName: String) {
+        let font = UIFont.fontAwesome(ofSize: 20.0, style: .regular)
+        let color = UIColor.init(red: 219/255, green: 68/255, blue: 55/255, alpha: 1.0)
+        let fontAwesomeIcon = iconName
+        
+        iconLabel.font = font
+        iconLabel.text = fontAwesomeIcon
+        iconLabel.textColor = color
+    }
+    
+    func setDatePicker() {
+        datePicker.datePickerMode = UIDatePicker.Mode.date
+        datePicker.timeZone = NSTimeZone.local
+        datePicker.locale = Locale.current
+        
+        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 40))
+        let spacelItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
+        toolbar.setItems([spacelItem, doneItem], animated: true)
+        
+        dateTextField.inputView = datePicker
+        dateTextField.inputAccessoryView = toolbar
+        
+    }
+    
+    func realmAddPost(post: Post){
+        do {
+            try realm.write {
+                realm.add(post)
+            }
+        } catch {
+            print("Error saving post \(error)")
+        }
+    }
+    
+    func saveAlert(){
+        let alert = UIAlertController(title: "ポストを新規作成しますか？", message: "", preferredStyle: .alert)
+        let action = UIAlertAction(title: "作成", style: .default) { (action) in
+            
+            self.inputContentToPost()
+            
+            //1つ前の画面に戻る
+            self.navigationController?.popViewController(animated: false)
+            
+            //Loafでメッセージ表示
+            self.loafOfCreated()
+            
+            //postをrealmに保存
+            self.realmAddPost(post: self.post)
+        }
+        
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel) { (action: UIAlertAction!) in
+        }
+        
+        alert.addAction(action)
+        alert.addAction(cancelAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func loafOfCreated() {
+        
+        let image = self.post.photo
+        let name = self.post.name
+        Loaf("\(String(describing: name))のポストを作成しました。", state: .custom(.init(backgroundColor: .systemGreen, icon: image)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
+    }
+    
+    func inputContentToPost() {
+        
+        post.name = self.nameTextField.text!
+        post.theme = self.themeTextField.text!
+        post.present = self.presentTextField.text!
+        post.date = self.dateTextField.text!
+        post.budget = Int(self.budgetTextField.text!)!
+        post.backImage = self.backImageView.image
+        post.photo = self.heroImageView.image
+    }
+    
     func validateTextField() {
         
         //空白文字が含むとエラー
@@ -199,21 +216,18 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
         //20../../..の型でないとエラー
         let dateRule = ValidationRulePattern(pattern: "20../../..", error: ExampleValidationError("日付を入力して下さい"))
         
-        let nameValidation = nameTextField.validate(rule: stringRule)
-        reflectValidateResalut(result: nameValidation, label: nameVdLabel)
+        applyRuleToTF(textField: nameTextField, rule: stringRule, VDLabel: nameVdLabel)
+        applyRuleToTF(textField: themeTextField, rule: stringRule, VDLabel: themeVdLabel)
+        applyRuleToTF(textField: presentTextField, rule: stringRule, VDLabel: presentVdLabel)
+        applyRuleToTF(textField: dateTextField, rule: dateRule, VDLabel: dateVdLabel)
+        applyRuleToTF(textField: budgetTextField, rule: budgetRule, VDLabel: budgetVdLabel)
         
-        let themeValidation = themeTextField.validate(rule: stringRule)
-        reflectValidateResalut(result: themeValidation, label: themeVdLabel)
+    }
+    
+    func applyRuleToTF(textField: UITextField, rule: ValidationRulePattern, VDLabel: UILabel) {
         
-        let presentValidation = presentTextField.validate(rule: stringRule)
-        reflectValidateResalut(result: presentValidation, label: presentVdLabel)
-        
-        let dateValidation = dateTextField.validate(rule: dateRule)
-        reflectValidateResalut(result: dateValidation, label: dateVdLabel)
-        
-        let budgetValidation = budgetTextField.validate(rule: budgetRule)
-        reflectValidateResalut(result: budgetValidation, label: budgetVdLabel)
-        
+        let validateTF = textField.validate(rule: rule)
+        reflectValidateResalut(result: validateTF, label: VDLabel)
     }
     
     func reflectValidateResalut(result: ValidationResult, label: UILabel) {
@@ -241,13 +255,16 @@ extension CreatePostViewController: UIImagePickerControllerDelegate, CropViewCon
         //pickerで取得したUIImageのデータサイズをカットする。（realmが5MB以下対応だから）
         let resizedImage:UIImage = pickerImage.resized(withPercentage: 0.3)!
         
-        if tapId == "heroImage" {
+        croppingStyle = {
             
-            croppingStyle = .circular
-        } else {
-            
-            croppingStyle = .default
-        }
+            if tapId == "heroImage" {
+                
+                return .circular
+            } else {
+                
+                return .default
+            }
+        }()
         
         let cropController = CropViewController(croppingStyle: croppingStyle, image: resizedImage)
         cropController.delegate = self
@@ -292,7 +309,6 @@ extension CreatePostViewController: UIImagePickerControllerDelegate, CropViewCon
             self.backImageView.image = image
         }
         
-        croppingStyle = .default
         cropViewController.dismiss(animated: true, completion: nil)
     }
 }
