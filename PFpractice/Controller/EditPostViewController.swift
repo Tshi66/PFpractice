@@ -79,13 +79,14 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         
         validateTextField()
         
-        if nameVdLabel.text == "ok" && themeVdLabel.text == "ok" && presentVdLabel.text == "ok" && dateVdLabel.text == "ok" && budgetVdLabel.text == "ok"  {
-            
-            saveAlert()
-        } else {
+        guard nameVdLabel.text == "ok" && themeVdLabel.text == "ok" && presentVdLabel.text == "ok" && dateVdLabel.text == "ok" && budgetVdLabel.text == "ok" else {
             
             Loaf("ポストが編集されませんでした。", state: .error, location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
+            
+            return
         }
+        
+        saveAlert()
     }
     
     @IBAction func backTapGesture(_ sender: UITapGestureRecognizer) {
@@ -98,18 +99,18 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         tapId = "heroImage"
     }
     
-    func setImgPicker(){
+    private func setImgPicker(){
         let picker = UIImagePickerController()
         picker.sourceType = .photoLibrary
         picker.delegate = self
         present(picker, animated: true, completion: nil)
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    internal func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
     }
     
-    func setPostData(){
+    private func setPostData(){
         
         nameTextField.text = post.name
         themeTextField.text = post.theme
@@ -118,10 +119,10 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         budgetTextField.text = "\(post.budget)"
         backImageView.image = post.backImage
         heroImageView.image = post.photo
-//        heroImageView.layer.cornerRadius = heroImageView.frame.size.width * 0.5
+        
     }
     
-    func iconSetToLabel(){
+    private func iconSetToLabel(){
         
         fontAwesomeIconSet(iconLabel: themeIcon, iconName: .fontAwesomeIcon(name: .heart))
         fontAwesomeIconSet(iconLabel: presentIcon, iconName: .fontAwesomeIcon(name: .gem))
@@ -130,9 +131,9 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         
     }
     
-    func fontAwesomeIconSet(iconLabel: UILabel, iconName: String) {
+    private func fontAwesomeIconSet(iconLabel: UILabel, iconName: String) {
         let font = UIFont.fontAwesome(ofSize: 20.0, style: .regular)
-        let color = UIColor.init(red: 219/255, green: 68/255, blue: 55/255, alpha: 1.0)
+        let color = AppTheme().mainColor
         let fontAwesomeIcon = iconName
         
         iconLabel.font = font
@@ -140,7 +141,7 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         iconLabel.textColor = color
     }
     
-    func setDatePicker() {
+    private func setDatePicker() {
         datePicker.datePickerMode = UIDatePicker.Mode.date
         datePicker.timeZone = NSTimeZone.local
         datePicker.locale = Locale.current
@@ -164,7 +165,7 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         dateTextField.text = "\(formatter.string(from: datePicker.date))"
     }
     
-    func saveAlert() {
+    private func saveAlert() {
         
         let alert = UIAlertController(title: "ポストを編集しますか？", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default) { (action) in
@@ -186,7 +187,7 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         present(alert, animated: true, completion: nil)
     }
     
-    func validateTextField() {
+    private func validateTextField() {
         
         //空白文字が含むとエラー
         let stringRule = ValidationRulePattern(pattern: "^[\\S]+$", error: ExampleValidationError("空白等は含めないで下さい"))
@@ -203,13 +204,13 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         
     }
     
-    func applyRuleToTF(textField: UITextField, rule: ValidationRulePattern, VDLabel: UILabel) {
+    private func applyRuleToTF(textField: UITextField, rule: ValidationRulePattern, VDLabel: UILabel) {
         
         let validateTF = textField.validate(rule: rule)
         reflectValidateResalut(result: validateTF, label: VDLabel)
     }
     
-    func reflectValidateResalut(result: ValidationResult, label: UILabel) {
+    private func reflectValidateResalut(result: ValidationResult, label: UILabel) {
         switch result {
         case .valid:
             label.text = "ok"
@@ -218,7 +219,7 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         }
     }
     
-    func updateRealmData(post: Post){
+    private func updateRealmData(post: Post){
         do {
             try realm.write {
                 
@@ -231,14 +232,14 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         }
     }
     
-    func modifySavingAndDeposit() {
+    private func modifySavingAndDeposit() {
         
         let deposit = post.deposit
-        let inputtedBudgetOnTF = self.budgetTextField.text
-        let difference = deposit - Int(inputtedBudgetOnTF!)!
+        let inputtedBudgetOnTF = self.budgetTextField.text ?? ""
+        let difference = deposit - (Int(inputtedBudgetOnTF) ?? 0)
         
         //入力された予算額がポストへの入金額よりも大きい場合
-        if deposit > Int(inputtedBudgetOnTF!)! {
+        if deposit > Int(inputtedBudgetOnTF) ?? 0 {
             //貯金額を増やす
             bank.saving += difference
             //ポストへの入金額を減らす
@@ -246,19 +247,19 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         }
     }
     
-    func updatePostOnRealm() {
+    private func updatePostOnRealm() {
         
-        post.name = self.nameTextField.text!
-        post.theme = self.themeTextField.text!
-        post.present = self.presentTextField.text!
-        post.date = self.dateTextField.text!
-        post.budget = Int(self.budgetTextField.text!)!
+        post.name = self.nameTextField.text ?? ""
+        post.theme = self.themeTextField.text ?? ""
+        post.present = self.presentTextField.text ?? ""
+        post.date = self.dateTextField.text ?? "2020/01/01"
+        post.budget = Int(self.budgetTextField.text ?? "0") ?? 0
         post.backImage = self.backImageView.image
         post.photo = self.heroImageView.image
         
     }
     
-    func bankLoad() {
+    private func bankLoad() {
         if realm.objects(Bank.self).filter("id = 0").first != nil{
             
             bank = realm.objects(Bank.self).filter("id = 0").first!
@@ -271,25 +272,23 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
 
 extension EditPostViewController: UIImagePickerControllerDelegate, CropViewControllerDelegate{
     
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+    internal func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
         
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         guard let pickerImage = (info[UIImagePickerController.InfoKey.originalImage] as? UIImage) else { return }
         
         //pickerで取得したUIImageのデータサイズをカットする。（realmが5MB以下対応だから）
         let resizedImage:UIImage = pickerImage.resized(withPercentage: 0.3)!
         
-        if tapId == "heroImage" {
+        croppingStyle = {
             
-            croppingStyle = .circular
-        } else {
-            
-            croppingStyle = .default
-        }
+            tapId == "heroImage" ? .circular : .default
+
+        }()
         
         let cropController = CropViewController(croppingStyle: croppingStyle, image: resizedImage)
         cropController.delegate = self
@@ -315,15 +314,15 @@ extension EditPostViewController: UIImagePickerControllerDelegate, CropViewContr
         }
     }
     
-    func cropViewController(_ cropViewController: CropViewController, didCropToCircularImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+    internal func cropViewController(_ cropViewController: CropViewController, didCropToCircularImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
         updateImageViewWithImage(image, fromCropViewController: cropViewController)
     }
     
-    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+    internal func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
         updateImageViewWithImage(image, fromCropViewController: cropViewController)
     }
     
-    func updateImageViewWithImage(_ image: UIImage, fromCropViewController cropViewController: CropViewController) {
+    internal func updateImageViewWithImage(_ image: UIImage, fromCropViewController cropViewController: CropViewController) {
         
         if tapId == "heroImage" {
             
