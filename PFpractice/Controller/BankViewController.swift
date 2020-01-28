@@ -29,38 +29,25 @@ class BankViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
                 
-        loadPosts()
-        bankLoad()
+        loadPostsFromRealm()
+        loadBankFromRealm()
         indicateProgress()
         
     }
     
     @IBAction func PushEditSavingButton(_ sender: UIButton) {
-                
-        let alert = UIAlertController(title: "貯金額を編集しますか？", message: "", preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .default) { (action) in
-            
-            self.validateTextField(caseNumber: 0)
-            self.viewDidLoad()
-        }
-        
-        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel) { (action: UIAlertAction!) in
-        }
-        
-        alert.addTextField { (editSavingTextField) in
-            self.bankLoad()
-            editSavingTextField.placeholder = "\(self.bank.saving)"
-            editSavingTextField.keyboardType = .numberPad
-            self.textField = editSavingTextField
-        }
-        
-        alert.addAction(action)
-        alert.addAction(cancelAction)
-        present(alert, animated: true, completion: nil)
+           
+        showEditSavingAlert()
         
     }
     
     @IBAction func inputSavingButton(_ sender: UIButton) {
+        
+        showAddSavingAlert()
+        
+    }
+    
+    private func showAddSavingAlert() {
         
         let alert = UIAlertController(title: "貯金しますか？", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default) { (action) in
@@ -82,27 +69,55 @@ class BankViewController: UIViewController {
         alert.addAction(action)
         alert.addAction(cancelAction)
         present(alert, animated: true, completion: nil)
-        
     }
     
-    func indicateProgress(){
+    private func showEditSavingAlert() {
+        
+        let alert = UIAlertController(title: "貯金額を編集しますか？", message: "", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default) { (action) in
+            
+            self.validateTextField(caseNumber: 0)
+            self.viewDidLoad()
+        }
+        
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel) { (action: UIAlertAction!) in
+        }
+        
+        alert.addTextField { (editSavingTextField) in
+            editSavingTextField.placeholder = "\(self.bank.saving)"
+            editSavingTextField.keyboardType = .numberPad
+            self.textField = editSavingTextField
+        }
+        
+        alert.addAction(action)
+        alert.addAction(cancelAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    private func indicateProgress(){
         let sumBudget: Int = posts.sum(ofProperty: "budget")
         let sumDeposit: Int = posts.sum(ofProperty: "deposit")
         
-        bankLoad()
         savingLabel.text = "\(bank.saving)円"
         sumDepositLabel.text = "\(sumDeposit)円"
         presentCostLabel.text = "\(sumBudget)円"
         
-        let amount = sumBudget - bank.saving
-        
-        if amount < 0 {
-            progressLabel.text = "余り \(-(amount))円"
-            progressLabel.textColor = .blue
-        } else {
-            progressLabel.text = "あと \(amount)円"
-            progressLabel.textColor = .red
-        }
+        showProgressView(sumBudget: sumBudget)
+    }
+    
+    private func showProgressView(sumBudget: Int) {
+                
+        (text: progressLabel.text, color: progressLabel.textColor) = {
+            
+            let amount = sumBudget - bank.saving
+            
+            if amount < 0 {
+                return (text: "余り \(-(amount))円", color: .blue)
+                
+            } else {
+                return (text: "あと \(amount)円", color: .red)
+            }
+        }()
         
         UIView.animate(withDuration: 1.0) {
             self.progressView.value = CGFloat(self.bank.saving)
@@ -111,7 +126,7 @@ class BankViewController: UIViewController {
         progressView.maxValue = CGFloat(sumBudget)
     }
     
-    func save(){
+    private func createBankOnRealm(){
         do {
             try self.realm.write {
                 self.realm.add(Bank())
@@ -122,7 +137,7 @@ class BankViewController: UIViewController {
         
     }
     
-    func bankLoad() {
+    private func loadBankFromRealm() {
         if realm.objects(Bank.self).filter("id = 0").first != nil{
             
             bank = realm.objects(Bank.self).filter("id = 0").first!
@@ -131,15 +146,21 @@ class BankViewController: UIViewController {
         }
     }
     
-    func loadPosts(){
+    private func loadPostsFromRealm(){
         
         posts = realm.objects(Post.self).filter("finished = false")
         
     }
     
-    func validateTextField(caseNumber: Int) {
+    private func validateTextField(caseNumber: Int) {
         
-        let caseNumber = caseNumber
+        let rules = setValidateRule()
+        let depositValidation = textField.validate(rules: rules)
+        reflectValidateResalut(result: depositValidation, pattern: caseNumber)
+        
+    }
+    
+    private func setValidateRule() -> ValidationRuleSet<String> {
         
         //空白文字が含むとエラー
         let stringRule = ValidationRulePattern(pattern: "^[\\S]+$", error: ExampleValidationError("空白等は含めないで下さい"))
@@ -149,96 +170,72 @@ class BankViewController: UIViewController {
         var depositRules = ValidationRuleSet<String>()
         depositRules.add(rule: stringRule)
         depositRules.add(rule: moneyRule)
-
-        if caseNumber == 0 {
-            
-            let depositValidation = textField.validate(rules: depositRules)
-            reflectValidateResalut(result: depositValidation, pattern: caseNumber)
-            
-        } else {
-            
-            let depositValidation = textField.validate(rules: depositRules)
-            reflectValidateResalut(result: depositValidation, pattern: caseNumber)
-            
-        }
         
+        return depositRules
     }
     
-    func reflectValidateResalut(result: ValidationResult, pattern: Int) {
+    private func reflectValidateResalut(result: ValidationResult, pattern: Int) {
         
         switch result {
         case .valid:
-            let pattern = pattern
             
-            if pattern == 0 {
-                                
-                if self.realm.objects(Bank.self).filter("id = 0").first != nil{
-                    
-                    do {
-                        try self.realm.write {
-                            self.bank.saving = Int(textField.text!)!
-                        }
-                    } catch {
-                        print("Error saving bank \(error)")
-                    }
-                    
-                } else {
-                    
-                    //Bankデータを新規作成
-                    save()
-                    
-                    do {
-                        self.bankLoad()
-                        try self.realm.write {
-                            self.bank.saving = Int(self.textField.text!)!
-                        }
-                    } catch {
-                        print("Error saving bank \(error)")
-                    }
-                }
-                
-                //貯金額変更を知らせる,Loaf
-                setLoaf(message: "貯金額を\(self.bank.saving)円に変更しました", state: .success)
-                
-            //pattern == 1
-            } else {
-                
-                if self.realm.objects(Bank.self).filter("id = 0").first != nil{
-                    
-                    do {
-                        try self.realm.write {
-                            self.bank.saving += Int(self.textField.text!)!
-                        }
-                    } catch {
-                        print("Error saving bank \(error)")
-                    }
-                    
-                } else {
-                    
-                    //Bankデータを新規作成
-                    self.save()
-                    
-                    do {
-                        self.bankLoad()
-                        try self.realm.write {
-                            self.bank.saving += Int(self.textField.text!)!
-                        }
-                    } catch {
-                        print("Error saving bank \(error)")
-                    }
-                }
-                
-                //貯金を知らせる,Loaf
-                setLoaf(message: "\(self.bank.saving)円を貯金しました", state: .success)
-            }
+            processSaving(pattern: pattern)
                         
         case .invalid(let failures):
+            
             //Loafでエラーメッセージ表示
-            setLoaf(message: "貯金額が反映されませんでした。\nエラー: \((String(describing: (failures.first as! ExampleValidationError).message)))", state: .error)
+            let errorMessage = String(describing: (failures.first as! ExampleValidationError).message)
+            let loafMessage = "貯金額が反映されませんでした。\nエラー: \(errorMessage)"
+            
+            showLoafMessage(message: loafMessage, state: .error)
         }
     }
     
-    func setLoaf(message: String, state: Loaf.State) {
+    private func processSaving(pattern: Int){
+        
+        guard let input = textField.text else {
+            return
+        }
+        
+        let inputValue: Int = Int(input)!
+        var add: Int = bank.saving
+        
+        //Bankデータが存在していなければ、Bankデータを新規作成
+        if realm.objects(Bank.self).filter("id = 0").first == nil{
+            
+            createBankOnRealm()
+        }
+        
+        if pattern == 0 {
+            
+            add = 0
+            saveToRealm(add: add, inputValue: inputValue)
+            
+            //貯金額変更を知らせる
+            showLoafMessage(message: "貯金額を\(inputValue)円に変更しました", state: .success)
+            
+        //pattern == 1
+        } else {
+                
+            saveToRealm(add: add, inputValue: inputValue)
+            
+            //完了を知らせる
+            showLoafMessage(message: "\(inputValue)円を貯金しました", state: .success)
+        }
+    }
+    
+    private func saveToRealm(add: Int, inputValue: Int) {
+        
+        do {
+            try realm.write {
+                bank.saving = add + inputValue
+            }
+        } catch {
+            print("Error saving bank \(error)")
+        }
+    }
+    
+    private func showLoafMessage(message: String, state: Loaf.State) {
         
         Loaf(message, state: state, location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
     }

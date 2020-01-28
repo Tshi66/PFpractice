@@ -54,6 +54,7 @@
 		858C1E07238D9CC900CDD91D /* Yes@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 858C1E01238D9CC900CDD91D /* Yes@3x.png */; };
 		858E6BB823CDF392000C1453 /* explosion.json in Resources */ = {isa = PBXBuildFile; fileRef = 858E6BB723CDF392000C1453 /* explosion.json */; };
 		858E6BBC23D09A16000C1453 /* UIImageResize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858E6BBB23D09A16000C1453 /* UIImageResize.swift */; };
+		85AB259523DF417D00589F9D /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AB259423DF417D00589F9D /* AppTheme.swift */; };
 		85B25AAC23966BC500E04A68 /* ContentScrollable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B25AAB23966BC500E04A68 /* ContentScrollable.swift */; };
 		85BCD5CD238061A9002828E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BCD5CC238061A9002828E3 /* AppDelegate.swift */; };
 		85BCD5CF238061A9002828E3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BCD5CE238061A9002828E3 /* SceneDelegate.swift */; };
@@ -144,6 +145,7 @@
 		858C1E01238D9CC900CDD91D /* Yes@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Yes@3x.png"; sourceTree = "<group>"; };
 		858E6BB723CDF392000C1453 /* explosion.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = explosion.json; sourceTree = "<group>"; };
 		858E6BBB23D09A16000C1453 /* UIImageResize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageResize.swift; sourceTree = "<group>"; };
+		85AB259423DF417D00589F9D /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		85B25AAB23966BC500E04A68 /* ContentScrollable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentScrollable.swift; sourceTree = "<group>"; };
 		85BCD5C9238061A9002828E3 /* PFpractice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PFpractice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85BCD5CC238061A9002828E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -297,6 +299,14 @@
 			path = Animation;
 			sourceTree = "<group>";
 		};
+		85AB259323DF414B00589F9D /* Struct */ = {
+			isa = PBXGroup;
+			children = (
+				85AB259423DF417D00589F9D /* AppTheme.swift */,
+			);
+			path = Struct;
+			sourceTree = "<group>";
+		};
 		85BCD5C0238061A9002828E3 = {
 			isa = PBXGroup;
 			children = (
@@ -319,6 +329,7 @@
 		85BCD5CB238061A9002828E3 /* PFpractice */ = {
 			isa = PBXGroup;
 			children = (
+				85AB259323DF414B00589F9D /* Struct */,
 				85C4C90E238BCBBB0026BE31 /* Extention */,
 				854631BC23850B80004E7514 /* Model */,
 				854631BB23850B7D004E7514 /* View */,
@@ -599,6 +610,7 @@
 				85CC082123B2957E000AD3C7 /* ValidationErrorType.swift .swift in Sources */,
 				8500D7EE23990B2000BE9C7E /* BankViewController.swift in Sources */,
 				85BEEEB023C71AAF00EE80EF /* hideKeyboardWhenTappedAround.swift in Sources */,
+				85AB259523DF417D00589F9D /* AppTheme.swift in Sources */,
 				8500D7E623981C5C00BE9C7E /* EditPostViewController.swift in Sources */,
 				85CC081423ACBFD3000AD3C7 /* Info.swift in Sources */,
 			);

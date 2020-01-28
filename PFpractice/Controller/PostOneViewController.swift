@@ -94,16 +94,16 @@ class PostOneViewController: UIViewController {
     
     @IBAction func editDepositButton(_ sender: UIButton) {
         
-        let alertTitle = "入金額を編集しますか？\n(現在の貯金額:\(self.bank.saving))円"
+        let alertTitle = "入金額を編集しますか？\n(現在の貯金額:\(bank.saving))円"
         let alertMessage = ""
         let validateCase = "editDeposit"
-        let depositTFplaceholder = "\(self.post.deposit)"
+        let depositTFplaceholder = "\(post.deposit)"
         
         showDepositAlert(alertTitle: alertTitle, alertMessage: alertMessage, validateCase: validateCase, depositTFplaceholder: depositTFplaceholder)
         
     }
     
-    func judgeHavingSavingOfBank() -> Bool {
+    private func judgeHavingSavingOfBank() -> Bool {
         
         if bank.saving > 0 && realm.objects(Bank.self).filter("id = 0").first != nil {
             return true
@@ -112,7 +112,7 @@ class PostOneViewController: UIViewController {
         }
     }
     
-    func judgeDepositIsFiFull() -> Bool {
+    private func judgeDepositIsFiFull() -> Bool {
         
         if post.budget == post.deposit {
             return true
@@ -121,7 +121,7 @@ class PostOneViewController: UIViewController {
         }
     }
     
-    func judgeToShowWhatAlert() {
+    private func judgeToShowWhatAlert() {
         
         let hasSavingOfBank: Bool = judgeHavingSavingOfBank()
         
@@ -136,9 +136,9 @@ class PostOneViewController: UIViewController {
         if hasSavingOfBank == true && depositIsFiFull == false {
             
             let alertTitle = "入金する"
-            let alertMessage = "貯金箱からこのポストに入金できます。\n(現在の貯金額:\(self.bank.saving))円"
+            let alertMessage = "貯金箱からこのポストに入金できます。\n(現在の貯金額:\(bank.saving))円"
             let validateCase = "deposit"
-            let depositTFplaceholder = "あと\(self.post.budget - self.post.deposit)円"
+            let depositTFplaceholder = "あと\(post.budget - post.deposit)円"
             
             showDepositAlert(alertTitle: alertTitle, alertMessage: alertMessage, validateCase: validateCase, depositTFplaceholder: depositTFplaceholder)
             
@@ -151,7 +151,7 @@ class PostOneViewController: UIViewController {
         }
     }
     
-    func showDeletePostAlert() {
+    private func showDeletePostAlert() {
         
         let alert = UIAlertController(title: "ポストの削除", message: "削除すると復元できません。", preferredStyle: .alert)
         let action = UIAlertAction(title: "削除", style: .destructive) { (action) in
@@ -182,7 +182,7 @@ class PostOneViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    func showFinishedAlert() {
+    private func showFinishedAlert() {
         
         let alert = UIAlertController(title: "プレゼント完了", message: "完了を押すと、「プレゼント完了」に移動されます。", preferredStyle: .alert)
         let action = UIAlertAction(title: "完了", style: .default) { (action) in
@@ -207,16 +207,16 @@ class PostOneViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    func deleteNotification() {
+    private func deleteNotification() {
         
         //通知リクエストの削除
-        let identifier = "postNotification" + String(self.post.id)
-        self.center.removePendingNotificationRequests(withIdentifiers: [identifier])
+        let identifier = "postNotification" + String(post.id)
+        center.removePendingNotificationRequests(withIdentifiers: [identifier])
         
         //realmから通知データを削除
         do {
             try self.realm.write {
-                self.realm.delete(self.post.info!)
+                self.realm.delete(post.info!)
             }
         } catch {
             print("Error delete post.info \(error)")
@@ -224,7 +224,7 @@ class PostOneViewController: UIViewController {
         
     }
     
-    func showDepositAlert(alertTitle: String, alertMessage: String, validateCase: String, depositTFplaceholder: String) {
+    private func showDepositAlert(alertTitle: String, alertMessage: String, validateCase: String, depositTFplaceholder: String) {
         
         let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default) { (action) in
@@ -250,7 +250,7 @@ class PostOneViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    func showErrorAlert(message: String) {
+    private func showErrorAlert(message: String) {
         
         let alert = UIAlertController(title: "入金できません", message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default) { (action) in
@@ -260,7 +260,7 @@ class PostOneViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    func setNotificationLabel() {
+    private func setNotificationLabel() {
         
         let imageName: String = {
             
@@ -274,7 +274,7 @@ class PostOneViewController: UIViewController {
         notificationButton.setImage(UIImage(named: imageName), for: .normal)
     }
     
-    func showContentsOfOnePost(){
+    private func showContentsOfOnePost(){
         
         //FAアイコンを表示
         iconSetToLabel()
@@ -290,7 +290,7 @@ class PostOneViewController: UIViewController {
         
     }
     
-    func showSubProgressView(){
+    private func showSubProgressView(){
         
         UIView.animate(withDuration: 1.0) {
             self.subProgressView.value = CGFloat(self.post.deposit)
@@ -298,7 +298,7 @@ class PostOneViewController: UIViewController {
         self.subProgressView.maxValue = CGFloat(post.budget)
     }
     
-    func showNotificationLabel(){
+    private func showNotificationLabel(){
         
         notificationLabel.layer.cornerRadius = 3
         notificationLabel.clipsToBounds = true
@@ -313,7 +313,7 @@ class PostOneViewController: UIViewController {
         }
     }
     
-    func showPostData(){
+    private func showPostData(){
         
         backImage.image = post.backImage
         heroImage.image = post.photo
@@ -327,16 +327,20 @@ class PostOneViewController: UIViewController {
         remainingTimeLabel.text = {
             
             let remainingDays = outputRemainingDays(date: post.date)
+            guard let days = remainingDays else {
+                
+                return nil
+            }
             
-            if remainingDays < 0 {
-                return ("\(-(remainingDays))日前")
+            if days < 0 {
+                return ("\(-(days))日前")
             } else {
-                return ("あと\(remainingDays)日")
+                return ("あと\(days)日")
             }
         }()
     }
     
-    func iconSetToLabel(){
+    private func iconSetToLabel(){
         
         fontAwesomeIconSet(iconLabel: themeIcon, iconName: .fontAwesomeIcon(name: .heart))
         fontAwesomeIconSet(iconLabel: presentIcon, iconName: .fontAwesomeIcon(name: .gem))
@@ -345,10 +349,10 @@ class PostOneViewController: UIViewController {
         
     }
     
-    func fontAwesomeIconSet(iconLabel: UILabel, iconName: String) {
+    private func fontAwesomeIconSet(iconLabel: UILabel, iconName: String) {
         
         let font = UIFont.fontAwesome(ofSize: 20.0, style: .regular)
-        let color = UIColor.init(red: 219/255, green: 68/255, blue: 55/255, alpha: 1.0)
+        let color = AppTheme().mainColor
         let fontAwesomeIcon = iconName
         
         iconLabel.font = font
@@ -356,20 +360,20 @@ class PostOneViewController: UIViewController {
         iconLabel.textColor = color
     }
     
-    func outputRemainingDays(date: String) -> Int {
+    private func outputRemainingDays(date: String) -> Int? {
         
         let now = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "yMd", options: 0, locale: Locale(identifier: "ja_JP"))
         let currentDate = dateFormatter.string(from: now)
-        let curDate = dateFormatter.date(from: currentDate)
-        let repDate = dateFormatter.date(from: date)
+        guard let curDate = dateFormatter.date(from: currentDate) else { return nil }
+        guard let repDate = dateFormatter.date(from: date) else { return nil }
         
-        return (Calendar.current.dateComponents([.day], from: curDate!, to: repDate!)).day!
+        return (Calendar.current.dateComponents([.day], from: curDate, to: repDate)).day
         
     }
     
-    func loadBankFromRealm() {
+    private func loadBankFromRealm() {
         if realm.objects(Bank.self).filter("id = 0").first != nil{
             
             bank = realm.objects(Bank.self).filter("id = 0").first!
@@ -378,13 +382,13 @@ class PostOneViewController: UIViewController {
         }
     }
     
-    func loadPostFromRealm(){
+    private func loadPostFromRealm(){
         
         self.post = realm.objects(Post.self).filter("id = \(post.id)").first!
         
     }
     
-    func postFinishedSaveToRealm(post: Post){
+    private func postFinishedSaveToRealm(post: Post){
         do {
             try realm.write {
                 
@@ -395,7 +399,7 @@ class PostOneViewController: UIViewController {
         }
     }
     
-    func deletePostFromRealm(post: Post) {
+    private func deletePostFromRealm(post: Post) {
         do {
             try realm.write {
                 
@@ -406,7 +410,7 @@ class PostOneViewController: UIViewController {
         }
     }
     
-    func validateTextField(validateCase: String) {
+    private func validateTextField(validateCase: String) {
         
         let ValidationRules = setValidateRule()
         let depositValidation = textField.validate(rules: ValidationRules)
@@ -415,7 +419,7 @@ class PostOneViewController: UIViewController {
         
     }
     
-    func setValidateRule() -> ValidationRuleSet<String> {
+    private func setValidateRule() -> ValidationRuleSet<String> {
         
         //空白文字が含むとエラー
         let stringRule = ValidationRulePattern(pattern: "^[\\S]+$", error: ExampleValidationError("空白等は含めないで下さい"))
@@ -429,13 +433,14 @@ class PostOneViewController: UIViewController {
         return depositRules
     }
     
-    //このメソッドのリファクタリングが難しい。
-    func reflectValidateResalut(result: ValidationResult, pattern: String) {
+    // FIXME: 現状ここまでしかリファクタリングできない。処理が複雑すぎる
+    // 要レビュー要請。
+    private func reflectValidateResalut(result: ValidationResult, pattern: String) {
         
-        var inputtedDepositOnTF = self.textField.text
-        let savingOnBank = self.bank.saving
-        let budget = self.post.budget
-        let deposit = self.post.deposit
+        var inputtedDepositOnTF = textField.text
+        let savingOnBank = bank.saving
+        let budget = post.budget
+        let deposit = post.deposit
         
         switch result {
         case .valid:
@@ -498,7 +503,7 @@ class PostOneViewController: UIViewController {
                 }
                 
                 //Loafを表示
-                setLoaf(message: "入金額を\(Int(self.post.deposit))円に変更しました。", state: .success)
+                setLoaf(message: "入金額を\(Int(post.deposit))円に変更しました。", state: .success)
             }
             
         case .invalid(let failures):
@@ -509,7 +514,7 @@ class PostOneViewController: UIViewController {
         }
     }
     
-    func modifyRealm(modifiedDeposit: Int, modifiedSaving: Int) {
+    private func modifyRealm(modifiedDeposit: Int, modifiedSaving: Int) {
         
         do {
             try self.realm.write {
@@ -523,7 +528,7 @@ class PostOneViewController: UIViewController {
     }
     
     
-    func setLoaf(message: String, state: Loaf.State) {
+    private func setLoaf(message: String, state: Loaf.State) {
         
         Loaf(message, state: state, location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
     }
