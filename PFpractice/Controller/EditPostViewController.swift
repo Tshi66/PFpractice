@@ -99,15 +99,19 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         tapId = "heroImage"
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+    }
+    
+}
+
+private extension EditPostViewController {
+    
     private func setImgPicker(){
         let picker = UIImagePickerController()
         picker.sourceType = .photoLibrary
         picker.delegate = self
         present(picker, animated: true, completion: nil)
-    }
-    
-    internal func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
     }
     
     private func setPostData(){
@@ -252,8 +256,8 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
         post.name = self.nameTextField.text ?? ""
         post.theme = self.themeTextField.text ?? ""
         post.present = self.presentTextField.text ?? ""
-        post.date = self.dateTextField.text ?? "2020/01/01"
-        post.budget = Int(self.budgetTextField.text ?? "0") ?? 0
+        post.date = self.dateTextField.text ?? ""
+        post.budget = Int(self.budgetTextField.text ?? "") ?? 0
         post.backImage = self.backImageView.image
         post.photo = self.heroImageView.image
         
@@ -272,12 +276,12 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
 
 extension EditPostViewController: UIImagePickerControllerDelegate, CropViewControllerDelegate{
     
-    internal func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
         
     }
     
-    internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         guard let pickerImage = (info[UIImagePickerController.InfoKey.originalImage] as? UIImage) else { return }
         
@@ -314,15 +318,15 @@ extension EditPostViewController: UIImagePickerControllerDelegate, CropViewContr
         }
     }
     
-    internal func cropViewController(_ cropViewController: CropViewController, didCropToCircularImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+    func cropViewController(_ cropViewController: CropViewController, didCropToCircularImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
         updateImageViewWithImage(image, fromCropViewController: cropViewController)
     }
     
-    internal func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
         updateImageViewWithImage(image, fromCropViewController: cropViewController)
     }
     
-    internal func updateImageViewWithImage(_ image: UIImage, fromCropViewController cropViewController: CropViewController) {
+    func updateImageViewWithImage(_ image: UIImage, fromCropViewController cropViewController: CropViewController) {
         
         if tapId == "heroImage" {
             

@@ -109,19 +109,24 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
         setImgPicker()
         tapId = "heroImage"
     }
-    private func setImgPicker(){
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+}
+
+private extension CreatePostViewController {
+    
+    func setImgPicker(){
         let picker = UIImagePickerController()
         picker.sourceType = .photoLibrary
         picker.delegate = self
         present(picker, animated: true, completion: nil)
     }
     
-    internal func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    
-    private func iconSetToLabel(){
+    func iconSetToLabel(){
         
         fontAwesomeIconSet(iconLabel: themeIcon, iconName: .fontAwesomeIcon(name: .heart))
         fontAwesomeIconSet(iconLabel: presentIcon, iconName: .fontAwesomeIcon(name: .gem))
@@ -130,7 +135,7 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
         
     }
     
-    private func fontAwesomeIconSet(iconLabel: UILabel, iconName: String) {
+    func fontAwesomeIconSet(iconLabel: UILabel, iconName: String) {
         let font = UIFont.fontAwesome(ofSize: 20.0, style: .regular)
         let color = AppTheme().mainColor
         let fontAwesomeIcon = iconName
@@ -140,7 +145,7 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
         iconLabel.textColor = color
     }
     
-    private func setDatePicker() {
+    func setDatePicker() {
         datePicker.datePickerMode = UIDatePicker.Mode.date
         datePicker.timeZone = NSTimeZone.local
         datePicker.locale = Locale.current
@@ -155,7 +160,7 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
         
     }
     
-    private func realmAddPost(post: Post){
+    func realmAddPost(post: Post){
         do {
             try realm.write {
                 realm.add(post)
@@ -165,7 +170,7 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
         }
     }
     
-    private func saveAlert(){
+    func saveAlert(){
         let alert = UIAlertController(title: "ポストを新規作成しますか？", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "作成", style: .default) { (action) in
             
@@ -189,14 +194,14 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
         present(alert, animated: true, completion: nil)
     }
     
-    private func loafOfCreated() {
+    func loafOfCreated() {
         
         let image = self.post.photo
         let name = self.post.name
         Loaf("\(String(describing: name))のポストを作成しました。", state: .custom(.init(backgroundColor: .systemGreen, icon: image)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
     }
     
-    private func inputContentToPost() {
+    func inputContentToPost() {
         
         post.name = self.nameTextField.text ?? ""
         post.theme = self.themeTextField.text ?? ""
@@ -207,7 +212,7 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
         post.photo = self.heroImageView.image
     }
     
-    private func validateTextField() {
+    func validateTextField() {
         
         //空白文字が含むとエラー
         let stringRule = ValidationRulePattern(pattern: "^[\\S]+$", error: ExampleValidationError("空白等は含めないで下さい"))
@@ -224,13 +229,13 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
         
     }
     
-    private func applyRuleToTF(textField: UITextField, rule: ValidationRulePattern, VDLabel: UILabel) {
+    func applyRuleToTF(textField: UITextField, rule: ValidationRulePattern, VDLabel: UILabel) {
         
         let validateTF = textField.validate(rule: rule)
         reflectValidateResalut(result: validateTF, label: VDLabel)
     }
     
-    private func reflectValidateResalut(result: ValidationResult, label: UILabel) {
+    func reflectValidateResalut(result: ValidationResult, label: UILabel) {
         switch result {
         case .valid:
             label.text = "ok"
@@ -239,16 +244,25 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
         }
     }
     
+    @objc func done() {
+        dateTextField.endEditing(true)
+        
+        // 日付のフォーマット
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd"
+        dateTextField.text = "\(formatter.string(from: datePicker.date))"
+    }
 }
+
 
 extension CreatePostViewController: UIImagePickerControllerDelegate, CropViewControllerDelegate{
     
-    internal func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
         
     }
     
-    internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         guard let pickerImage = (info[UIImagePickerController.InfoKey.originalImage] as? UIImage) else { return }
         
@@ -285,11 +299,11 @@ extension CreatePostViewController: UIImagePickerControllerDelegate, CropViewCon
         }
     }
     
-    internal func cropViewController(_ cropViewController: CropViewController, didCropToCircularImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+    func cropViewController(_ cropViewController: CropViewController, didCropToCircularImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
         updateImageViewWithImage(image, fromCropViewController: cropViewController)
     }
     
-    internal func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
         updateImageViewWithImage(image, fromCropViewController: cropViewController)
     }
     
