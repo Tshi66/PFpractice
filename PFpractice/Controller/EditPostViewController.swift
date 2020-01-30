@@ -239,7 +239,7 @@ private extension EditPostViewController {
     private func modifySavingAndDeposit() {
         
         let deposit = post.deposit
-        let inputtedBudgetOnTF = self.budgetTextField.text ?? ""
+        let inputtedBudgetOnTF = budgetTextField.text ?? ""
         let difference = deposit - (Int(inputtedBudgetOnTF) ?? 0)
         
         //入力された予算額がポストへの入金額よりも大きい場合
@@ -253,13 +253,18 @@ private extension EditPostViewController {
     
     private func updatePostOnRealm() {
         
-        post.name = self.nameTextField.text ?? ""
-        post.theme = self.themeTextField.text ?? ""
-        post.present = self.presentTextField.text ?? ""
-        post.date = self.dateTextField.text ?? ""
-        post.budget = Int(self.budgetTextField.text ?? "") ?? 0
-        post.backImage = self.backImageView.image
-        post.photo = self.heroImageView.image
+        if nameTextField.text == "" || themeTextField.text == "" || presentTextField.text == "" || dateTextField.text == "" || budgetTextField.text == "" {
+            
+            fatalError("想定しないエラーが発生したためプログラムを終了します")
+        }
+        
+        post.name = nameTextField.text!
+        post.theme = themeTextField.text!
+        post.present = presentTextField.text!
+        post.date = dateTextField.text!
+        post.budget = Int(budgetTextField.text!)!
+        post.backImage = backImageView.image
+        post.photo = heroImageView.image
         
     }
     
@@ -330,11 +335,11 @@ extension EditPostViewController: UIImagePickerControllerDelegate, CropViewContr
         
         if tapId == "heroImage" {
             
-            self.heroImageView.image = image
+            heroImageView.image = image
             
         } else {
             
-            self.backImageView.image = image
+            backImageView.image = image
         }
         
         cropViewController.dismiss(animated: true, completion: nil)

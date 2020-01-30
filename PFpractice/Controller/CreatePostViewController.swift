@@ -187,20 +187,25 @@ private extension CreatePostViewController {
     
     func loafOfCreated() {
         
-        let image = self.post.photo
-        let name = self.post.name
+        let image = post.photo
+        let name = post.name
         Loaf("\(String(describing: name))のポストを作成しました。", state: .custom(.init(backgroundColor: .systemGreen, icon: image)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
     }
     
     func inputContentToPost() {
         
-        post.name = self.nameTextField.text ?? ""
-        post.theme = self.themeTextField.text ?? ""
-        post.present = self.presentTextField.text ?? ""
-        post.date = self.dateTextField.text ?? ""
-        post.budget = Int(self.budgetTextField.text ?? "") ?? 0
-        post.backImage = self.backImageView.image
-        post.photo = self.heroImageView.image
+        if nameTextField.text == "" || themeTextField.text == "" || presentTextField.text == "" || dateTextField.text == "" || budgetTextField.text == "" {
+            
+            fatalError("想定しないエラーが発生したためプログラムを終了します")
+        }
+        
+        post.name = nameTextField.text!
+        post.theme = themeTextField.text!
+        post.present = presentTextField.text!
+        post.date = dateTextField.text!
+        post.budget = Int(budgetTextField.text!)!
+        post.backImage = backImageView.image
+        post.photo = heroImageView.image
     }
     
     func validateTextField() {
@@ -302,11 +307,11 @@ extension CreatePostViewController: UIImagePickerControllerDelegate, CropViewCon
         
         if tapId == "heroImage" {
             
-            self.heroImageView.image = image
+            heroImageView.image = image
             
         } else {
             
-            self.backImageView.image = image
+            backImageView.image = image
         }
         
         cropViewController.dismiss(animated: true, completion: nil)
