@@ -75,15 +75,6 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
         
     }
     
-    @objc func done() {
-        dateTextField.endEditing(true)
-        
-        // 日付のフォーマット
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy/MM/dd"
-        dateTextField.text = "\(formatter.string(from: datePicker.date))"
-    }
-    
     //MARC: IBAction
     
     @IBAction func createPostButton(_ sender: UIButton) {
@@ -137,7 +128,7 @@ private extension CreatePostViewController {
     
     func fontAwesomeIconSet(iconLabel: UILabel, iconName: String) {
         let font = UIFont.fontAwesome(ofSize: 20.0, style: .regular)
-        let color = AppTheme().mainColor
+        let color = AppTheme.mainColor
         let fontAwesomeIcon = iconName
         
         iconLabel.font = font

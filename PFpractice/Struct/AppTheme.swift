@@ -12,6 +12,6 @@ import FontAwesome_swift
 
 struct AppTheme {
     
-    let mainColor = UIColor(red: 219/255, green: 68/255, blue: 55/255, alpha: 1.0)
+    static let mainColor = UIColor(red: 219/255, green: 68/255, blue: 55/255, alpha: 1.0)
     
 }

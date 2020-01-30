@@ -46,13 +46,16 @@ class BankViewController: UIViewController {
         showAddSavingAlert()
         
     }
+}
+
+private extension BankViewController {
     
-    private func showAddSavingAlert() {
+    func showAddSavingAlert() {
         
         let alert = UIAlertController(title: "貯金しますか？", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default) { (action) in
                         
-            self.validateTextField(caseNumber: 1)
+            self.validateTextField(savingType: .add)
             self.viewDidLoad()
             
         }
@@ -71,12 +74,12 @@ class BankViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    private func showEditSavingAlert() {
+    func showEditSavingAlert() {
         
         let alert = UIAlertController(title: "貯金額を編集しますか？", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default) { (action) in
             
-            self.validateTextField(caseNumber: 0)
+            self.validateTextField(savingType: .edit)
             self.viewDidLoad()
         }
         
@@ -94,7 +97,7 @@ class BankViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    private func indicateProgress(){
+    func indicateProgress(){
         let sumBudget: Int = posts.sum(ofProperty: "budget")
         let sumDeposit: Int = posts.sum(ofProperty: "deposit")
         
@@ -105,18 +108,13 @@ class BankViewController: UIViewController {
         showProgressView(sumBudget: sumBudget)
     }
     
-    private func showProgressView(sumBudget: Int) {
+    func showProgressView(sumBudget: Int) {
                 
         (text: progressLabel.text, color: progressLabel.textColor) = {
             
             let amount = sumBudget - bank.saving
             
-            if amount < 0 {
-                return (text: "余り \(-(amount))円", color: .blue)
-                
-            } else {
-                return (text: "あと \(amount)円", color: .red)
-            }
+            return amount < 0 ? (text: "余り \(-(amount))円", color: .blue) : (text: "あと \(amount)円", color: .red)
         }()
         
         UIView.animate(withDuration: 1.0) {
@@ -126,7 +124,7 @@ class BankViewController: UIViewController {
         progressView.maxValue = CGFloat(sumBudget)
     }
     
-    private func createBankOnRealm(){
+    func createBankOnRealm(){
         do {
             try self.realm.write {
                 self.realm.add(Bank())
@@ -137,7 +135,7 @@ class BankViewController: UIViewController {
         
     }
     
-    private func loadBankFromRealm() {
+    func loadBankFromRealm() {
         if realm.objects(Bank.self).filter("id = 0").first != nil{
             
             bank = realm.objects(Bank.self).filter("id = 0").first!
@@ -146,21 +144,21 @@ class BankViewController: UIViewController {
         }
     }
     
-    private func loadPostsFromRealm(){
+    func loadPostsFromRealm(){
         
         posts = realm.objects(Post.self).filter("finished = false")
         
     }
     
-    private func validateTextField(caseNumber: Int) {
+    func validateTextField(savingType: savingType) {
         
         let rules = setValidateRule()
         let depositValidation = textField.validate(rules: rules)
-        reflectValidateResalut(result: depositValidation, pattern: caseNumber)
+        reflectValidateResalut(result: depositValidation, savingType: savingType)
         
     }
     
-    private func setValidateRule() -> ValidationRuleSet<String> {
+    func setValidateRule() -> ValidationRuleSet<String> {
         
         //空白文字が含むとエラー
         let stringRule = ValidationRulePattern(pattern: "^[\\S]+$", error: ExampleValidationError("空白等は含めないで下さい"))
@@ -174,12 +172,12 @@ class BankViewController: UIViewController {
         return depositRules
     }
     
-    private func reflectValidateResalut(result: ValidationResult, pattern: Int) {
+    func reflectValidateResalut(result: ValidationResult, savingType: savingType) {
         
         switch result {
         case .valid:
             
-            processSaving(pattern: pattern)
+            processSaving(savingType: savingType)
                         
         case .invalid(let failures):
             
@@ -191,7 +189,7 @@ class BankViewController: UIViewController {
         }
     }
     
-    private func processSaving(pattern: Int){
+    func processSaving(savingType: savingType){
         
         guard let input = textField.text else {
             return
@@ -206,7 +204,8 @@ class BankViewController: UIViewController {
             createBankOnRealm()
         }
         
-        if pattern == 0 {
+        switch savingType {
+        case .edit:
             
             add = 0
             saveToRealm(add: add, inputValue: inputValue)
@@ -214,9 +213,8 @@ class BankViewController: UIViewController {
             //貯金額変更を知らせる
             showLoafMessage(message: "貯金額を\(inputValue)円に変更しました", state: .success)
             
-        //pattern == 1
-        } else {
-                
+        case .add:
+            
             saveToRealm(add: add, inputValue: inputValue)
             
             //完了を知らせる
@@ -224,7 +222,7 @@ class BankViewController: UIViewController {
         }
     }
     
-    private func saveToRealm(add: Int, inputValue: Int) {
+    func saveToRealm(add: Int, inputValue: Int) {
         
         do {
             try realm.write {
@@ -235,7 +233,7 @@ class BankViewController: UIViewController {
         }
     }
     
-    private func showLoafMessage(message: String, state: Loaf.State) {
+    func showLoafMessage(message: String, state: Loaf.State) {
         
         Loaf(message, state: state, location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
     }

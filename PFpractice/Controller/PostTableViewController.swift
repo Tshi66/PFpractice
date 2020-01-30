@@ -91,8 +91,11 @@ class PostTableViewController: UITableViewController {
             nextVC.post = post
         }
     }
+}
+
+private extension PostTableViewController {
     
-    private func showPostData(cell: PostTableViewCell) {
+    func showPostData(cell: PostTableViewCell) {
         
         cell.nameLabel.text = post.name
         cell.themeLabel.text = post.theme
@@ -113,7 +116,7 @@ class PostTableViewController: UITableViewController {
         }()
     }
     
-    private func outputRemainingDays(date: String) -> Int {
+    func outputRemainingDays(date: String) -> Int {
         
         let now = Date()
         let dateFormatter = DateFormatter()
@@ -126,7 +129,7 @@ class PostTableViewController: UITableViewController {
         
     }
     
-    private func iconSetToLabel(cell: PostTableViewCell){
+    func iconSetToLabel(cell: PostTableViewCell){
         
         fontAwesomeIconSet(iconLabel: cell.themeIcon, iconName: .fontAwesomeIcon(name: .heart))
         fontAwesomeIconSet(iconLabel: cell.presentIcon, iconName: .fontAwesomeIcon(name: .gem))
@@ -135,10 +138,10 @@ class PostTableViewController: UITableViewController {
         
     }
     
-    private func fontAwesomeIconSet(iconLabel: UILabel, iconName: String) {
+    func fontAwesomeIconSet(iconLabel: UILabel, iconName: String) {
         
         let font = UIFont.fontAwesome(ofSize: 14.0, style: .regular)
-        let color = AppTheme().mainColor
+        let color = AppTheme.mainColor
         let fontAwesomeIcon = iconName
         
         iconLabel.font = font
@@ -146,7 +149,7 @@ class PostTableViewController: UITableViewController {
         iconLabel.textColor = color
     }
     
-    private func showNotificationLabel(cell: PostTableViewCell) {
+    func showNotificationLabel(cell: PostTableViewCell) {
         
         cell.notificationLabel.layer.cornerRadius = 3
         cell.notificationLabel.clipsToBounds = true
@@ -162,7 +165,7 @@ class PostTableViewController: UITableViewController {
         }
     }
     
-    private func showSubProgressView(cell: PostTableViewCell){
+    func showSubProgressView(cell: PostTableViewCell){
         
         UIView.animate(withDuration: 1.0) {
             cell.subProgressView.value = CGFloat(self.post.deposit)
@@ -170,7 +173,7 @@ class PostTableViewController: UITableViewController {
         cell.subProgressView.maxValue = CGFloat(post.budget)
     }
     
-    private func showMiniBankView(){
+    func showMiniBankView(){
         
         let sumBudget: Int = posts.sum(ofProperty: "budget")
         let sumDeposit: Int = posts.sum(ofProperty: "deposit")
@@ -183,18 +186,14 @@ class PostTableViewController: UITableViewController {
         showMainProgressView(sumBudget: sumBudget)
     }
     
-    private func showMainProgressView(sumBudget: Int) {
+    func showMainProgressView(sumBudget: Int) {
                 
         (text: progressLabel.text, color: progressLabel.textColor) = {
             
             let amount = sumBudget - bank.saving
             
-            if amount < 0 {
-                return (text: "余り \(-(amount))円", color: .blue)
-                
-            } else {
-                return (text: "あと \(amount)円", color: .red)
-            }
+            return amount < 0 ? (text: "余り \(-(amount))円", color: .blue) : (text: "あと \(amount)円", color: .red)
+            
         }()
         
         UIView.animate(withDuration: 1.0) {
@@ -204,13 +203,13 @@ class PostTableViewController: UITableViewController {
         mainProgressView.maxValue = CGFloat(sumBudget)
     }
     
-    private func loadPostsFromRealm(){
+    func loadPostsFromRealm(){
         
         posts = realm.objects(Post.self).filter("finished = false")
         
     }
     
-    private func loadBankFromRealm() {
+    func loadBankFromRealm() {
         if realm.objects(Bank.self).filter("id = 0").first != nil{
             
             bank = realm.objects(Bank.self).filter("id = 0").first!

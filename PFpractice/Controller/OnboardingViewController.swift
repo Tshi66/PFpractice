@@ -31,27 +31,20 @@ class OnboardingViewController: UIViewController, PaperOnboardingDelegate, Paper
         self.navigationController?.isNavigationBarHidden = true
     }
     
-
-    private func setupPaperOnboardingView() {
-        let onboarding = PaperOnboarding()
-        onboarding.delegate = self
-        onboarding.dataSource = self
-        onboarding.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(onboarding)
-
-        // Add constraints
-        for attribute: NSLayoutConstraint.Attribute in [.left, .right, .top, .bottom] {
-            let constraint = NSLayoutConstraint(item: onboarding,
-                                                attribute: attribute,
-                                                relatedBy: .equal,
-                                                toItem: view,
-                                                attribute: attribute,
-                                                multiplier: 1,
-                                                constant: 0)
-            view.addConstraint(constraint)
-        }
+    @IBAction func skipButtonTapped(_ sender: UIButton) {
+         print(#function)
+        
+//        performSegue(withIdentifier: "Home", sender: nil)
+        
+        //storyboardのインスタンスを取得。
+        let storyboard: UIStoryboard = self.storyboard!
+        
+        //変遷先ViewControllerのインスタンを取得。
+        let tabVC = storyboard.instantiateViewController(withIdentifier: "TabBar") as! TabBarController
+        
+        self.navigationController?.pushViewController(tabVC, animated: true)
+        
     }
-    
     
     func onboardingItem(at index: Int) -> OnboardingItemInfo {
 
@@ -99,22 +92,6 @@ class OnboardingViewController: UIViewController, PaperOnboardingDelegate, Paper
         ][index]
     }
     
-    
-    @IBAction func skipButtonTapped(_ sender: UIButton) {
-         print(#function)
-        
-//        performSegue(withIdentifier: "Home", sender: nil)
-        
-        //storyboardのインスタンスを取得。
-        let storyboard: UIStoryboard = self.storyboard!
-        
-        //変遷先ViewControllerのインスタンを取得。
-        let tabVC = storyboard.instantiateViewController(withIdentifier: "TabBar") as! TabBarController
-        
-        self.navigationController?.pushViewController(tabVC, animated: true)
-        
-    }
-    
     func onboardingWillTransitonToIndex(_ index: Int) {
         skipButton.isHidden = index != 0 ? false : true
     }
@@ -134,4 +111,27 @@ class OnboardingViewController: UIViewController, PaperOnboardingDelegate, Paper
         return [UIColor.systemRed, UIColor.systemRed, UIColor.systemRed,UIColor.systemRed][index]
     }
     
+}
+
+private extension OnboardingViewController {
+    
+    func setupPaperOnboardingView() {
+        let onboarding = PaperOnboarding()
+        onboarding.delegate = self
+        onboarding.dataSource = self
+        onboarding.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(onboarding)
+
+        // Add constraints
+        for attribute: NSLayoutConstraint.Attribute in [.left, .right, .top, .bottom] {
+            let constraint = NSLayoutConstraint(item: onboarding,
+                                                attribute: attribute,
+                                                relatedBy: .equal,
+                                                toItem: view,
+                                                attribute: attribute,
+                                                multiplier: 1,
+                                                constant: 0)
+            view.addConstraint(constraint)
+        }
+    }
 }

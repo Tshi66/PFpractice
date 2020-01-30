@@ -137,7 +137,7 @@ private extension EditPostViewController {
     
     private func fontAwesomeIconSet(iconLabel: UILabel, iconName: String) {
         let font = UIFont.fontAwesome(ofSize: 20.0, style: .regular)
-        let color = AppTheme().mainColor
+        let color = AppTheme.mainColor
         let fontAwesomeIcon = iconName
         
         iconLabel.font = font

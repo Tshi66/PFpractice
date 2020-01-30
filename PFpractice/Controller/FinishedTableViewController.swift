@@ -74,6 +74,9 @@ class FinishedTableViewController: UITableViewController {
             
         }
     }
+}
+
+private extension FinishedTableViewController {
     
     func showLoaf(post: Post) {
         
@@ -122,7 +125,7 @@ class FinishedTableViewController: UITableViewController {
     func fontAwesomeIconSet(iconLabel: UILabel, iconName: String) {
         
         let font = UIFont.fontAwesome(ofSize: 13.0, style: .regular)
-        let color = AppTheme().mainColor
+        let color = AppTheme.mainColor
         let fontAwesomeIcon = iconName
         
         iconLabel.font = font
@@ -130,4 +133,3 @@ class FinishedTableViewController: UITableViewController {
         iconLabel.textColor = color
     }
 }
-
