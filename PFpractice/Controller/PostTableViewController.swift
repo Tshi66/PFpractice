@@ -91,6 +91,9 @@ class PostTableViewController: UITableViewController {
             nextVC.post = post
         }
     }
+}
+
+private extension PostTableViewController {
     
     func showPostData(cell: PostTableViewCell) {
         
@@ -138,7 +141,7 @@ class PostTableViewController: UITableViewController {
     func fontAwesomeIconSet(iconLabel: UILabel, iconName: String) {
         
         let font = UIFont.fontAwesome(ofSize: 14.0, style: .regular)
-        let color = UIColor.init(red: 219/255, green: 68/255, blue: 55/255, alpha: 1.0)
+        let color = AppTheme.mainColor
         let fontAwesomeIcon = iconName
         
         iconLabel.font = font
@@ -189,12 +192,8 @@ class PostTableViewController: UITableViewController {
             
             let amount = sumBudget - bank.saving
             
-            if amount < 0 {
-                return (text: "余り \(-(amount))円", color: .blue)
-                
-            } else {
-                return (text: "あと \(amount)円", color: .red)
-            }
+            return amount < 0 ? (text: "余り \(-(amount))円", color: .blue) : (text: "あと \(amount)円", color: .red)
+            
         }()
         
         UIView.animate(withDuration: 1.0) {

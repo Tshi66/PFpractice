@@ -75,29 +75,20 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
         
     }
     
-    @objc func done() {
-        dateTextField.endEditing(true)
-        
-        // 日付のフォーマット
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy/MM/dd"
-        dateTextField.text = "\(formatter.string(from: datePicker.date))"
-    }
-    
     //MARC: IBAction
     
     @IBAction func createPostButton(_ sender: UIButton) {
         
         validateTextField()
         
-        if nameVdLabel.text == "ok" && themeVdLabel.text == "ok" && presentVdLabel.text == "ok" && dateVdLabel.text == "ok" && budgetVdLabel.text == "ok" {
-            
-            saveAlert()
-            
-        } else {
+        guard nameVdLabel.text == "ok" && themeVdLabel.text == "ok" && presentVdLabel.text == "ok" && dateVdLabel.text == "ok" && budgetVdLabel.text == "ok" else {
             
             Loaf("ポストが作成されませんでした。", state: .error, location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
+            
+            return
         }
+        
+        saveAlert()
         
     }
     
@@ -109,16 +100,21 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
         setImgPicker()
         tapId = "heroImage"
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+}
+
+private extension CreatePostViewController {
+    
     func setImgPicker(){
         let picker = UIImagePickerController()
         picker.sourceType = .photoLibrary
         picker.delegate = self
         present(picker, animated: true, completion: nil)
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
     }
     
     func iconSetToLabel(){
@@ -132,7 +128,7 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
     
     func fontAwesomeIconSet(iconLabel: UILabel, iconName: String) {
         let font = UIFont.fontAwesome(ofSize: 20.0, style: .regular)
-        let color = UIColor.init(red: 219/255, green: 68/255, blue: 55/255, alpha: 1.0)
+        let color = AppTheme.mainColor
         let fontAwesomeIcon = iconName
         
         iconLabel.font = font
@@ -191,20 +187,25 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
     
     func loafOfCreated() {
         
-        let image = self.post.photo
-        let name = self.post.name
+        let image = post.photo
+        let name = post.name
         Loaf("\(String(describing: name))のポストを作成しました。", state: .custom(.init(backgroundColor: .systemGreen, icon: image)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
     }
     
     func inputContentToPost() {
         
-        post.name = self.nameTextField.text!
-        post.theme = self.themeTextField.text!
-        post.present = self.presentTextField.text!
-        post.date = self.dateTextField.text!
-        post.budget = Int(self.budgetTextField.text!)!
-        post.backImage = self.backImageView.image
-        post.photo = self.heroImageView.image
+        if nameTextField.text == "" || themeTextField.text == "" || presentTextField.text == "" || dateTextField.text == "" || budgetTextField.text == "" {
+            
+            fatalError("想定しないエラーが発生したためプログラムを終了します")
+        }
+        
+        post.name = nameTextField.text!
+        post.theme = themeTextField.text!
+        post.present = presentTextField.text!
+        post.date = dateTextField.text!
+        post.budget = Int(budgetTextField.text!)!
+        post.backImage = backImageView.image
+        post.photo = heroImageView.image
     }
     
     func validateTextField() {
@@ -239,7 +240,16 @@ class CreatePostViewController: UIViewController, UINavigationControllerDelegate
         }
     }
     
+    @objc func done() {
+        dateTextField.endEditing(true)
+        
+        // 日付のフォーマット
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd"
+        dateTextField.text = "\(formatter.string(from: datePicker.date))"
+    }
 }
+
 
 extension CreatePostViewController: UIImagePickerControllerDelegate, CropViewControllerDelegate{
     
@@ -254,16 +264,11 @@ extension CreatePostViewController: UIImagePickerControllerDelegate, CropViewCon
         
         //pickerで取得したUIImageのデータサイズをカットする。（realmが5MB以下対応だから）
         let resizedImage:UIImage = pickerImage.resized(withPercentage: 0.3)!
-        
+                
         croppingStyle = {
             
-            if tapId == "heroImage" {
-                
-                return .circular
-            } else {
-                
-                return .default
-            }
+            tapId == "heroImage" ? .circular : .default
+
         }()
         
         let cropController = CropViewController(croppingStyle: croppingStyle, image: resizedImage)
@@ -298,15 +303,15 @@ extension CreatePostViewController: UIImagePickerControllerDelegate, CropViewCon
         updateImageViewWithImage(image, fromCropViewController: cropViewController)
     }
     
-    func updateImageViewWithImage(_ image: UIImage, fromCropViewController cropViewController: CropViewController) {
+    private func updateImageViewWithImage(_ image: UIImage, fromCropViewController cropViewController: CropViewController) {
         
         if tapId == "heroImage" {
             
-            self.heroImageView.image = image
+            heroImageView.image = image
             
         } else {
             
-            self.backImageView.image = image
+            backImageView.image = image
         }
         
         cropViewController.dismiss(animated: true, completion: nil)

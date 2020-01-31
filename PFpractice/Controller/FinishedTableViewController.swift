@@ -64,17 +64,25 @@ class FinishedTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCell.EditingStyle.delete {
             
-            let deletePost = self.posts![indexPath.row]
-            
-            let name = deletePost.name
-            let image = deletePost.photo
-            Loaf("\(name)のポストを削除しました。", state: .custom(.init(backgroundColor: .systemGreen, icon: image)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
+            let deletePost = posts![indexPath.row]
+
+            showLoaf(post: deletePost)
             
             deletePostFromRealm(post: deletePost)
             
-            self.tableView.reloadData()
+            tableView.reloadData()
             
         }
+    }
+}
+
+private extension FinishedTableViewController {
+    
+    func showLoaf(post: Post) {
+        
+        let name = post.name
+        let image = post.photo
+        Loaf("\(name)のポストを削除しました。", state: .custom(.init(backgroundColor: .systemGreen, icon: image)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
     }
     
     func deletePostFromRealm(post: Post) {
@@ -92,7 +100,7 @@ class FinishedTableViewController: UITableViewController {
         
         posts = realm.objects(Post.self).filter("finished = true")
         
-        self.tableView.reloadData()
+        tableView.reloadData()
     }
     
     func setPostLabelAndImage(cell: FinishedTableViewCell, post: Post){
@@ -117,7 +125,7 @@ class FinishedTableViewController: UITableViewController {
     func fontAwesomeIconSet(iconLabel: UILabel, iconName: String) {
         
         let font = UIFont.fontAwesome(ofSize: 13.0, style: .regular)
-        let color = UIColor.init(red: 219/255, green: 68/255, blue: 55/255, alpha: 1.0)
+        let color = AppTheme.mainColor
         let fontAwesomeIcon = iconName
         
         iconLabel.font = font
@@ -125,4 +133,3 @@ class FinishedTableViewController: UITableViewController {
         iconLabel.textColor = color
     }
 }
-

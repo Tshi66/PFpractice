@@ -68,6 +68,44 @@ class PostToFinishedViewController: UIViewController, UINavigationControllerDele
         textField.resignFirstResponder()
     }
     
+    
+    
+    @IBAction func doneFinishButton(_ sender: UIButton) {
+        
+        validateTextField()
+        
+        guard realThemeVdLabel.text == "ok" && realDateVdLabel.text == "ok" && realPresentVdLabel.text == "ok" && realCostVdLabel.text == "ok" else {
+            
+            //Loafでエラーメッセージ表示
+            let loafMessage = "変更が反映されませんでした。"
+            showLoafMessage(message: loafMessage, state: .error)
+            
+            return
+        }
+        
+        //アニメーションの停止
+        animationView.stop()
+        
+        //変更値を保存
+        modifyPost(post: post)
+        
+        //全体表示をオフにする
+        navigationController?.isNavigationBarHidden = false
+        tabBarController?.tabBar.isHidden = false
+        
+        navigationController?.popToRootViewController(animated: true)
+        
+        //Loafでメッセージ表示
+        let image = post.photo
+        let name = post.name
+        let loafMassage = "\(name)のポストが「プレゼント完了」に追加されました。"
+        Loaf(loafMassage, state: .custom(.init(backgroundColor: .systemGreen, icon: image)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
+        
+    }
+}
+
+private extension PostToFinishedViewController {
+    
     func setAnimation(){
         
         let explosionAnimation = Animation.named("explosion")
@@ -85,7 +123,6 @@ class PostToFinishedViewController: UIViewController, UINavigationControllerDele
         realDateTextField.text = post.date
         realCostTextField.text = "\(post.deposit)"
         heroImageView.image = post.photo
-        heroImageView.layer.cornerRadius = heroImageView.frame.size.width * 0.5
     }
     
     func setDatePicker() {
@@ -112,51 +149,31 @@ class PostToFinishedViewController: UIViewController, UINavigationControllerDele
         realDateTextField.text = "\(formatter.string(from: datePicker.date))"
     }
     
-    @IBAction func doneFinishButton(_ sender: UIButton) {
-        
-        validateTextField()
-        
-//        //アニメーションのデバック
-//        if animationView.isAnimationPlaying == true {
-//            print("再生中")
-//        } else {
-//            print("停止中")
-//        }
-        
-        if realThemeVdLabel.text == "ok" && realDateVdLabel.text == "ok" && realPresentVdLabel.text == "ok" && realCostVdLabel.text == "ok" {
-            
-            //アニメーションの停止
-            animationView.stop()
-            
-            modifyPost(post: post)
-            
-            //全体表示をオフにする
-            navigationController?.isNavigationBarHidden = false
-            tabBarController?.tabBar.isHidden = false
-            
-            self.navigationController?.popToRootViewController(animated: true)
-            
-            //Loafでメッセージ表示
-            let image = post.photo
-            let name = post.name
-            Loaf("\(String(describing: name))のポストが「プレゼント完了」に追加されました。", state: .custom(.init(backgroundColor: .systemGreen, icon: image)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
-        }
-    }
-    
     func modifyPost(post: Post){
         
+        if realThemeTextField.text == "" || realPresentTextField.text == "" || realDateTextField.text == "" || realCostTextField.text == "" {
+            
+            fatalError("想定しないエラーが発生したためプログラムを終了します")
+        }
+        
+        saveToRealm()
+        
+    }
+    
+    func saveToRealm() {
         do {
             try realm.write {
                 
                 //変更がなくても、それぞれ変更値としてデータを保存する
-                post.realTheme = self.realThemeTextField.text!
-                post.realPresent = self.realPresentTextField.text!
-                post.realDate = self.realDateTextField.text!
-                post.realCost = Int(self.realCostTextField.text!)!
+                post.realTheme = realThemeTextField.text ?? ""
+                post.realPresent = realPresentTextField.text ?? ""
+                post.realDate = realDateTextField.text ?? ""
+                post.realCost = Int(realCostTextField.text ?? "") ?? 0
                 
             }
         } catch {
             print("Error saving post \(error)")
+            return
         }
     }
     
@@ -166,6 +183,7 @@ class PostToFinishedViewController: UIViewController, UINavigationControllerDele
             bank = realm.objects(Bank.self).filter("id = 0").first!
         } else {
             print("Bankデータが存在しません。")
+            return
         }
     }
     
@@ -174,47 +192,36 @@ class PostToFinishedViewController: UIViewController, UINavigationControllerDele
         //空白文字が含むとエラー
         let stringRule = ValidationRulePattern(pattern: "^[\\S]+$", error: ExampleValidationError("空白等は含めないで下さい"))
         //数字以外はエラー
-        let moneyRule = ValidationRulePattern(pattern: "^[\\d]+$", error:
-            ExampleValidationError("金額を入力して下さい"))
+        let moneyRule = ValidationRulePattern(pattern: "^[\\d]+$", error: ExampleValidationError("金額を入力して下さい"))
         //20../../..の型でないとエラー
         let dateRule = ValidationRulePattern(pattern: "20../../..", error: ExampleValidationError("日付を入力して下さい"))
         
-        var dateRules = ValidationRuleSet<String>()
-        dateRules.add(rule: stringRule)
-        dateRules.add(rule: dateRule)
+        applyRuleToTF(textField: realThemeTextField, rule: stringRule, VDLabel: realThemeVdLabel)
+        applyRuleToTF(textField: realPresentTextField, rule: stringRule, VDLabel: realPresentVdLabel)
+        applyRuleToTF(textField: realDateTextField, rule: dateRule, VDLabel: realDateVdLabel)
+        applyRuleToTF(textField: realCostTextField, rule: moneyRule, VDLabel: realCostVdLabel)
         
-        var moneyRules = ValidationRuleSet<String>()
-        moneyRules.add(rule: stringRule)
-        moneyRules.add(rule: moneyRule)
+    }
+    
+    func applyRuleToTF(textField: UITextField, rule: ValidationRulePattern, VDLabel: UILabel) {
         
-        let themeValidation = realThemeTextField.validate(rule: stringRule)
-        reflectValidateResalut(result: themeValidation, label: realThemeVdLabel)
-        
-        let presentValidation = realPresentTextField.validate(rule: stringRule)
-        reflectValidateResalut(result: presentValidation, label: realPresentVdLabel)
-        
-        let dateValidation = realDateTextField.validate(rules: dateRules)
-        reflectValidateResalut(result: dateValidation, label: realDateVdLabel)
-        
-        let budgetValidation = realCostTextField.validate(rules: moneyRules)
-        reflectValidateResalut(result: budgetValidation, label: realCostVdLabel)
-        
+        let validateTF = textField.validate(rule: rule)
+        reflectValidateResalut(result: validateTF, label: VDLabel)
     }
     
     func reflectValidateResalut(result: ValidationResult, label: UILabel) {
         switch result {
         case .valid:
+            
             label.text = "ok"
             
         case .invalid(let failures):
-            label.text = (failures.first as? ExampleValidationError)?.message
             
-            //Loafでエラーメッセージ表示
-            setLoaf(message: "変更が反映されませんでした。\nエラー: \((String(describing: (failures.first as! ExampleValidationError).message)))", state: .error)
+            label.text = (failures.first as? ExampleValidationError)?.message
         }
     }
     
-    func setLoaf(message: String, state: Loaf.State) {
+    func showLoafMessage(message: String, state: Loaf.State) {
         
         Loaf(message, state: state, location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
     }

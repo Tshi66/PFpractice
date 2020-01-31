@@ -94,14 +94,16 @@ class PostOneViewController: UIViewController {
     
     @IBAction func editDepositButton(_ sender: UIButton) {
         
-        let alertTitle = "入金額を編集しますか？\n(現在の貯金額:\(self.bank.saving))円"
+        let alertTitle = "入金額を編集しますか？\n(現在の貯金額:\(bank.saving))円"
         let alertMessage = ""
-        let validateCase = "editDeposit"
-        let depositTFplaceholder = "\(self.post.deposit)"
+        let depositTFplaceholder = "\(post.deposit)"
         
-        showDepositAlert(alertTitle: alertTitle, alertMessage: alertMessage, validateCase: validateCase, depositTFplaceholder: depositTFplaceholder)
+        showDepositAlert(alertTitle: alertTitle, alertMessage: alertMessage, depositType: .edit, depositTFplaceholder: depositTFplaceholder)
         
     }
+}
+
+private extension PostOneViewController {
     
     func judgeHavingSavingOfBank() -> Bool {
         
@@ -136,11 +138,10 @@ class PostOneViewController: UIViewController {
         if hasSavingOfBank == true && depositIsFiFull == false {
             
             let alertTitle = "入金する"
-            let alertMessage = "貯金箱からこのポストに入金できます。\n(現在の貯金額:\(self.bank.saving))円"
-            let validateCase = "deposit"
-            let depositTFplaceholder = "あと\(self.post.budget - self.post.deposit)円"
+            let alertMessage = "貯金箱からこのポストに入金できます。\n(現在の貯金額:\(bank.saving))円"
+            let depositTFplaceholder = "あと\(post.budget - post.deposit)円"
             
-            showDepositAlert(alertTitle: alertTitle, alertMessage: alertMessage, validateCase: validateCase, depositTFplaceholder: depositTFplaceholder)
+            showDepositAlert(alertTitle: alertTitle, alertMessage: alertMessage, depositType: .add, depositTFplaceholder: depositTFplaceholder)
             
         }
         
@@ -210,13 +211,13 @@ class PostOneViewController: UIViewController {
     func deleteNotification() {
         
         //通知リクエストの削除
-        let identifier = "postNotification" + String(self.post.id)
-        self.center.removePendingNotificationRequests(withIdentifiers: [identifier])
+        let identifier = "postNotification" + String(post.id)
+        center.removePendingNotificationRequests(withIdentifiers: [identifier])
         
         //realmから通知データを削除
         do {
             try self.realm.write {
-                self.realm.delete(self.post.info!)
+                self.realm.delete(post.info!)
             }
         } catch {
             print("Error delete post.info \(error)")
@@ -224,12 +225,12 @@ class PostOneViewController: UIViewController {
         
     }
     
-    func showDepositAlert(alertTitle: String, alertMessage: String, validateCase: String, depositTFplaceholder: String) {
+    func showDepositAlert(alertTitle: String, alertMessage: String, depositType: depositType, depositTFplaceholder: String) {
         
         let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default) { (action) in
             
-            self.validateTextField(validateCase: validateCase)
+            self.validateTextField(depositType: depositType)
             self.viewWillAppear(true)
         }
         
@@ -327,11 +328,15 @@ class PostOneViewController: UIViewController {
         remainingTimeLabel.text = {
             
             let remainingDays = outputRemainingDays(date: post.date)
+            guard let days = remainingDays else {
+                
+                return nil
+            }
             
-            if remainingDays < 0 {
-                return ("\(-(remainingDays))日前")
+            if days < 0 {
+                return ("\(-(days))日前")
             } else {
-                return ("あと\(remainingDays)日")
+                return ("あと\(days)日")
             }
         }()
     }
@@ -348,7 +353,7 @@ class PostOneViewController: UIViewController {
     func fontAwesomeIconSet(iconLabel: UILabel, iconName: String) {
         
         let font = UIFont.fontAwesome(ofSize: 20.0, style: .regular)
-        let color = UIColor.init(red: 219/255, green: 68/255, blue: 55/255, alpha: 1.0)
+        let color = AppTheme.mainColor
         let fontAwesomeIcon = iconName
         
         iconLabel.font = font
@@ -356,16 +361,16 @@ class PostOneViewController: UIViewController {
         iconLabel.textColor = color
     }
     
-    func outputRemainingDays(date: String) -> Int {
+    func outputRemainingDays(date: String) -> Int? {
         
         let now = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "yMd", options: 0, locale: Locale(identifier: "ja_JP"))
         let currentDate = dateFormatter.string(from: now)
-        let curDate = dateFormatter.date(from: currentDate)
-        let repDate = dateFormatter.date(from: date)
+        guard let curDate = dateFormatter.date(from: currentDate) else { return nil }
+        guard let repDate = dateFormatter.date(from: date) else { return nil }
         
-        return (Calendar.current.dateComponents([.day], from: curDate!, to: repDate!)).day!
+        return (Calendar.current.dateComponents([.day], from: curDate, to: repDate)).day
         
     }
     
@@ -406,12 +411,12 @@ class PostOneViewController: UIViewController {
         }
     }
     
-    func validateTextField(validateCase: String) {
+    func validateTextField(depositType: depositType) {
         
         let ValidationRules = setValidateRule()
         let depositValidation = textField.validate(rules: ValidationRules)
         
-        reflectValidateResalut(result: depositValidation, pattern: validateCase)
+        reflectValidateResalut(result: depositValidation, depositType: depositType)
         
     }
     
@@ -429,83 +434,92 @@ class PostOneViewController: UIViewController {
         return depositRules
     }
     
-    //このメソッドのリファクタリングが難しい。
-    func reflectValidateResalut(result: ValidationResult, pattern: String) {
-        
-        var inputtedDepositOnTF = self.textField.text
-        let savingOnBank = self.bank.saving
-        let budget = self.post.budget
-        let deposit = self.post.deposit
+    func reflectValidateResalut(result: ValidationResult, depositType: depositType) {
         
         switch result {
         case .valid:
             
-            //ポストに入金したときの処理
-            if pattern == "deposit" {
-                
-                if Int(inputtedDepositOnTF!)! > savingOnBank {
-                    
-                    inputtedDepositOnTF = String(savingOnBank)
-                }
-                
-                if budget < Int(inputtedDepositOnTF!)! + deposit {
-                    
-                    let modifiedDeposit =  budget - deposit
-                    inputtedDepositOnTF = String(modifiedDeposit)
-                }
-                
-                let modifiedSaving: Int = deposit + Int(inputtedDepositOnTF!)!
-                let modifiedDeposit: Int = savingOnBank - Int(inputtedDepositOnTF!)!
-                
-                modifyRealm(modifiedDeposit: modifiedDeposit, modifiedSaving: modifiedSaving)
-                
-                //Loafを表示
-                setLoaf(message: "\(Int(inputtedDepositOnTF!)!)円を入金しました。", state: .success)
-                
-                //入金額を編集するときの処理 pattern == "editDeposit"
-            } else {
-                
-                //入力した金額が予算額を超える
-                if Int(inputtedDepositOnTF!)! > budget {
-                    inputtedDepositOnTF = String(budget)
-                }
-                
-                //入力した金額よりも、入金額が大きい場合
-                if Int(inputtedDepositOnTF!)! < deposit {
-                    
-                    let modifiedSaving: Int = savingOnBank + (deposit - Int(inputtedDepositOnTF!)!)
-                    let modifiedDeposit: Int = Int(inputtedDepositOnTF!)!
-                    
-                    modifyRealm(modifiedDeposit: modifiedDeposit, modifiedSaving: modifiedSaving)
-                    
-                } else {
-                    
-                    if Int(inputtedDepositOnTF!)! - deposit > savingOnBank {
-                        
-                        let modifiedSaving: Int = savingOnBank - savingOnBank
-                        let modifiedDeposit: Int = deposit + savingOnBank
-
-                        modifyRealm(modifiedDeposit: modifiedDeposit, modifiedSaving: modifiedSaving)
-                        
-                    } else {
-                        
-                        let modifiedSaving: Int = savingOnBank - (Int(inputtedDepositOnTF!)! - deposit)
-                        let modifiedDeposit: Int = Int(inputtedDepositOnTF!)!
-                        
-                        modifyRealm(modifiedDeposit: modifiedDeposit, modifiedSaving: modifiedSaving)
-                        
-                    }
-                }
-                
-                //Loafを表示
-                setLoaf(message: "入金額を\(Int(self.post.deposit))円に変更しました。", state: .success)
-            }
+            modifySavingAndDeposit(depositType: depositType)
             
         case .invalid(let failures):
             //Loafでエラーメッセージ表示
             let errorMessage = String(describing: (failures.first as! ExampleValidationError).message)
             let loafMassage = "入金額が反映されませんでした。\nエラー: \(errorMessage)"
             setLoaf(message: loafMassage, state: .error)
+        }
+    }
+    
+    // FIXME: 現状ここまでしかリファクタリングできない。処理が複雑すぎる
+    // 要レビュー要請。
+    func modifySavingAndDeposit(depositType: depositType) {
+        
+        var inputtedDepositOnTF = textField.text
+        let savingOnBank = bank.saving
+        let budget = post.budget
+        let deposit = post.deposit
+        
+        switch depositType {
+        case .add:
+            
+            inputtedDepositOnTF = {
+                
+                if Int(inputtedDepositOnTF!)! > savingOnBank {
+                    
+                    return String(savingOnBank)
+                }
+                
+                if budget < Int(inputtedDepositOnTF!)! + deposit {
+                    
+                    return String(budget - deposit)
+                }
+                
+                return textField.text
+            }()
+            
+            let modifiedSaving: Int = savingOnBank - Int(inputtedDepositOnTF!)!
+            let modifiedDeposit: Int = deposit + Int(inputtedDepositOnTF!)!
+            modifyRealm(modifiedDeposit: modifiedDeposit, modifiedSaving: modifiedSaving)
+            
+            //Loafを表示
+            setLoaf(message: "\(Int(inputtedDepositOnTF!)!)円を入金しました。", state: .success)
+            
+        case .edit:
+            
+            //入力した金額が予算額を超える
+            if Int(inputtedDepositOnTF!)! > budget {
+                inputtedDepositOnTF = String(budget)
+            }
+            
+            //入力した金額よりも、入金額が大きい場合
+            if Int(inputtedDepositOnTF!)! < deposit {
+                
+                let modifiedSaving: Int = savingOnBank + (deposit - Int(inputtedDepositOnTF!)!)
+                let modifiedDeposit: Int = Int(inputtedDepositOnTF!)!
+                
+                modifyRealm(modifiedDeposit: modifiedDeposit, modifiedSaving: modifiedSaving)
+                
+            } else {
+                
+                if Int(inputtedDepositOnTF!)! - deposit > savingOnBank {
+                    
+                    let modifiedSaving: Int = savingOnBank - savingOnBank
+                    let modifiedDeposit: Int = deposit + savingOnBank
+                    
+                    modifyRealm(modifiedDeposit: modifiedDeposit, modifiedSaving: modifiedSaving)
+                    
+                } else {
+                    
+                    let modifiedSaving: Int = savingOnBank - (Int(inputtedDepositOnTF!)! - deposit)
+                    let modifiedDeposit: Int = Int(inputtedDepositOnTF!)!
+                    
+                    modifyRealm(modifiedDeposit: modifiedDeposit, modifiedSaving: modifiedSaving)
+                    
+                }
+                
+                //Loafを表示
+                setLoaf(message: "入金額を\(Int(post.deposit))円に変更しました。", state: .success)
+                
+            }
         }
     }
     
