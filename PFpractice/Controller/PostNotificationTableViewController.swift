@@ -12,6 +12,9 @@ import UserNotifications
 import Validator
 import Loaf
 
+//:FIXME
+//ここのクラスはリファクタリングが済んでいませんので、後回しでお願いします
+
 class PostNotificationTableViewController: UITableViewController,UIPickerViewDelegate,UNUserNotificationCenterDelegate {
     
     @IBOutlet weak var dateLabel: UILabel!

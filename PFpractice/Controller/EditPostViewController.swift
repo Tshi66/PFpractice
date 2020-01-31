@@ -107,14 +107,14 @@ class EditPostViewController: UIViewController, UINavigationControllerDelegate, 
 
 private extension EditPostViewController {
     
-    private func setImgPicker(){
+    func setImgPicker(){
         let picker = UIImagePickerController()
         picker.sourceType = .photoLibrary
         picker.delegate = self
         present(picker, animated: true, completion: nil)
     }
     
-    private func setPostData(){
+    func setPostData(){
         
         nameTextField.text = post.name
         themeTextField.text = post.theme
@@ -126,7 +126,7 @@ private extension EditPostViewController {
         
     }
     
-    private func iconSetToLabel(){
+    func iconSetToLabel(){
         
         fontAwesomeIconSet(iconLabel: themeIcon, iconName: .fontAwesomeIcon(name: .heart))
         fontAwesomeIconSet(iconLabel: presentIcon, iconName: .fontAwesomeIcon(name: .gem))
@@ -135,7 +135,7 @@ private extension EditPostViewController {
         
     }
     
-    private func fontAwesomeIconSet(iconLabel: UILabel, iconName: String) {
+    func fontAwesomeIconSet(iconLabel: UILabel, iconName: String) {
         let font = UIFont.fontAwesome(ofSize: 20.0, style: .regular)
         let color = AppTheme.mainColor
         let fontAwesomeIcon = iconName
@@ -145,7 +145,7 @@ private extension EditPostViewController {
         iconLabel.textColor = color
     }
     
-    private func setDatePicker() {
+    func setDatePicker() {
         datePicker.datePickerMode = UIDatePicker.Mode.date
         datePicker.timeZone = NSTimeZone.local
         datePicker.locale = Locale.current
@@ -169,7 +169,7 @@ private extension EditPostViewController {
         dateTextField.text = "\(formatter.string(from: datePicker.date))"
     }
     
-    private func saveAlert() {
+    func saveAlert() {
         
         let alert = UIAlertController(title: "ポストを編集しますか？", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default) { (action) in
@@ -191,7 +191,7 @@ private extension EditPostViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    private func validateTextField() {
+    func validateTextField() {
         
         //空白文字が含むとエラー
         let stringRule = ValidationRulePattern(pattern: "^[\\S]+$", error: ExampleValidationError("空白等は含めないで下さい"))
@@ -208,13 +208,13 @@ private extension EditPostViewController {
         
     }
     
-    private func applyRuleToTF(textField: UITextField, rule: ValidationRulePattern, VDLabel: UILabel) {
+    func applyRuleToTF(textField: UITextField, rule: ValidationRulePattern, VDLabel: UILabel) {
         
         let validateTF = textField.validate(rule: rule)
         reflectValidateResalut(result: validateTF, label: VDLabel)
     }
     
-    private func reflectValidateResalut(result: ValidationResult, label: UILabel) {
+    func reflectValidateResalut(result: ValidationResult, label: UILabel) {
         switch result {
         case .valid:
             label.text = "ok"
@@ -223,7 +223,7 @@ private extension EditPostViewController {
         }
     }
     
-    private func updateRealmData(post: Post){
+    func updateRealmData(post: Post){
         do {
             try realm.write {
                 
@@ -236,7 +236,7 @@ private extension EditPostViewController {
         }
     }
     
-    private func modifySavingAndDeposit() {
+    func modifySavingAndDeposit() {
         
         let deposit = post.deposit
         let inputtedBudgetOnTF = budgetTextField.text ?? ""
@@ -251,7 +251,7 @@ private extension EditPostViewController {
         }
     }
     
-    private func updatePostOnRealm() {
+    func updatePostOnRealm() {
         
         if nameTextField.text == "" || themeTextField.text == "" || presentTextField.text == "" || dateTextField.text == "" || budgetTextField.text == "" {
             
@@ -268,7 +268,7 @@ private extension EditPostViewController {
         
     }
     
-    private func bankLoad() {
+    func bankLoad() {
         if realm.objects(Bank.self).filter("id = 0").first != nil{
             
             bank = realm.objects(Bank.self).filter("id = 0").first!

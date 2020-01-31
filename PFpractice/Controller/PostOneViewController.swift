@@ -434,8 +434,6 @@ private extension PostOneViewController {
         return depositRules
     }
     
-    // FIXME: 現状ここまでしかリファクタリングできない。処理が複雑すぎる
-    // 要レビュー要請。
     func reflectValidateResalut(result: ValidationResult, depositType: depositType) {
         
         switch result {
@@ -451,6 +449,8 @@ private extension PostOneViewController {
         }
     }
     
+    // FIXME: 現状ここまでしかリファクタリングできない。処理が複雑すぎる
+    // 要レビュー要請。
     func modifySavingAndDeposit(depositType: depositType) {
         
         var inputtedDepositOnTF = textField.text

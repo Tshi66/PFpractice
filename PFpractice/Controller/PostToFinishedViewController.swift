@@ -68,6 +68,44 @@ class PostToFinishedViewController: UIViewController, UINavigationControllerDele
         textField.resignFirstResponder()
     }
     
+    
+    
+    @IBAction func doneFinishButton(_ sender: UIButton) {
+        
+        validateTextField()
+        
+        guard realThemeVdLabel.text == "ok" && realDateVdLabel.text == "ok" && realPresentVdLabel.text == "ok" && realCostVdLabel.text == "ok" else {
+            
+            //Loafでエラーメッセージ表示
+            let loafMessage = "変更が反映されませんでした。"
+            showLoafMessage(message: loafMessage, state: .error)
+            
+            return
+        }
+        
+        //アニメーションの停止
+        animationView.stop()
+        
+        //変更値を保存
+        modifyPost(post: post)
+        
+        //全体表示をオフにする
+        navigationController?.isNavigationBarHidden = false
+        tabBarController?.tabBar.isHidden = false
+        
+        navigationController?.popToRootViewController(animated: true)
+        
+        //Loafでメッセージ表示
+        let image = post.photo
+        let name = post.name
+        let loafMassage = "\(name)のポストが「プレゼント完了」に追加されました。"
+        Loaf(loafMassage, state: .custom(.init(backgroundColor: .systemGreen, icon: image)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
+        
+    }
+}
+
+private extension PostToFinishedViewController {
+    
     func setAnimation(){
         
         let explosionAnimation = Animation.named("explosion")
@@ -111,41 +149,18 @@ class PostToFinishedViewController: UIViewController, UINavigationControllerDele
         realDateTextField.text = "\(formatter.string(from: datePicker.date))"
     }
     
-    @IBAction func doneFinishButton(_ sender: UIButton) {
+    func modifyPost(post: Post){
         
-        validateTextField()
-        
-        guard realThemeVdLabel.text == "ok" && realDateVdLabel.text == "ok" && realPresentVdLabel.text == "ok" && realCostVdLabel.text == "ok" else {
+        if realThemeTextField.text == "" || realPresentTextField.text == "" || realDateTextField.text == "" || realCostTextField.text == "" {
             
-            //Loafでエラーメッセージ表示
-            let loafMessage = "変更が反映されませんでした。"
-            showLoafMessage(message: loafMessage, state: .error)
-            
-            return
+            fatalError("想定しないエラーが発生したためプログラムを終了します")
         }
         
-        //アニメーションの停止
-        animationView.stop()
-        
-        //変更値を保存
-        modifyPost(post: post)
-        
-        //全体表示をオフにする
-        navigationController?.isNavigationBarHidden = false
-        tabBarController?.tabBar.isHidden = false
-        
-        navigationController?.popToRootViewController(animated: true)
-        
-        //Loafでメッセージ表示
-        let image = post.photo
-        let name = post.name
-        let loafMassage = "\(name)のポストが「プレゼント完了」に追加されました。"
-        Loaf(loafMassage, state: .custom(.init(backgroundColor: .systemGreen, icon: image)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
+        saveToRealm()
         
     }
     
-    func modifyPost(post: Post){
-        
+    func saveToRealm() {
         do {
             try realm.write {
                 
@@ -172,7 +187,7 @@ class PostToFinishedViewController: UIViewController, UINavigationControllerDele
         }
     }
     
-    private func validateTextField() {
+    func validateTextField() {
         
         //空白文字が含むとエラー
         let stringRule = ValidationRulePattern(pattern: "^[\\S]+$", error: ExampleValidationError("空白等は含めないで下さい"))
@@ -188,7 +203,7 @@ class PostToFinishedViewController: UIViewController, UINavigationControllerDele
         
     }
     
-    private func applyRuleToTF(textField: UITextField, rule: ValidationRulePattern, VDLabel: UILabel) {
+    func applyRuleToTF(textField: UITextField, rule: ValidationRulePattern, VDLabel: UILabel) {
         
         let validateTF = textField.validate(rule: rule)
         reflectValidateResalut(result: validateTF, label: VDLabel)
