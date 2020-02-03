@@ -151,7 +151,7 @@
 		859CBD0623E2A7B80067C266 /* DepositType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepositType.swift; sourceTree = "<group>"; };
 		85AB259423DF417D00589F9D /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		85B25AAB23966BC500E04A68 /* ContentScrollable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentScrollable.swift; sourceTree = "<group>"; };
-		85BCD5C9238061A9002828E3 /* PFpractice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PFpractice.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		85BCD5C9238061A9002828E3 /* プレゼント管理.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "プレゼント管理.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		85BCD5CC238061A9002828E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		85BCD5CE238061A9002828E3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		85BCD5D0238061A9002828E3 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
@@ -334,7 +334,7 @@
 		85BCD5CA238061A9002828E3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				85BCD5C9238061A9002828E3 /* PFpractice.app */,
+				85BCD5C9238061A9002828E3 /* プレゼント管理.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -449,7 +449,7 @@
 			);
 			name = PFpractice;
 			productName = PFpractice;
-			productReference = 85BCD5C9238061A9002828E3 /* PFpractice.app */;
+			productReference = 85BCD5C9238061A9002828E3 /* プレゼント管理.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -782,7 +782,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "swift-test.PFpractice";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "プレゼント管理";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -802,7 +802,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "swift-test.PFpractice";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "プレゼント管理";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
