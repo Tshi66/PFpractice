@@ -183,21 +183,22 @@ private extension PostTableViewController {
         presentCostLabel.text = "\(sumBudget)円"
         
         //mainProgressViewを表示
-        showMainProgressView(sumBudget: sumBudget)
+        showMainProgressView(sumBudget: sumBudget, sumDeposit: sumDeposit)
     }
     
-    func showMainProgressView(sumBudget: Int) {
+    func showMainProgressView(sumBudget: Int, sumDeposit: Int) {
                 
+        var amount: Int = 0
+        
         (text: progressLabel.text, color: progressLabel.textColor) = {
             
-            let amount = sumBudget - bank.saving
-            
-            return amount < 0 ? (text: "余り \(-(amount))円", color: .blue) : (text: "あと \(amount)円", color: .red)
+            amount = sumBudget - (bank.saving + sumDeposit)
+            return amount < 0 ? (text: "+ \(-(amount))円", color: .blue) : (text: "- \(amount)円", color: .red)
             
         }()
         
         UIView.animate(withDuration: 1.0) {
-            self.mainProgressView.value = CGFloat(self.bank.saving)
+            self.mainProgressView.value = CGFloat(amount)
         }
         
         mainProgressView.maxValue = CGFloat(sumBudget)
