@@ -119,7 +119,7 @@ private extension BankViewController {
         }()
         
         UIView.animate(withDuration: 1.0) {
-            self.progressView.value = CGFloat(amount)
+            self.progressView.value = CGFloat(self.bank.saving + sumDeposit)
         }
         
         progressView.maxValue = CGFloat(sumBudget)
