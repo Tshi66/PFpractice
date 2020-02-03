@@ -105,20 +105,21 @@ private extension BankViewController {
         sumDepositLabel.text = "\(sumDeposit)円"
         presentCostLabel.text = "\(sumBudget)円"
         
-        showProgressView(sumBudget: sumBudget)
+        showProgressView(sumBudget: sumBudget, sumDeposit: sumDeposit)
     }
     
-    func showProgressView(sumBudget: Int) {
+    func showProgressView(sumBudget: Int, sumDeposit: Int) {
                 
+        var amount: Int = 0
+        
         (text: progressLabel.text, color: progressLabel.textColor) = {
             
-            let amount = sumBudget - bank.saving
-            
-            return amount < 0 ? (text: "余り \(-(amount))円", color: .blue) : (text: "あと \(amount)円", color: .red)
+            amount = sumBudget - (bank.saving + sumDeposit)
+            return amount < 0 ? (text: "+ \(-(amount))円", color: .blue) : (text: "- \(amount)円", color: .red)
         }()
         
         UIView.animate(withDuration: 1.0) {
-            self.progressView.value = CGFloat(self.bank.saving)
+            self.progressView.value = CGFloat(amount)
         }
         
         progressView.maxValue = CGFloat(sumBudget)
