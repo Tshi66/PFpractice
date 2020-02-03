@@ -198,7 +198,7 @@ private extension PostTableViewController {
         }()
         
         UIView.animate(withDuration: 1.0) {
-            self.mainProgressView.value = CGFloat(amount)
+            self.mainProgressView.value = CGFloat(self.bank.saving + sumDeposit)
         }
         
         mainProgressView.maxValue = CGFloat(sumBudget)
