@@ -10,12 +10,12 @@
         <!--Onboarding View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="onBoarding" id="BYZ-38-t0r" customClass="OnboardingViewController" customModule="PFpractice" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="onBoarding" id="BYZ-38-t0r" customClass="OnboardingViewController" customModule="プレゼント管理" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xw8-cp-aTm" customClass="OnboardingView" customModule="PFpractice" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xw8-cp-aTm" customClass="OnboardingView" customModule="プレゼント管理" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
@@ -53,7 +53,7 @@
         <!--貯金箱-->
         <scene sceneID="65J-FS-dXm">
             <objects>
-                <viewController storyboardIdentifier="asd" id="Mao-WQ-xCz" customClass="BankViewController" customModule="PFpractice" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="asd" id="Mao-WQ-xCz" customClass="BankViewController" customModule="プレゼント管理" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kQ1-3G-sse">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -81,21 +81,13 @@
                                                         <color key="textColor" red="0.85882352939999995" green="0.2666666667" blue="0.2156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(プレゼント総額 - 貯金額)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S73-pA-rN4">
-                                                        <rect key="frame" x="82" y="233" width="156" height="16"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                        <color key="textColor" red="0.85882352939999995" green="0.2666666667" blue="0.2156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 <constraints>
                                                     <constraint firstItem="o4i-7I-MBl" firstAttribute="centerY" secondItem="iWE-uF-tcG" secondAttribute="centerY" id="CNa-mF-Xjt"/>
                                                     <constraint firstItem="uLI-kg-csV" firstAttribute="centerX" secondItem="iWE-uF-tcG" secondAttribute="centerX" id="JRT-lw-60U"/>
-                                                    <constraint firstItem="S73-pA-rN4" firstAttribute="centerY" secondItem="iWE-uF-tcG" secondAttribute="centerY" constant="81" id="N0H-aE-SkT"/>
                                                     <constraint firstAttribute="height" constant="320" id="Weo-Fr-4b8"/>
                                                     <constraint firstItem="o4i-7I-MBl" firstAttribute="centerX" secondItem="iWE-uF-tcG" secondAttribute="centerX" id="hiz-Pl-6bF"/>
-                                                    <constraint firstItem="S73-pA-rN4" firstAttribute="centerX" secondItem="iWE-uF-tcG" secondAttribute="centerX" id="luO-sR-IGP"/>
                                                     <constraint firstAttribute="width" constant="320" id="onA-QI-LQJ"/>
                                                     <constraint firstItem="uLI-kg-csV" firstAttribute="centerY" secondItem="iWE-uF-tcG" secondAttribute="centerY" id="us5-yJ-FNu"/>
                                                 </constraints>
@@ -245,7 +237,7 @@
         <!--新規作成-->
         <scene sceneID="8xV-Y1-dpU">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="E2Y-e0-7qJ" customClass="CreatePostViewController" customModule="PFpractice" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="E2Y-e0-7qJ" customClass="CreatePostViewController" customModule="プレゼント管理" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3vU-tf-rLx">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -572,7 +564,7 @@
         <!--Home-->
         <scene sceneID="a8e-lt-61m">
             <objects>
-                <tableViewController storyboardIdentifier="postTable" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="QV5-tp-6Bl" customClass="PostTableViewController" customModule="PFpractice" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="postTable" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="QV5-tp-6Bl" customClass="PostTableViewController" customModule="プレゼント管理" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorInsetReference="fromAutomaticInsets" rowHeight="152" sectionHeaderHeight="18" estimatedSectionHeaderHeight="12" sectionFooterHeight="18" id="MBH-KS-r1I">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -614,23 +606,15 @@
                                                     <color key="textColor" red="0.85882352939999995" green="0.2666666667" blue="0.2156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(プレゼント総額 - 貯金額)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7uw-Kq-2D8">
-                                                    <rect key="frame" x="38.5" y="105.5" width="73.5" height="7.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="6"/>
-                                                    <color key="textColor" red="0.85882352939999995" green="0.2666666667" blue="0.2156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                             <constraints>
                                                 <constraint firstItem="8Kd-ub-61p" firstAttribute="centerX" secondItem="tK7-bo-5if" secondAttribute="centerX" id="0cn-sL-LbM"/>
-                                                <constraint firstItem="7uw-Kq-2D8" firstAttribute="centerX" secondItem="tK7-bo-5if" secondAttribute="centerX" id="AAZ-yO-9oz"/>
                                                 <constraint firstItem="1X8-h2-PDS" firstAttribute="centerY" secondItem="tK7-bo-5if" secondAttribute="centerY" id="B1A-6D-3oZ"/>
                                                 <constraint firstItem="8Kd-ub-61p" firstAttribute="centerY" secondItem="tK7-bo-5if" secondAttribute="centerY" id="G4K-v2-JOe"/>
                                                 <constraint firstAttribute="width" constant="150" id="N6T-1p-AJH"/>
                                                 <constraint firstItem="1X8-h2-PDS" firstAttribute="centerY" secondItem="tK7-bo-5if" secondAttribute="centerY" id="OKf-sN-2wC"/>
                                                 <constraint firstItem="1X8-h2-PDS" firstAttribute="centerX" secondItem="tK7-bo-5if" secondAttribute="centerX" id="Sfg-i5-ZyQ"/>
-                                                <constraint firstItem="7uw-Kq-2D8" firstAttribute="centerY" secondItem="tK7-bo-5if" secondAttribute="centerY" constant="34" id="UYY-xY-jRt"/>
                                                 <constraint firstItem="1X8-h2-PDS" firstAttribute="centerX" secondItem="tK7-bo-5if" secondAttribute="centerX" id="oEp-0e-vTZ"/>
                                                 <constraint firstAttribute="height" constant="150" id="rRY-wQ-Skv"/>
                                             </constraints>
@@ -726,7 +710,7 @@
                             </connections>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PostTableViewCell" translatesAutoresizingMaskIntoConstraints="NO" id="GGC-JC-B5K" customClass="PostTableViewCell" customModule="PFpractice" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PostTableViewCell" translatesAutoresizingMaskIntoConstraints="NO" id="GGC-JC-B5K" customClass="PostTableViewCell" customModule="プレゼント管理" customModuleProvider="target">
                                 <rect key="frame" x="20" y="226.5" width="374" height="152"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GGC-JC-B5K" id="LYs-xr-xTD">
@@ -974,7 +958,7 @@
         <!--Post One View Controller-->
         <scene sceneID="joa-94-dCy">
             <objects>
-                <viewController id="Igr-a7-kAd" customClass="PostOneViewController" customModule="PFpractice" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Igr-a7-kAd" customClass="PostOneViewController" customModule="プレゼント管理" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="mxT-ig-UZg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1334,7 +1318,7 @@
         <!--通知設定-->
         <scene sceneID="2EY-ov-xVm">
             <objects>
-                <tableViewController id="Gho-sX-FpI" customClass="PostNotificationTableViewController" customModule="PFpractice" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="Gho-sX-FpI" customClass="PostNotificationTableViewController" customModule="プレゼント管理" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" separatorInsetReference="fromAutomaticInsets" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="Pc3-ih-JC1">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1478,7 +1462,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="El0-pw-eZg">
             <objects>
-                <tabBarController storyboardIdentifier="TabBar" automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dtu-pL-4sj" customClass="TabBarController" customModule="PFpractice" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBar" automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dtu-pL-4sj" customClass="TabBarController" customModule="プレゼント管理" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="tpY-MG-ogt"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Fiy-i6-Ysb">
@@ -1559,7 +1543,7 @@
         <!--編集-->
         <scene sceneID="YPg-jz-NQU">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="0UG-Of-6pB" customClass="EditPostViewController" customModule="PFpractice" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="0UG-Of-6pB" customClass="EditPostViewController" customModule="プレゼント管理" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dt9-Jv-j5A">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1887,7 +1871,7 @@
         <!--プレゼント完了-->
         <scene sceneID="Ffn-mc-M12">
             <objects>
-                <tableViewController storyboardIdentifier="FinishedTable" modalTransitionStyle="crossDissolve" id="bwT-Wv-2uK" customClass="FinishedTableViewController" customModule="PFpractice" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="FinishedTable" modalTransitionStyle="crossDissolve" id="bwT-Wv-2uK" customClass="FinishedTableViewController" customModule="プレゼント管理" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorInsetReference="fromAutomaticInsets" allowsSelection="NO" rowHeight="124" sectionHeaderHeight="18" estimatedSectionHeaderHeight="12" sectionFooterHeight="18" id="B3K-z1-9Xo">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1896,10 +1880,10 @@
                         <color key="separatorColor" red="1" green="0.67450980390000004" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <inset key="separatorInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FinishedTableViewCell" rowHeight="124" id="gcr-xw-CCc" customClass="FinishedTableViewCell" customModule="PFpractice" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FinishedTableViewCell" rowHeight="124" id="gcr-xw-CCc" customClass="FinishedTableViewCell" customModule="プレゼント管理" customModuleProvider="target">
                                 <rect key="frame" x="20" y="55.5" width="374" height="124"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gcr-xw-CCc" id="11v-W4-qe2" customClass="FinishedTableViewCell" customModule="PFpractice" customModuleProvider="target">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gcr-xw-CCc" id="11v-W4-qe2" customClass="FinishedTableViewCell" customModule="プレゼント管理" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="124"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
@@ -2080,7 +2064,7 @@
         <!--Post To Finished View Controller-->
         <scene sceneID="qft-aO-LnA">
             <objects>
-                <viewController storyboardIdentifier="PostToFinished" useStoryboardIdentifierAsRestorationIdentifier="YES" id="eQz-ya-now" customClass="PostToFinishedViewController" customModule="PFpractice" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PostToFinished" useStoryboardIdentifierAsRestorationIdentifier="YES" id="eQz-ya-now" customClass="PostToFinishedViewController" customModule="プレゼント管理" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Dwl-1B-9t2">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
