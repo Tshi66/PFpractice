@@ -46,6 +46,7 @@
 		854631BE23850DF0004E7514 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854631BD23850DF0004E7514 /* PostTableViewCell.swift */; };
 		854631C223851BAA004E7514 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854631C123851BAA004E7514 /* Post.swift */; };
 		854631C423852560004E7514 /* PostTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854631C323852560004E7514 /* PostTableViewController.swift */; };
+		857C24ED23E9127100F72B90 /* PickerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857C24EC23E9127100F72B90 /* PickerType.swift */; };
 		858C1E02238D9CC900CDD91D /* No@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 858C1DFC238D9CC700CDD91D /* No@2x.png */; };
 		858C1E03238D9CC900CDD91D /* Yes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 858C1DFD238D9CC800CDD91D /* Yes@2x.png */; };
 		858C1E04238D9CC900CDD91D /* Yes.png in Resources */ = {isa = PBXBuildFile; fileRef = 858C1DFE238D9CC800CDD91D /* Yes.png */; };
@@ -139,6 +140,7 @@
 		854631BD23850DF0004E7514 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		854631C123851BAA004E7514 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		854631C323852560004E7514 /* PostTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewController.swift; sourceTree = "<group>"; };
+		857C24EC23E9127100F72B90 /* PickerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerType.swift; sourceTree = "<group>"; };
 		858C1DFC238D9CC700CDD91D /* No@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "No@2x.png"; sourceTree = "<group>"; };
 		858C1DFD238D9CC800CDD91D /* Yes@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Yes@2x.png"; sourceTree = "<group>"; };
 		858C1DFE238D9CC800CDD91D /* Yes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Yes.png; sourceTree = "<group>"; };
@@ -308,6 +310,7 @@
 			children = (
 				859CBD0423E1685A0067C266 /* SavingType.swift */,
 				859CBD0623E2A7B80067C266 /* DepositType.swift */,
+				857C24EC23E9127100F72B90 /* PickerType.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -625,6 +628,7 @@
 				8500D7EC239907D000BE9C7E /* Bank.swift in Sources */,
 				85CC082123B2957E000AD3C7 /* ValidationErrorType.swift .swift in Sources */,
 				8500D7EE23990B2000BE9C7E /* BankViewController.swift in Sources */,
+				857C24ED23E9127100F72B90 /* PickerType.swift in Sources */,
 				85BEEEB023C71AAF00EE80EF /* hideKeyboardWhenTappedAround.swift in Sources */,
 				85AB259523DF417D00589F9D /* AppTheme.swift in Sources */,
 				8500D7E623981C5C00BE9C7E /* EditPostViewController.swift in Sources */,

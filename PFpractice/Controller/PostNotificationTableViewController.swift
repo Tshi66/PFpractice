@@ -12,9 +12,6 @@ import UserNotifications
 import Validator
 import Loaf
 
-//:FIXME
-//ここのクラスはリファクタリングが済んでいませんので、後回しでお願いします
-
 class PostNotificationTableViewController: UITableViewController,UIPickerViewDelegate,UNUserNotificationCenterDelegate {
     
     @IBOutlet weak var dateLabel: UILabel!
@@ -23,10 +20,8 @@ class PostNotificationTableViewController: UITableViewController,UIPickerViewDel
     @IBOutlet weak var deleteButton: UIButton!
     
     let datePicker = UIDatePicker()
-    let timePicker = UIDatePicker()
     var textField = UITextField()
     let center = UNUserNotificationCenter.current()
-    
     let realm = try! Realm()
     var post = Post()
     var info = Info()
@@ -37,31 +32,9 @@ class PostNotificationTableViewController: UITableViewController,UIPickerViewDel
         postRealmLoad()
         allowNotification()
         setLabel()
-
-        if post.info != nil {
-            deleteButton.isHidden = false
-        } else {
-            deleteButton.isHidden = true
-        }
-        
+        showDeleteButton()
         //通知デバック用
-        print("<Pending request identifiers>")
-        UNUserNotificationCenter.current().getPendingNotificationRequests { (requests: [UNNotificationRequest]) in
-            for request in requests {
-                print("identifier:\(request.identifier)")
-                print("  title:\(request.content.title)")
-                
-            }
-        }
-        
-        print("<Delivered request identifiers>")
-        UNUserNotificationCenter.current().getDeliveredNotifications { (notifications: [UNNotification]) in
-            for notification in notifications {
-                print("identifier:\(notification.request.identifier)")
-                print("  title:\(notification.request.content.title)")
-                
-            }
-        }
+        debugNotification()
         
     }
     
@@ -70,123 +43,199 @@ class PostNotificationTableViewController: UITableViewController,UIPickerViewDel
         switch indexPath.row {
         case 0:
             
-            let alert = UIAlertController(title: "日付を選択してください。", message: "", preferredStyle: .alert)
-            let action = UIAlertAction(title: "OK", style: .default) { (action) in
-                
-                self.validateTextField(caseNumber: 0)
-            }
-            
-            let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel) { (action: UIAlertAction!) in
-            }
-            
-            alert.addTextField { (datePickTextField) in
-                self.textField = datePickTextField
-                datePickTextField.placeholder = self.post.info?.date ?? ""
-                self.setDatePicker()
-            }
-            
-            alert.addAction(action)
-            alert.addAction(cancelAction)
-            present(alert, animated: true, completion: nil)
+            showDatePickAlert()
             
         case 1:
             
-            let alert = UIAlertController(title: "時刻を選択してください。", message: "", preferredStyle: .alert)
-            let action = UIAlertAction(title: "OK", style: .default) { (action) in
-                
-                self.validateTextField(caseNumber: 1)
-            }
-            
-            let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel) { (action: UIAlertAction!) in
-            }
-            
-            alert.addTextField { (timePickTextField) in
-                self.textField = timePickTextField
-                timePickTextField.placeholder = self.post.info?.time ?? ""
-                self.setTimePicker()
-                
-            }
-            
-            alert.addAction(action)
-            alert.addAction(cancelAction)
-            present(alert, animated: true, completion: nil)
+            showTimePickAlert()
             
         case 2:
-            let alert = UIAlertController(title: "", message: "", preferredStyle: UIAlertController.Style.actionSheet)
             
-            let action_1 = UIAlertAction(title: "繰り返さない", style: UIAlertAction.Style.default, handler: {
-                (action: UIAlertAction!) in
-                
-                self.repetitionLabel.text = "繰り返さない"
-                self.info.repetition = self.repetitionLabel.text!
-                tableView.reloadData()
-            })
+            showRepeatAlert()
             
-            let action_2 = UIAlertAction(title: "毎日", style: UIAlertAction.Style.default, handler: {
-                (action: UIAlertAction!) in
-                self.repetitionLabel.text = "毎日"
-                self.info.repetition = self.repetitionLabel.text!
-                tableView.reloadData()
-            })
-            
-            let action_3 = UIAlertAction(title: "毎週", style: UIAlertAction.Style.default, handler: {
-                (action: UIAlertAction!) in
-                self.repetitionLabel.text = "毎週"
-                self.info.repetition = self.repetitionLabel.text!
-                tableView.reloadData()
-            })
-            
-            let action_4 = UIAlertAction(title: "毎月", style: UIAlertAction.Style.default, handler: {
-                (action: UIAlertAction!) in
-                self.repetitionLabel.text = "毎月"
-                self.info.repetition = self.repetitionLabel.text!
-                tableView.reloadData()
-            })
-            
-            alert.addAction(action_1)
-            alert.addAction(action_2)
-            alert.addAction(action_3)
-            alert.addAction(action_4)
-            
-            present(alert, animated: true, completion: nil)
         default:
-            print("error")
+            
+            fatalError("原因不明のエラーが発生しました。")
         }
+    }
+    
+    @IBAction func savePostNotification(_ sender: UIBarButtonItem) {
+        
+        saveValueToPost()
+        
+        saveInfoToRealm()
+        
+        setNotification()
+        
+        //1つ前の画面に戻り、Loafでメッセージ表示
+        self.navigationController?.popViewController(animated: false)
+        
+        let image = UIImage(named: "通知")
+        Loaf("通知を設定しました。", state: .custom(.init(backgroundColor: .gray, icon: image)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
+    }
+    
+    @IBAction func deleteButton(_ sender: UIButton) {
+        
+        showDeleteAlerm()
+        
+    }
+    
+}
+
+private extension PostNotificationTableViewController {
+    
+    func showDeleteButton(){
+        
+        deleteButton.isHidden = {
+            
+            return post.info != nil ? false : true
+        }()
+    }
+    
+    func showDatePickAlert(){
+        
+        let alert = UIAlertController(title: "日付を選択してください。", message: "", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default) { (action) in
+            
+            self.validateTextField(pickerType: .date)
+        }
+        
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel) { (action: UIAlertAction!) in
+        }
+        
+        alert.addTextField { (datePickTextField) in
+            self.textField = datePickTextField
+            datePickTextField.placeholder = self.post.info?.date ?? ""
+            self.setDatePicker()
+        }
+        
+        alert.addAction(action)
+        alert.addAction(cancelAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func showTimePickAlert(){
+        
+        let alert = UIAlertController(title: "時刻を選択してください。", message: "", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default) { (action) in
+            
+            self.validateTextField(pickerType: .time)
+        }
+        
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel) { (action: UIAlertAction!) in
+        }
+        
+        alert.addTextField { (timePickTextField) in
+            self.textField = timePickTextField
+            timePickTextField.placeholder = self.post.info?.time ?? ""
+            self.setTimePicker()
+            
+        }
+        
+        alert.addAction(action)
+        alert.addAction(cancelAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func showRepeatAlert(){
+        
+        let alert = UIAlertController(title: "", message: "", preferredStyle: UIAlertController.Style.actionSheet)
+        
+        createAlertAction(alert: alert, actionTitle: "繰り返さない", labelText: "繰り返さない", tableView: tableView)
+        createAlertAction(alert: alert, actionTitle: "毎日", labelText: "毎日", tableView: tableView)
+        createAlertAction(alert: alert, actionTitle: "毎週", labelText: "毎週", tableView: tableView)
+        createAlertAction(alert: alert, actionTitle: "毎月", labelText: "毎月", tableView: tableView)
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func createAlertAction(alert: UIAlertController, actionTitle: String, labelText: String, tableView: UITableView){
+        
+        let action = UIAlertAction(title: actionTitle, style: UIAlertAction.Style.default, handler: {
+            (action: UIAlertAction!) in
+            self.repetitionLabel.text = labelText
+            self.info.repetition = self.repetitionLabel.text!
+            tableView.reloadData()
+        })
+        
+        alert.addAction(action)
+    }
+    
+    func showDeleteAlerm(){
+        
+        let alert = UIAlertController(title: "通知を削除します。", message: "", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default) { (action) in
+            
+            self.removeInfoInRealm()
+            
+            self.removeNotificationRequests()
+            
+            //1つ前の画面に戻り、Loafでメッセージ表示
+            let image = UIImage(named: "通知オフ")
+            Loaf("通知を削除しました。", state: .custom(.init(backgroundColor: .gray, icon: image)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: ((self.navigationController?.popViewController(animated: false))!)).show()
+        }
+        
+        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel) { (action: UIAlertAction!) in
+        }
+        
+        alert.addAction(action)
+        alert.addAction(cancelAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func removeInfoInRealm() {
+        do {
+            try self.realm.write {
+                self.realm.delete(self.post.info!)
+            }
+        } catch {
+            print("Error delete post.info \(error)")
+        }
+    }
+    
+    func removeNotificationRequests(){
+        
+        let identifier = "postNotification" + String(self.post.id)
+        self.center.removePendingNotificationRequests(withIdentifiers: [identifier])
     }
     
     func setLabel() {
         if post.info != nil {
             
+            //保存されている通知設定を表示する。
             dateLabel.text = post.info?.date
             timeLabel.text = post.info?.time
             repetitionLabel.text = post.info?.repetition
             
         } else {
             
-            let current = Date()
-            let calendar = Calendar.current
-            let component = DateComponents(day: 1)
-            let date = calendar.date(byAdding: component, to: current)
-            let formatter1 = DateFormatter()
-            let formatter2 = DateFormatter()
-            formatter1.dateFormat = "yyyy/MM/dd"
-            formatter2.dateFormat = "HH:mm"
-            formatter1.locale = .current
-            formatter2.locale = .current
+            //現在の日時を表示する。
+            let date = setCurrent(dateFormat: "yyyy/MM/dd")
+            let time = setCurrent(dateFormat: "HH:mm")
             
-            let format1 = formatter1.string(from: date!)
-            let format2 = formatter2.string(from: date!)
-            
-            info.date = format1
-            info.time = format2
-            info.repetition = "繰り返さない"
-            info.enable = true
-            
-            dateLabel.text = info.date
-            timeLabel.text = info.time
-            repetitionLabel.text = info.repetition
+            dateLabel.text = date
+            timeLabel.text = time
+            repetitionLabel.text = "繰り返さない"
             
         }
+    }
+    
+    func setCurrent(dateFormat: String) -> String {
+        
+        let current = Date()
+        let calendar = Calendar.current
+        let component = DateComponents(day: 1)
+        let date = calendar.date(byAdding: component, to: current)
+        let formatter = DateFormatter()
+        formatter.dateFormat = dateFormat
+        formatter.locale = .current
+        
+        guard date != nil else {
+            fatalError("原因不明のエラーが発生しました。")
+        }
+        
+        let format = formatter.string(from: date!)
+        return format
     }
     
     func setDatePicker() {
@@ -218,82 +267,25 @@ class PostNotificationTableViewController: UITableViewController,UIPickerViewDel
     }
     
     @objc func setDate() {
-        textField.endEditing(true)
         
-        // 日付のフォーマット
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy/MM/dd"
-        formatter.locale = .current
-        let format = formatter.string(from: datePicker.date)
-        textField.text = format
+        format(dateFormat: "yyyy/MM/dd")
         
     }
     
     @objc func setTime(){
+        
+        format(dateFormat: "HH:mm")
+        
+    }
+    
+    @objc func format(dateFormat: String){
         textField.endEditing(true)
         
         let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
+        formatter.dateFormat = dateFormat
         formatter.locale = .current
         let format = formatter.string(from: datePicker.date)
         textField.text = format
-        
-    }
-    
-    @IBAction func savePostNotification(_ sender: UIBarButtonItem) {
-        do {
-            try realm.write {
-                if post.info != nil {
-                    post.info?.date = dateLabel.text!
-                    post.info?.time = timeLabel.text!
-                    post.info?.repetition = repetitionLabel.text!
-                    post.info?.enable = true
-                    
-                } else {
-                    post.info = info
-                }
-                
-            }
-        } catch {
-            print("Error saving post \(error)")
-        }
-        
-        setNotification()
-        
-        //1つ前の画面に戻り、Loafでメッセージ表示
-        self.navigationController?.popViewController(animated: false)
-        
-        let image = UIImage(named: "通知")
-        Loaf("通知を設定しました。", state: .custom(.init(backgroundColor: .gray, icon: image)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
-    }
-    
-    @IBAction func deleteButton(_ sender: UIButton) {
-        
-        let alert = UIAlertController(title: "通知を削除します。", message: "", preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .default) { (action) in
-            do {
-                try self.realm.write {
-                    self.realm.delete(self.post.info!)
-                }
-            } catch {
-                print("Error delete post.info \(error)")
-            }
-            
-            let identifier = "postNotification" + String(self.post.id)
-            self.center.removePendingNotificationRequests(withIdentifiers: [identifier])
-            
-            //1つ前の画面に戻り、Loafでメッセージ表示
-            let image = UIImage(named: "通知オフ")
-            Loaf("通知を削除しました。", state: .custom(.init(backgroundColor: .gray, icon: image)), location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: ((self.navigationController?.popViewController(animated: false))!)).show()
-        }
-        
-        let cancelAction = UIAlertAction(title: "キャンセル", style: .cancel) { (action: UIAlertAction!) in
-        }
-        
-        alert.addAction(action)
-        alert.addAction(cancelAction)
-        present(alert, animated: true, completion: nil)
-        
     }
     
     func postRealmLoad(){
@@ -322,28 +314,43 @@ class PostNotificationTableViewController: UITableViewController,UIPickerViewDel
             
         default:
             
-            setRepetition(date: [.year, .month, .day, .hour, .minute], repeats: false)
+            fatalError("原因不明のエラーが発生しました。")
         }
         
     }
     
     func setRepetition(date: Set<Calendar.Component>, repeats: Bool) {
                 
+        guard post.info != nil else {
+            fatalError("原因不明のエラーが発生しました。")
+        }
+        
+        removeNotificationRequests()
+        
+        let content = setContentOfNotification()
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/ddHH:mm"
+        formatter.locale = .current
+        
+        let dateFromFormatter = formatter.date(from: post.info!.date + post.info!.time)
+        let component = Calendar.current.dateComponents(date, from: dateFromFormatter!)
+        let trigger = UNCalendarNotificationTrigger.init(dateMatching: component, repeats: repeats)
         let identifier = "postNotification" + String(post.id)
-        center.removePendingNotificationRequests(withIdentifiers: [identifier])
+        let request = UNNotificationRequest.init(identifier: identifier, content: content, trigger: trigger)
+        center.add(request)
+        
+    }
+    
+    func setContentOfNotification() -> UNMutableNotificationContent {
         
         let content = UNMutableNotificationContent()
         content.title = "\(post.name)ポストの状況"
         
-        var remTime: String = ""
-        
-        if remainingTime(date: post.date) < 0 {
+        let remTime = {
             
-            remTime = "\(-(remainingTime(date: post.date)))日"
-        } else {
-            
-            remTime = "\(remainingTime(date: post.date))日"
-        }
+            remainingTime(date: post.date) < 0 ? "\(-(remainingTime(date: post.date)))日" : "\(remainingTime(date: post.date))日"
+        }()
         
         let difference = "\(post.budget - post.deposit)円"
         
@@ -351,17 +358,7 @@ class PostNotificationTableViewController: UITableViewController,UIPickerViewDel
         
         content.sound = UNNotificationSound.default
         
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy/MM/ddHH:mm"
-        formatter.locale = .current
-        let dateFromFormatter = formatter.date(from: post.info!.date + post.info!.time)
-        
-        let component = Calendar.current.dateComponents(date, from: dateFromFormatter!)
-        let trigger = UNCalendarNotificationTrigger.init(dateMatching: component, repeats: repeats)
-        let request = UNNotificationRequest.init(identifier: identifier, content: content, trigger: trigger)
-        let center = UNUserNotificationCenter.current()
-        center.add(request)
-        
+        return content
     }
     
     func allowNotification() {
@@ -404,9 +401,22 @@ class PostNotificationTableViewController: UITableViewController,UIPickerViewDel
         
     }
     
-    func validateTextField(caseNumber: Int) {
+    func validateTextField(pickerType: pickerType) {
         
-        let caseNumber = caseNumber
+        let rules = setRule(pickerType: pickerType)
+        let validationResult = textField.validate(rules: rules)
+        
+        switch pickerType {
+        case .date:
+            reflectValidateResalut(result: validationResult, pickerType: pickerType)
+            
+        case .time:
+            reflectValidateResalut(result: validationResult, pickerType: pickerType)
+        }
+        
+    }
+    
+    func setRule(pickerType: pickerType) -> ValidationRuleSet<String>{
         
         //空白文字が含むとエラー
         let stringRule = ValidationRulePattern(pattern: "^[\\S]+$", error: ExampleValidationError("空白等は含めないで下さい"))
@@ -416,44 +426,25 @@ class PostNotificationTableViewController: UITableViewController,UIPickerViewDel
         //20../../..の型でないとエラー
         let dateRule = ValidationRulePattern(pattern: "20../../..", error: ExampleValidationError("日付を入力して下さい"))
         
-        var dateRules = ValidationRuleSet<String>()
-        dateRules.add(rule: stringRule)
-        dateRules.add(rule: dateRule)
+        var rules = ValidationRuleSet<String>()
+        rules.add(rule: stringRule)
         
-        var timeRules = ValidationRuleSet<String>()
-        timeRules.add(rule: timeRule)
-        timeRules.add(rule: stringRule)
-        
-        
-        if caseNumber == 0 {
+        switch pickerType {
+        case .date:
+            rules.add(rule: dateRule)
             
-            let dateValidation = textField.validate(rules: dateRules)
-            reflectValidateResalut(result: dateValidation, pattern: 0)
-        } else {
-            
-            let timeValidation = textField.validate(rules: timeRules)
-            reflectValidateResalut(result: timeValidation, pattern: 1)
-            
+        case .time:
+            rules.add(rule: timeRule)
         }
         
+        return rules
     }
     
-    func reflectValidateResalut(result: ValidationResult, pattern: Int) {
+    func reflectValidateResalut(result: ValidationResult, pickerType: pickerType) {
         switch result {
         case .valid:
-            let pattern = pattern
             
-            if pattern == 0 {
-                
-                self.dateLabel.text = self.textField.text
-                self.info.date = self.dateLabel.text!
-            } else {
-                
-                self.timeLabel.text = self.textField.text
-                self.info.time = self.timeLabel.text!
-            }
-            
-            tableView.reloadData()
+            actionOnValid(pickerType: pickerType)
             
         case .invalid(let failures):
 
@@ -462,8 +453,73 @@ class PostNotificationTableViewController: UITableViewController,UIPickerViewDel
         }
     }
     
+    func actionOnValid(pickerType: pickerType){
+        
+        switch pickerType {
+        case .date:
+            dateLabel.text = textField.text
+            info.date = dateLabel.text!
+            
+        case .time:
+            timeLabel.text = textField.text
+            info.time = timeLabel.text!
+        }
+        
+        tableView.reloadData()
+    }
+    
     func setLoaf(message: String, state: Loaf.State) {
         
         Loaf(message, state: state, location: .top, presentingDirection: .vertical, dismissingDirection: .vertical, sender: self).show()
+    }
+    
+    func saveValueToPost(){
+        
+        info.date = dateLabel.text!
+        info.time = timeLabel.text!
+        info.repetition = repetitionLabel.text!
+        info.enable = true
+        
+    }
+    
+    func saveInfoToRealm(){
+        
+        do {
+            try realm.write {
+                if post.info != nil {
+                    post.info?.date = dateLabel.text!
+                    post.info?.time = timeLabel.text!
+                    post.info?.repetition = repetitionLabel.text!
+                    post.info?.enable = true
+                    
+                } else {
+                    post.info = info
+                }
+            }
+        } catch {
+            print("Error saving post \(error)")
+        }
+    }
+    
+    func debugNotification(){
+        
+        //通知デバック用
+        print("<Pending request identifiers>")
+        UNUserNotificationCenter.current().getPendingNotificationRequests { (requests: [UNNotificationRequest]) in
+            for request in requests {
+                print("identifier:\(request.identifier)")
+                print("  title:\(request.content.title)")
+                
+            }
+        }
+        
+        print("<Delivered request identifiers>")
+        UNUserNotificationCenter.current().getDeliveredNotifications { (notifications: [UNNotification]) in
+            for notification in notifications {
+                print("identifier:\(notification.request.identifier)")
+                print("  title:\(notification.request.content.title)")
+                
+            }
+        }
     }
 }
