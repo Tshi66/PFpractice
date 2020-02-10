@@ -10,6 +10,29 @@
 ![20200205_224814](https://user-images.githubusercontent.com/47974150/73849264-fc9c7000-486c-11ea-849e-737aaf1c8ec3.GIF)
 ![20200205_225047](https://user-images.githubusercontent.com/47974150/73849385-2d7ca500-486d-11ea-9238-325325aaf797.GIF)
 
+
+# プロジェクトのクローンからビルド完了までの手順
+
+### bundlerでcocoapodsをバージョン管理しています。
+```
+ *version
+ 
+ Bundler '1.17.2'
+ Cocoapods '1.8.4'
+```
+### クローンからビルド完了までの手順
+1. このプロジェクトをclone or download
+
+2. ```$ bundle install --path vendor/bundle```
+
+3. ```$ bundle exec pod install```
+
+
+### エラーが出る場合
+1. ```$ bundle exec pod --version```で、’1.8.4’であるか確認して下さい。
+2. ```$ gem list | grep 'bundler'```で、**bundlerがインストール**されているか確認してください。
+
+
 # 製作者
 + [***Tshi66***](https://github.com/Tshi66)
     + [***Wantedly***](https://www.wantedly.com/users/99532404)
