@@ -710,7 +710,7 @@
                             </connections>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PostTableViewCell" translatesAutoresizingMaskIntoConstraints="NO" id="GGC-JC-B5K" customClass="PostTableViewCell" customModule="プレゼント管理" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PostTableViewCell" translatesAutoresizingMaskIntoConstraints="NO" id="GGC-JC-B5K" customClass="PostTableViewCell" customModule="プレゼント管理" customModuleProvider="target">
                                 <rect key="frame" x="20" y="226.5" width="374" height="152"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GGC-JC-B5K" id="LYs-xr-xTD">
@@ -1239,14 +1239,14 @@
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Kr-DR-hRE">
                                                 <rect key="frame" x="146" y="0.0" width="56" height="56"/>
-                                                <state key="normal" image="ゴミ箱" backgroundImage="楕円形"/>
+                                                <state key="normal" image="trash" backgroundImage="楕円形"/>
                                                 <connections>
                                                     <action selector="deleteButton:" destination="Igr-a7-kAd" eventType="touchUpInside" id="bpj-sI-hSZ"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lyM-Ei-eLD">
                                                 <rect key="frame" x="219" y="0.0" width="56" height="56"/>
-                                                <state key="normal" image="プレゼント完了" backgroundImage="楕円形"/>
+                                                <state key="normal" image="finish" backgroundImage="楕円形"/>
                                                 <connections>
                                                     <action selector="finishedButton:" destination="Igr-a7-kAd" eventType="touchUpInside" id="ubk-Yw-fB0"/>
                                                 </connections>
@@ -1507,7 +1507,7 @@
         <scene sceneID="ZaX-up-dAN">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="qLa-Qy-15X" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="プレゼントOK" selectedImage="プレゼントOK" id="4PS-22-1VZ"/>
+                    <tabBarItem key="tabBarItem" title="" image="presentok" selectedImage="presentok" id="4PS-22-1VZ"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="xyp-JJ-oae">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -1887,7 +1887,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="374" height="124"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="プレゼントOK" id="XuV-Hf-HEW">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="presentok" id="XuV-Hf-HEW">
                                             <rect key="frame" x="286" y="90" width="100" height="100"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <constraints>
@@ -2332,12 +2332,12 @@
         <image name="Yes" width="66" height="66"/>
         <image name="checkmark" catalog="system" width="64" height="56"/>
         <image name="defaultHero" width="257" height="257"/>
+        <image name="finish" width="25" height="33.5"/>
         <image name="nyukin" width="34.5" height="34"/>
         <image name="pencil.circle.fill" catalog="system" width="64" height="60"/>
         <image name="pregressBackImage" width="193.5" height="190"/>
-        <image name="ゴミ箱" width="20.5" height="23"/>
-        <image name="プレゼントOK" width="30" height="35.5"/>
-        <image name="プレゼント完了" width="25" height="33.5"/>
+        <image name="presentok" width="30" height="35.5"/>
+        <image name="trash" width="20.5" height="23"/>
         <image name="振り替え" width="29" height="26.5"/>
         <image name="楕円形" width="56" height="56"/>
         <image name="通知オフ" width="22.5" height="29.5"/>
