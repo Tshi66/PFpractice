@@ -25,6 +25,7 @@
 		854631BE23850DF0004E7514 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854631BD23850DF0004E7514 /* PostTableViewCell.swift */; };
 		854631C223851BAA004E7514 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854631C123851BAA004E7514 /* Post.swift */; };
 		854631C423852560004E7514 /* PostTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854631C323852560004E7514 /* PostTableViewController.swift */; };
+		857BABC623FBF4BA003E1156 /* FinishedPostTable.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 857BABC523FBF4BA003E1156 /* FinishedPostTable.storyboard */; };
 		857C24ED23E9127100F72B90 /* PickerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857C24EC23E9127100F72B90 /* PickerType.swift */; };
 		8586705123FBEEB70040DAC0 /* CreatePost.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8586705023FBEEB70040DAC0 /* CreatePost.storyboard */; };
 		8586705323FBEFB30040DAC0 /* Bank.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8586705223FBEFB30040DAC0 /* Bank.storyboard */; };
@@ -70,6 +71,7 @@
 		854631BD23850DF0004E7514 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		854631C123851BAA004E7514 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		854631C323852560004E7514 /* PostTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewController.swift; sourceTree = "<group>"; };
+		857BABC523FBF4BA003E1156 /* FinishedPostTable.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FinishedPostTable.storyboard; sourceTree = "<group>"; };
 		857C24EC23E9127100F72B90 /* PickerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerType.swift; sourceTree = "<group>"; };
 		8586705023FBEEB70040DAC0 /* CreatePost.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CreatePost.storyboard; sourceTree = "<group>"; };
 		8586705223FBEFB30040DAC0 /* Bank.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Bank.storyboard; sourceTree = "<group>"; };
@@ -136,20 +138,11 @@
 		854631BB23850B7D004E7514 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				85BCD5D2238061A9002828E3 /* Main.storyboard */,
-				8586705423FBF1BE0040DAC0 /* PostTable.storyboard */,
-				8545DF1A23F6910100993703 /* Onboarding.storyboard */,
+				857BABC723FBF643003E1156 /* Storyboards */,
 				85BCD5D5238061AB002828E3 /* Assets.xcassets */,
-				85BCD5D7238061AB002828E3 /* LaunchScreen.storyboard */,
 				85BEEEAD23C50A2000EE80EF /* OnboardingView.swift */,
 				854631BD23850DF0004E7514 /* PostTableViewCell.swift */,
 				85BEEEB323CB956400EE80EF /* FinishedTableViewCell.swift */,
-				8545DF1C23FAD16100993703 /* EditPost.storyboard */,
-				8537D6A523FBE83F0023450B /* Notification.storyboard */,
-				8537D6A723FBEA3F0023450B /* FinishedPost.storyboard */,
-				8537D6A923FBEB7A0023450B /* PostOne.storyboard */,
-				8586705023FBEEB70040DAC0 /* CreatePost.storyboard */,
-				8586705223FBEFB30040DAC0 /* Bank.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -163,6 +156,24 @@
 				85CC082023B2957E000AD3C7 /* ValidationErrorType.swift .swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		857BABC723FBF643003E1156 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				85BCD5D2238061A9002828E3 /* Main.storyboard */,
+				8586705423FBF1BE0040DAC0 /* PostTable.storyboard */,
+				8545DF1A23F6910100993703 /* Onboarding.storyboard */,
+				8545DF1C23FAD16100993703 /* EditPost.storyboard */,
+				8537D6A523FBE83F0023450B /* Notification.storyboard */,
+				8537D6A723FBEA3F0023450B /* FinishedPost.storyboard */,
+				8537D6A923FBEB7A0023450B /* PostOne.storyboard */,
+				8586705023FBEEB70040DAC0 /* CreatePost.storyboard */,
+				8586705223FBEFB30040DAC0 /* Bank.storyboard */,
+				857BABC523FBF4BA003E1156 /* FinishedPostTable.storyboard */,
+				85BCD5D7238061AB002828E3 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
 			sourceTree = "<group>";
 		};
 		859CBD0323E1668A0067C266 /* Enum */ = {
@@ -317,6 +328,7 @@
 				8537D6A823FBEA3F0023450B /* FinishedPost.storyboard in Resources */,
 				8586705523FBF1BE0040DAC0 /* PostTable.storyboard in Resources */,
 				8586705323FBEFB30040DAC0 /* Bank.storyboard in Resources */,
+				857BABC623FBF4BA003E1156 /* FinishedPostTable.storyboard in Resources */,
 				8537D6A623FBE83F0023450B /* Notification.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
