@@ -19,7 +19,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="4Yl-Rp-0al">
-                                        <rect key="frame" x="47" y="60" width="320" height="641.5"/>
+                                        <rect key="frame" x="47" y="60" width="320" height="585.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iWE-uF-tcG" customClass="MBCircularProgressBarView">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
@@ -141,10 +141,10 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="44" translatesAutoresizingMaskIntoConstraints="NO" id="hcs-6U-vAx">
-                                                <rect key="frame" x="104" y="529.5" width="112" height="112"/>
+                                                <rect key="frame" x="132" y="529.5" width="56" height="56"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zj3-J5-1hJ">
-                                                        <rect key="frame" x="0.0" y="0.0" width="112" height="112"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
                                                         <state key="normal" image="nyukin" backgroundImage="楕円形"/>
                                                         <connections>
                                                             <action selector="inputSavingButton:" destination="Mao-WQ-xCz" eventType="touchUpInside" id="6N0-wl-LGj"/>
@@ -1191,7 +1191,7 @@
                                                 <rect key="frame" x="73" y="0.0" width="56" height="56"/>
                                                 <state key="normal" image="通知オフ" backgroundImage="楕円形"/>
                                                 <connections>
-                                                    <segue destination="Gho-sX-FpI" kind="show" identifier="postInfo" id="HYR-0L-kIu"/>
+                                                    <segue destination="k9f-Rz-SKx" kind="show" identifier="postInfo" id="uqy-pH-WEN"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Kr-DR-hRE">
@@ -1271,150 +1271,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6dV-T5-Vp1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5223.1999999999998" y="180.35982008995504"/>
-        </scene>
-        <!--通知設定-->
-        <scene sceneID="2EY-ov-xVm">
-            <objects>
-                <tableViewController id="Gho-sX-FpI" customClass="PostNotificationTableViewController" customModule="プレゼント管理" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" separatorInsetReference="fromAutomaticInsets" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="Pc3-ih-JC1">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="OGj-D4-AAD">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="91"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IyP-E4-BX1" userLabel="プレゼントを渡す日まであと何日か、 予算より貯金額が不足しているかどうかを通知します。">
-                                    <rect key="frame" x="57" y="17" width="300" height="57.5"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="300" id="plS-lR-zE0"/>
-                                    </constraints>
-                                    <string key="text">プレゼントを渡す日まであと何日か、
-予算より貯金額が不足しているかどうかを通知します。</string>
-                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <color key="highlightedColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                    <size key="shadowOffset" width="0.0" height="0.0"/>
-                                </label>
-                            </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                            <constraints>
-                                <constraint firstItem="IyP-E4-BX1" firstAttribute="centerY" secondItem="OGj-D4-AAD" secondAttribute="centerY" id="sau-OL-tIy"/>
-                                <constraint firstItem="IyP-E4-BX1" firstAttribute="centerX" secondItem="OGj-D4-AAD" secondAttribute="centerX" id="xQj-IG-Ru0"/>
-                            </constraints>
-                        </view>
-                        <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="6ni-dJ-ePb">
-                            <rect key="frame" x="0.0" y="293.5" width="414" height="70"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                            <state key="normal" title="通知の削除">
-                                <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </state>
-                            <connections>
-                                <action selector="deleteButton:" destination="Gho-sX-FpI" eventType="touchUpInside" id="gPm-qX-tJd"/>
-                            </connections>
-                        </button>
-                        <sections>
-                            <tableViewSection id="vcM-4i-nv5">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="hEC-PF-K6T" detailTextLabel="9GT-4t-yov" style="IBUITableViewCellStyleSubtitle" id="Ets-bS-cJL">
-                                        <rect key="frame" x="0.0" y="109" width="414" height="55.5"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ets-bS-cJL" id="kkM-M9-GoR">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="55.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="日付" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hEC-PF-K6T">
-                                                    <rect key="frame" x="20" y="10" width="35" height="20.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9GT-4t-yov">
-                                                    <rect key="frame" x="20" y="31.5" width="33" height="14.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="d0r-yd-Uuo" detailTextLabel="844-iB-wQe" style="IBUITableViewCellStyleSubtitle" id="tJW-J2-tH8">
-                                        <rect key="frame" x="0.0" y="164.5" width="414" height="55.5"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tJW-J2-tH8" id="xsz-Np-Wfe">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="55.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="時刻" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="d0r-yd-Uuo">
-                                                    <rect key="frame" x="20" y="10" width="35" height="20.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="844-iB-wQe">
-                                                    <rect key="frame" x="20" y="31.5" width="33" height="14.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="Yt5-uq-rdx" detailTextLabel="1YL-6l-iCw" style="IBUITableViewCellStyleSubtitle" id="rHq-J6-zN5">
-                                        <rect key="frame" x="0.0" y="220" width="414" height="55.5"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rHq-J6-zN5" id="K5Y-cr-YSV">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="55.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="繰り返し" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Yt5-uq-rdx">
-                                                    <rect key="frame" x="20" y="10" width="69.5" height="20.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1YL-6l-iCw">
-                                                    <rect key="frame" x="20" y="31.5" width="33" height="14.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                        </sections>
-                        <connections>
-                            <outlet property="dataSource" destination="Gho-sX-FpI" id="JVj-Hw-wkh"/>
-                            <outlet property="delegate" destination="Gho-sX-FpI" id="f6C-MR-LtN"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="通知設定" id="YXR-ja-N71">
-                        <barButtonItem key="rightBarButtonItem" image="checkmark" catalog="system" id="qzc-48-P7Q">
-                            <connections>
-                                <action selector="savePostNotification:" destination="Gho-sX-FpI" id="HQV-6j-505"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="dateLabel" destination="9GT-4t-yov" id="R4n-9x-Ba8"/>
-                        <outlet property="deleteButton" destination="6ni-dJ-ePb" id="jzD-qS-SMd"/>
-                        <outlet property="repetitionLabel" destination="1YL-6l-iCw" id="9HY-jn-2VD"/>
-                        <outlet property="timeLabel" destination="844-iB-wQe" id="zaM-g8-GBa"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Tjm-Em-01e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="6509" y="256"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="El0-pw-eZg">
@@ -1947,11 +1803,20 @@
             </objects>
             <point key="canvasLocation" x="6331" y="-297"/>
         </scene>
+        <!--Notification-->
+        <scene sceneID="cSe-O9-ZLL">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Notification" id="k9f-Rz-SKx" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="dYH-0D-r4H"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pIl-Nb-Oxr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6411" y="180"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Home" width="34" height="30"/>
         <image name="Yes" width="66" height="66"/>
-        <image name="checkmark" catalog="system" width="64" height="56"/>
         <image name="defaultHero" width="257" height="257"/>
         <image name="finish" width="25" height="33.5"/>
         <image name="nyukin" width="34.5" height="34"/>
