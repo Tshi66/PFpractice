@@ -28,6 +28,7 @@
 		857C24ED23E9127100F72B90 /* PickerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857C24EC23E9127100F72B90 /* PickerType.swift */; };
 		8586705123FBEEB70040DAC0 /* CreatePost.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8586705023FBEEB70040DAC0 /* CreatePost.storyboard */; };
 		8586705323FBEFB30040DAC0 /* Bank.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8586705223FBEFB30040DAC0 /* Bank.storyboard */; };
+		8586705523FBF1BE0040DAC0 /* PostTable.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8586705423FBF1BE0040DAC0 /* PostTable.storyboard */; };
 		858E6BBC23D09A16000C1453 /* UIImageResize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858E6BBB23D09A16000C1453 /* UIImageResize.swift */; };
 		859CBD0523E1685A0067C266 /* SavingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CBD0423E1685A0067C266 /* SavingType.swift */; };
 		859CBD0723E2A7B80067C266 /* DepositType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859CBD0623E2A7B80067C266 /* DepositType.swift */; };
@@ -72,6 +73,7 @@
 		857C24EC23E9127100F72B90 /* PickerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerType.swift; sourceTree = "<group>"; };
 		8586705023FBEEB70040DAC0 /* CreatePost.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CreatePost.storyboard; sourceTree = "<group>"; };
 		8586705223FBEFB30040DAC0 /* Bank.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Bank.storyboard; sourceTree = "<group>"; };
+		8586705423FBF1BE0040DAC0 /* PostTable.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PostTable.storyboard; sourceTree = "<group>"; };
 		858E6BBB23D09A16000C1453 /* UIImageResize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageResize.swift; sourceTree = "<group>"; };
 		859CBD0423E1685A0067C266 /* SavingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingType.swift; sourceTree = "<group>"; };
 		859CBD0623E2A7B80067C266 /* DepositType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepositType.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				85BCD5D2238061A9002828E3 /* Main.storyboard */,
+				8586705423FBF1BE0040DAC0 /* PostTable.storyboard */,
 				8545DF1A23F6910100993703 /* Onboarding.storyboard */,
 				85BCD5D5238061AB002828E3 /* Assets.xcassets */,
 				85BCD5D7238061AB002828E3 /* LaunchScreen.storyboard */,
@@ -312,6 +315,7 @@
 				8537D6AA23FBEB7A0023450B /* PostOne.storyboard in Resources */,
 				8545DF1723F423C600993703 /* explosion.json in Resources */,
 				8537D6A823FBEA3F0023450B /* FinishedPost.storyboard in Resources */,
+				8586705523FBF1BE0040DAC0 /* PostTable.storyboard in Resources */,
 				8586705323FBEFB30040DAC0 /* Bank.storyboard in Resources */,
 				8537D6A623FBE83F0023450B /* Notification.storyboard in Resources */,
 			);
