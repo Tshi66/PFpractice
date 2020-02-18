@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9qK-0m-RQj">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="gU4-a9-lCs">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9qK-0m-RQj" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="presentok" selectedImage="presentok" id="d0y-lT-HaV"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="baS-RM-QpT">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="bWu-8K-ueZ" kind="relationship" relationship="rootViewController" id="qFz-Dm-dCI"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rIb-7r-YKF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3118.840579710145" y="855.80357142857144"/>
+        </scene>
+        <!--プレゼント完了-->
+        <scene sceneID="wyF-iy-AcI">
+            <objects>
+                <tableViewController storyboardIdentifier="FinishedTable" modalTransitionStyle="crossDissolve" id="bWu-8K-ueZ" customClass="FinishedTableViewController" customModule="プレゼント管理" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorInsetReference="fromAutomaticInsets" allowsSelection="NO" rowHeight="124" sectionHeaderHeight="18" estimatedSectionHeaderHeight="12" sectionFooterHeight="18" id="DAN-xt-yvJ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="0.8862745098" blue="0.87843137250000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" red="1" green="0.8862745098" blue="0.87843137250000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="separatorColor" red="1" green="0.67450980390000004" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <inset key="separatorInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FinishedTableViewCell" rowHeight="124" id="NDh-87-KhN" customClass="FinishedTableViewCell" customModule="プレゼント管理" customModuleProvider="target">
+                                <rect key="frame" x="20" y="55.5" width="374" height="124"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="NDh-87-KhN" id="KYt-Lc-4uK" customClass="FinishedTableViewCell" customModule="プレゼント管理" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="124"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.20000000298023224" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="presentok" id="Q5Z-pr-CrA">
+                                            <rect key="frame" x="286" y="90" width="100" height="100"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="100" id="GqK-QK-sAn"/>
+                                                <constraint firstAttribute="height" constant="100" id="eqV-jB-2m3"/>
+                                            </constraints>
+                                        </imageView>
+                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="8" id="nx7-KH-upB">
+                                            <rect key="frame" x="8" y="11" width="403" height="116"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gqe-Zw-M04">
+                                                    <rect key="frame" x="0.0" y="0.0" width="105" height="105"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="105" id="l2T-tO-HVh"/>
+                                                        <constraint firstAttribute="width" constant="105" id="n2X-dv-S5Z"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="jnj-ad-wo7">
+                                                    <rect key="frame" x="113" y="0.0" width="290" height="105"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="名前" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QRr-AA-8v5">
+                                                            <rect key="frame" x="0.0" y="0.0" width="49" height="29"/>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="0d7-M9-PCW">
+                                                            <rect key="frame" x="0.0" y="34" width="192.5" height="71"/>
+                                                            <subviews>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="MCg-uo-hB0">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="192.5" height="17"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Icon" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q1c-Sn-ERv">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="27.5" height="17"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="20" id="837-6s-azw"/>
+                                                                                <constraint firstAttribute="height" constant="17" id="xkI-qe-n8a"/>
+                                                                            </constraints>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                            <size key="shadowOffset" width="0.0" height="0.0"/>
+                                                                        </label>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="テーマ" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nro-2f-HWT">
+                                                                            <rect key="frame" x="32.5" y="0.0" width="160" height="17"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" constant="160" id="BUL-l1-Ccs"/>
+                                                                                <constraint firstAttribute="height" constant="17" id="glw-EL-A7Q"/>
+                                                                            </constraints>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                            <size key="shadowOffset" width="0.0" height="0.0"/>
+                                                                        </label>
+                                                                    </subviews>
+                                                                </stackView>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="c3Y-rB-v3f">
+                                                                    <rect key="frame" x="0.0" y="18" width="192.5" height="17"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Icon" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uX5-IF-Fe5">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="27.5" height="17"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="20" id="B4j-Gd-6sl"/>
+                                                                                <constraint firstAttribute="height" constant="17" id="iez-i1-IU3"/>
+                                                                            </constraints>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                            <size key="shadowOffset" width="0.0" height="0.0"/>
+                                                                        </label>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="プレゼント名" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o1t-NR-tDx">
+                                                                            <rect key="frame" x="32.5" y="0.0" width="160" height="17"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" constant="160" id="Lwv-Zt-1D9"/>
+                                                                                <constraint firstAttribute="height" constant="17" id="mDd-BX-QBd"/>
+                                                                            </constraints>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                            <size key="shadowOffset" width="0.0" height="0.0"/>
+                                                                        </label>
+                                                                    </subviews>
+                                                                </stackView>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="cj1-R1-UWR">
+                                                                    <rect key="frame" x="0.0" y="36" width="192.5" height="17"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Icon" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fBB-5D-RbL">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="27.5" height="17"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="height" constant="17" id="5yk-Ly-RB6"/>
+                                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="20" id="cxU-et-Vdn"/>
+                                                                            </constraints>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                            <size key="shadowOffset" width="0.0" height="0.0"/>
+                                                                        </label>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="渡した日" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Da5-8I-cDw">
+                                                                            <rect key="frame" x="32.5" y="0.0" width="160" height="17"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" constant="160" id="GCt-b8-UEN"/>
+                                                                                <constraint firstAttribute="height" constant="17" id="lZD-7H-hX4"/>
+                                                                            </constraints>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                            <size key="shadowOffset" width="0.0" height="0.0"/>
+                                                                        </label>
+                                                                    </subviews>
+                                                                </stackView>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="eoz-IE-Vi8">
+                                                                    <rect key="frame" x="0.0" y="54" width="192.5" height="17"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Icon" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oVm-2Q-Cmx">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="27.5" height="17"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="height" constant="17" id="38Y-Yl-ZdG"/>
+                                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="20" id="vli-n7-gyr"/>
+                                                                            </constraints>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                            <size key="shadowOffset" width="0.0" height="0.0"/>
+                                                                        </label>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="かかった費用" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K9m-S8-77L">
+                                                                            <rect key="frame" x="32.5" y="0.0" width="160" height="17"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="height" constant="17" id="MdB-0f-pIQ"/>
+                                                                                <constraint firstAttribute="width" constant="160" id="iAI-OR-esK"/>
+                                                                            </constraints>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                            <size key="shadowOffset" width="0.0" height="0.0"/>
+                                                                        </label>
+                                                                    </subviews>
+                                                                </stackView>
+                                                            </subviews>
+                                                        </stackView>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <color key="tintColor" red="1" green="0.8862745098" blue="0.87843137250000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <outlet property="budgetIcon" destination="oVm-2Q-Cmx" id="MPQ-sh-qvd"/>
+                                    <outlet property="budgetLabel" destination="K9m-S8-77L" id="2EW-o0-Muj"/>
+                                    <outlet property="dateIcon" destination="fBB-5D-RbL" id="MOi-ez-rUW"/>
+                                    <outlet property="dateLabel" destination="Da5-8I-cDw" id="dvi-1M-qSZ"/>
+                                    <outlet property="nameLabel" destination="QRr-AA-8v5" id="zs2-7E-uB4"/>
+                                    <outlet property="photoImageView" destination="gqe-Zw-M04" id="ru5-n1-RNy"/>
+                                    <outlet property="presentIcon" destination="uX5-IF-Fe5" id="i8c-54-NqT"/>
+                                    <outlet property="presentLabel" destination="o1t-NR-tDx" id="yRX-QW-5La"/>
+                                    <outlet property="themeIcon" destination="Q1c-Sn-ERv" id="5ix-bZ-9nY"/>
+                                    <outlet property="themeLabel" destination="nro-2f-HWT" id="bjc-4g-EdJ"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="bWu-8K-ueZ" id="Y7F-0k-XPQ"/>
+                            <outlet property="delegate" destination="bWu-8K-ueZ" id="GfT-5Y-Vyd"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="プレゼント完了" id="kiT-VU-tAl"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="s9x-QY-IcH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4023.1999999999998" y="855.02248875562225"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="presentok" width="30" height="35.5"/>
+    </resources>
+</document>

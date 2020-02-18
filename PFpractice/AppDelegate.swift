@@ -34,10 +34,10 @@ import RealmSwift
                     //起動を判定するlaunchedBeforeという論理型のKeyをUserDefaultsに用意
                     UserDefaults.standard.set(true, forKey: "launchedBefore")
                     
-                    let introViewController = UIStoryboard.init(name: "Main", bundle: nil)
-                        .instantiateViewController(withIdentifier: "onBoarding") as! OnboardingViewController
-                    let navigationController = UINavigationController(rootViewController: introViewController)
-                    self.window?.rootViewController = navigationController
+                    let storyboard = UIStoryboard(name: "Onboarding", bundle: nil)
+                    let onboardingViewController = storyboard.instantiateViewController(withIdentifier: "onBoarding") as! OnboardingViewController
+                    let naviVC = UINavigationController(rootViewController: onboardingViewController)
+                    self.window?.rootViewController = naviVC
 
                 } else {
 

@@ -88,3 +88,6 @@ iOSInjectionProject/
 
 #bundlerで入れるファイルはバージョン管理の対象にしない。
 vendor/bundle
+
+#Resourcesを除外
+Resources

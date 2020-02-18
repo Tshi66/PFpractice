@@ -32,12 +32,9 @@ class OnboardingViewController: UIViewController, PaperOnboardingDelegate, Paper
     }
     
     @IBAction func skipButtonTapped(_ sender: UIButton) {
-         print(#function)
-        
-//        performSegue(withIdentifier: "Home", sender: nil)
         
         //storyboardのインスタンスを取得。
-        let storyboard: UIStoryboard = self.storyboard!
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         //変遷先ViewControllerのインスタンを取得。
         let tabVC = storyboard.instantiateViewController(withIdentifier: "TabBar") as! TabBarController
