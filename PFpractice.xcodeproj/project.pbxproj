@@ -17,6 +17,7 @@
 		850A072D23826745006F4827 /* CreatePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850A072C23826745006F4827 /* CreatePostViewController.swift */; };
 		8537D6A623FBE83F0023450B /* Notification.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8537D6A523FBE83F0023450B /* Notification.storyboard */; };
 		8537D6A823FBEA3F0023450B /* FinishedPost.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8537D6A723FBEA3F0023450B /* FinishedPost.storyboard */; };
+		8537D6AA23FBEB7A0023450B /* PostOne.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8537D6A923FBEB7A0023450B /* PostOne.storyboard */; };
 		853FE56F2387C250003F3E2D /* PostOneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853FE56E2387C250003F3E2D /* PostOneViewController.swift */; };
 		8545DF1723F423C600993703 /* explosion.json in Resources */ = {isa = PBXBuildFile; fileRef = 8545DF1623F423C500993703 /* explosion.json */; };
 		8545DF1B23F6910100993703 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8545DF1A23F6910100993703 /* Onboarding.storyboard */; };
@@ -58,6 +59,7 @@
 		850A072C23826745006F4827 /* CreatePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostViewController.swift; sourceTree = "<group>"; };
 		8537D6A523FBE83F0023450B /* Notification.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Notification.storyboard; sourceTree = "<group>"; };
 		8537D6A723FBEA3F0023450B /* FinishedPost.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FinishedPost.storyboard; sourceTree = "<group>"; };
+		8537D6A923FBEB7A0023450B /* PostOne.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PostOne.storyboard; sourceTree = "<group>"; };
 		853FE56E2387C250003F3E2D /* PostOneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOneViewController.swift; sourceTree = "<group>"; };
 		8545DF1623F423C500993703 /* explosion.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = explosion.json; sourceTree = "<group>"; };
 		8545DF1A23F6910100993703 /* Onboarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				8545DF1C23FAD16100993703 /* EditPost.storyboard */,
 				8537D6A523FBE83F0023450B /* Notification.storyboard */,
 				8537D6A723FBEA3F0023450B /* FinishedPost.storyboard */,
+				8537D6A923FBEB7A0023450B /* PostOne.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -299,6 +302,7 @@
 				85BCD5D6238061AB002828E3 /* Assets.xcassets in Resources */,
 				85BCD5D4238061A9002828E3 /* Main.storyboard in Resources */,
 				8545DF1D23FAD16100993703 /* EditPost.storyboard in Resources */,
+				8537D6AA23FBEB7A0023450B /* PostOne.storyboard in Resources */,
 				8545DF1723F423C600993703 /* explosion.json in Resources */,
 				8537D6A823FBEA3F0023450B /* FinishedPost.storyboard in Resources */,
 				8537D6A623FBE83F0023450B /* Notification.storyboard in Resources */,
