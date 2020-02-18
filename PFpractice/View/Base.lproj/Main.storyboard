@@ -3,194 +3,9 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--貯金箱-->
-        <scene sceneID="65J-FS-dXm">
-            <objects>
-                <viewController storyboardIdentifier="asd" id="Mao-WQ-xCz" customClass="BankViewController" customModule="プレゼント管理" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="kQ1-3G-sse">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AZJ-6S-Woa">
-                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="4Yl-Rp-0al">
-                                        <rect key="frame" x="47" y="60" width="320" height="585.5"/>
-                                        <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iWE-uF-tcG" customClass="MBCircularProgressBarView">
-                                                <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
-                                                <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pregressBackImage" translatesAutoresizingMaskIntoConstraints="NO" id="uLI-kg-csV">
-                                                        <rect key="frame" x="85" y="85" width="150" height="150"/>
-                                                        <color key="tintColor" red="1" green="0.8862745098" blue="0.87843137250000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" constant="150" id="Nq7-D9-qLb"/>
-                                                            <constraint firstAttribute="height" constant="150" id="Rfa-fA-t82"/>
-                                                        </constraints>
-                                                    </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="あとxx円" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o4i-7I-MBl">
-                                                        <rect key="frame" x="112.5" y="146.5" width="95" height="27.5"/>
-                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
-                                                        <color key="textColor" red="0.85882352939999995" green="0.2666666667" blue="0.2156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                </subviews>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                                <constraints>
-                                                    <constraint firstItem="o4i-7I-MBl" firstAttribute="centerY" secondItem="iWE-uF-tcG" secondAttribute="centerY" id="CNa-mF-Xjt"/>
-                                                    <constraint firstItem="uLI-kg-csV" firstAttribute="centerX" secondItem="iWE-uF-tcG" secondAttribute="centerX" id="JRT-lw-60U"/>
-                                                    <constraint firstAttribute="height" constant="320" id="Weo-Fr-4b8"/>
-                                                    <constraint firstItem="o4i-7I-MBl" firstAttribute="centerX" secondItem="iWE-uF-tcG" secondAttribute="centerX" id="hiz-Pl-6bF"/>
-                                                    <constraint firstAttribute="width" constant="320" id="onA-QI-LQJ"/>
-                                                    <constraint firstItem="uLI-kg-csV" firstAttribute="centerY" secondItem="iWE-uF-tcG" secondAttribute="centerY" id="us5-yJ-FNu"/>
-                                                </constraints>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="progressRotationAngle">
-                                                        <real key="value" value="50"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="progressAngle">
-                                                        <real key="value" value="100"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="progressLineWidth">
-                                                        <real key="value" value="30"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="color" keyPath="progressColor">
-                                                        <color key="value" red="0.85882352939999995" green="0.2666666667" blue="0.2156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="progressCapType">
-                                                        <integer key="value" value="5"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="emptyLineWidth">
-                                                        <real key="value" value="30"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="showValueString" value="NO"/>
-                                                    <userDefinedRuntimeAttribute type="color" keyPath="emptyLineColor">
-                                                        <color key="value" red="1" green="0.8862745098" blue="0.87843137250000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                            </view>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="ysv-DK-UL5">
-                                                <rect key="frame" x="35" y="340" width="250" height="169.5"/>
-                                                <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="foB-uP-pt2">
-                                                        <rect key="frame" x="0.0" y="0.0" width="112" height="29"/>
-                                                        <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="貯金額" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="95u-vR-ZKD">
-                                                                <rect key="frame" x="0.0" y="0.0" width="73" height="29"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aRk-4h-RAX">
-                                                                <rect key="frame" x="83" y="0.5" width="29" height="28"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="height" constant="29" id="T99-lg-bpb"/>
-                                                                    <constraint firstAttribute="width" constant="29" id="yDJ-LV-4xW"/>
-                                                                </constraints>
-                                                                <color key="tintColor" red="0.85882352939999995" green="0.2666666667" blue="0.2156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <state key="normal" backgroundImage="pencil.circle.fill" catalog="system"/>
-                                                                <connections>
-                                                                    <action selector="PushEditSavingButton:" destination="Mao-WQ-xCz" eventType="touchUpInside" id="rQF-2o-ou8"/>
-                                                                </connections>
-                                                            </button>
-                                                        </subviews>
-                                                    </stackView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="0円" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IYb-t5-ikj">
-                                                        <rect key="frame" x="0.0" y="29" width="250" height="27.5"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="250" id="0hN-gy-ajf"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ポスト入金総額" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YWX-4K-bJD">
-                                                        <rect key="frame" x="0.0" y="56.5" width="170.5" height="29"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="0円" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hhr-bM-cKz">
-                                                        <rect key="frame" x="0.0" y="85.5" width="250" height="27.5"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="250" id="Nxy-0r-b3S"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="プレゼント総額" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S2n-P4-fgS">
-                                                        <rect key="frame" x="0.0" y="113" width="170.5" height="29"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0円" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uDy-g1-7sL">
-                                                        <rect key="frame" x="0.0" y="142" width="250" height="27.5"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="250" id="VPy-Gd-c5f"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                </subviews>
-                                            </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="44" translatesAutoresizingMaskIntoConstraints="NO" id="hcs-6U-vAx">
-                                                <rect key="frame" x="132" y="529.5" width="56" height="56"/>
-                                                <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zj3-J5-1hJ">
-                                                        <rect key="frame" x="0.0" y="0.0" width="56" height="56"/>
-                                                        <state key="normal" image="nyukin" backgroundImage="楕円形"/>
-                                                        <connections>
-                                                            <action selector="inputSavingButton:" destination="Mao-WQ-xCz" eventType="touchUpInside" id="6N0-wl-LGj"/>
-                                                        </connections>
-                                                    </button>
-                                                </subviews>
-                                            </stackView>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="320" id="7vh-i8-shb"/>
-                                        </constraints>
-                                    </stackView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="4Yl-Rp-0al" firstAttribute="centerX" secondItem="AZJ-6S-Woa" secondAttribute="centerX" id="Fje-DQ-rFU"/>
-                                    <constraint firstItem="4Yl-Rp-0al" firstAttribute="top" secondItem="AZJ-6S-Woa" secondAttribute="top" constant="60" id="SGY-3R-rpY"/>
-                                    <constraint firstAttribute="bottom" secondItem="4Yl-Rp-0al" secondAttribute="bottom" constant="60" id="YJY-Ww-Ulj"/>
-                                    <constraint firstItem="4Yl-Rp-0al" firstAttribute="leading" secondItem="3nK-l8-79Z" secondAttribute="trailing" id="YaY-KJ-E3d"/>
-                                </constraints>
-                                <viewLayoutGuide key="contentLayoutGuide" id="3nK-l8-79Z"/>
-                                <viewLayoutGuide key="frameLayoutGuide" id="erL-18-9Vs"/>
-                            </scrollView>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="AZJ-6S-Woa" firstAttribute="bottom" secondItem="Tt2-Z8-xzB" secondAttribute="bottom" id="8j9-FW-BQI"/>
-                            <constraint firstItem="AZJ-6S-Woa" firstAttribute="top" secondItem="Tt2-Z8-xzB" secondAttribute="top" id="Jh7-n6-pKA"/>
-                            <constraint firstItem="AZJ-6S-Woa" firstAttribute="trailing" secondItem="Tt2-Z8-xzB" secondAttribute="trailing" id="Jug-Sq-eiN"/>
-                            <constraint firstItem="AZJ-6S-Woa" firstAttribute="leading" secondItem="Tt2-Z8-xzB" secondAttribute="leading" id="agO-zT-vtz"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="Tt2-Z8-xzB"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="貯金箱" id="s7Z-D6-9HU"/>
-                    <connections>
-                        <outlet property="editSavingButton" destination="aRk-4h-RAX" id="fDx-d2-UCH"/>
-                        <outlet property="presentCostLabel" destination="uDy-g1-7sL" id="v7R-y7-C60"/>
-                        <outlet property="progressLabel" destination="o4i-7I-MBl" id="xc4-XG-KSy"/>
-                        <outlet property="progressView" destination="iWE-uF-tcG" id="TQR-P6-fe2"/>
-                        <outlet property="savingLabel" destination="IYb-t5-ikj" id="m5A-a0-5qe"/>
-                        <outlet property="sumDepositLabel" destination="hhr-bM-cKz" id="IzM-dg-0Ot"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="NkC-Fb-TSH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5221.6000000000004" y="-1311.9940029985009"/>
-        </scene>
         <!--Home-->
         <scene sceneID="a8e-lt-61m">
             <objects>
@@ -579,7 +394,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4ca-tg-74e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="NT1-ii-p0R">
                     <connections>
-                        <segue destination="Mao-WQ-xCz" kind="show" id="P7B-hb-EpW"/>
+                        <segue destination="2ef-vY-BII" kind="show" id="L9q-t7-BcP"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -861,13 +676,20 @@
             </objects>
             <point key="canvasLocation" x="4886" y="-542"/>
         </scene>
+        <!--Bank-->
+        <scene sceneID="Sn5-fJ-yFK">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Bank" id="2ef-vY-BII" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="cR0-y1-3AD"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qyp-BI-2XY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4625" y="-912"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Home" width="34" height="30"/>
-        <image name="nyukin" width="34.5" height="34"/>
-        <image name="pencil.circle.fill" catalog="system" width="64" height="60"/>
         <image name="pregressBackImage" width="193.5" height="190"/>
         <image name="presentok" width="30" height="35.5"/>
-        <image name="楕円形" width="56" height="56"/>
     </resources>
 </document>
