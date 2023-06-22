@@ -33,12 +33,6 @@
 2. ```$ gem list | grep 'bundler'```で、**bundlerがインストール**されているか確認してください。
 
 
-# 製作者
-+ [***Tshi66***](https://github.com/Tshi66)
-    + [***Wantedly***](https://www.wantedly.com/users/99532404)
-    + [***Twitter***](https://twitter.com/Takahir10791670)
-    + [***Qiita***](https://qiita.com/Tsh-43879562)
-
 # 使用した技術
   + 開発環境
       + xcode, swift 
@@ -67,10 +61,9 @@
   + Validate（ライブラリ）を使って、バリデーションを実装（金額、空白無効、文字数制限、日付など）
   + アニメーションやトーストで可愛いUIへ
   
-
 # デザインツール
 
 AdobeXD
-→[作成したプロトタイプをご覧いただけます。](https://xd.adobe.com/view/170dd0bc-ee66-4eb9-7f09-06548c65ce7f-613c/?fullscreen&hints=off)
+→[作成したプロトタイプ](https://xd.adobe.com/view/170dd0bc-ee66-4eb9-7f09-06548c65ce7f-613c/?fullscreen&hints=off)
 以下のようにデザインを行いました。
 <img width="985" alt="スクリーンショット 2020-02-05 23 47 26" src="https://user-images.githubusercontent.com/47974150/73852151-0d9bb000-4872-11ea-8bbf-0e98bab13a02.png">
